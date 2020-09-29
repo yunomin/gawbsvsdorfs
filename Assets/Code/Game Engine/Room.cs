@@ -6,8 +6,9 @@ public class Room : MonoBehaviour
 {
 
     public string roomName;
+    public GameObject roomGameObject;
     public int roomOwner; //Usage: should be 0 for neutral, 1 for player 1, -1 for player 2. 
-    public List<Room> Adjacent; //A list of rooms that count as "Adjacent".
+    public List<GameObject> Adjacent; //A list of rooms that count as "Adjacent".
     public int[] roomID;
     public int roomSlots;
     public int emptySlots;
@@ -46,7 +47,7 @@ public class Room : MonoBehaviour
 
     }
 
-    public void SetAdjacent(Room room)
+    public void SetAdjacent(GameObject room)
     {
         Adjacent.Add(room);
     }

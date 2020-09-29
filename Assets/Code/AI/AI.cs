@@ -11,7 +11,7 @@ public class AI : MonoBehaviour
     public int mushroomReserve;
     public int mushroomIncome;
     public int mushroomUpkeep;
-    public int actions;
+    public int numActions;
     public List<Room> ownedRooms;
     // Start is called before the first frame update
     void Start()
@@ -26,17 +26,25 @@ public class AI : MonoBehaviour
         mushroomReserve = 0;
         mushroomIncome = 6;
         mushroomUpkeep = 6;
-        actions = 0;
+        numActions = 0;
     }
 
     public void StartTurn(List<Room> roomList)
     {
-        actions = 2;
+        numActions = 2;
         myTurn = true;
         CalcIncome();
         MushroomEconomy();
         goldReserve += goldIncome;
-        GetActions(roomList);
+        List<string> actions;
+        List<Room> tempRoomList = roomList;
+        while (actions > 0) { 
+            List<String> currAction = GetAction(ref tempRoomList, numActions);
+            for (int i = 0; i < 3; i++)
+            {
+                actions.Add(currAction[i]);
+            }
+        }
 
     }
 
@@ -85,8 +93,16 @@ public class AI : MonoBehaviour
         goldIncome = newGoldIncome;
     }
 
-    /*List<string>*/ void GetActions(List<Room> roomList)
+    List<string>GetAction(ref List<Room> roomList, int numActions)
     {
+        if (numActions == 2)
+        {
+            return GetMove(List<Room> roomList);
+        }
+        else
+        {
+
+        }
         List<string> actions;
         for (int a = 0; a < 2; a++)
         {
@@ -98,40 +114,40 @@ public class AI : MonoBehaviour
         }
     }
 
-    /*List<string>*/ void GetMove(List<Room> roomList)
+    List<string>nGetMove(ref List<Room> roomList)
     {
         List<string> actions;
-        actions.Add("move");
-        actions.Add("");
-        actions.Add("");
-        actions.Add("");
-        actions.Add("");
+        actions.Add("move"); //action name
+        actions.Add(""); //from room
+        actions.Add(""); //to room
+        actions.Add(""); //num to move
         int maxStateScore = 0;
         for (int r = 0; r < roomList.Count(); r++)
         {
             //for each room that the AI owns
             if (roomList[r].roomOwner == -1)
             {
-                //for each room the AI can moved to from the current room
+                //for each room the AI can move to from the current room
+                //need to add moving to owned rooms
                 for (int a = 0; a < roomList[r].Adjacent.count(); a++)
                 {
-                    //take an action in this room
-                    List<string> nonMoveAction = GetNonMove(roomList[r].Adjacent[a]);
-                    currentStateScore = int.Parse(nonMoveAction[0]);
-                    if (currentStateScore > maxStateScore)
+                    //move from roomList[r] to roomList[r].Adjacent[a]
+                    int currStateScore = getStateScore(roomList);
+                    if (currStateScore > maxStateScore)
                     {
                         maxStateScore = currentStateScore;
                         actions[1] = roomList[r];
                         actions[2] = roomList[r].Adjacent[a];
-                        actions[3] = nonMoveAction[1];
-                        actions[4] = nonMoveAction[2];
                     }
                 }
             }
         }
     }
-
-
+     
+    int stateScore(List<Room> roomList)
+    {
+        return mushroomIncome + goldIncome + 10 * ownedRooms.Count();
+    }
 
 
 }

@@ -27,6 +27,7 @@ public class AI : MonoBehaviour
         mushroomIncome = 6;
         mushroomUpkeep = 6;
         numActions = 0;
+        int stateScoreMod = 0;
     }
 
     public void StartTurn(List<Room> roomList)
@@ -36,11 +37,12 @@ public class AI : MonoBehaviour
         CalcIncome();
         MushroomEconomy();
         goldReserve += goldIncome;
+        stateScoreMod = 0;
         List<string> actions;
         List<Room> tempRoomList = roomList;
         while (actions > 0) { 
             List<String> currAction = GetAction(ref tempRoomList, numActions);
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < currAction.Count(); i++)
             {
                 actions.Add(currAction[i]);
             }
@@ -93,7 +95,7 @@ public class AI : MonoBehaviour
         goldIncome = newGoldIncome;
     }
 
-    List<string>GetAction(ref List<Room> roomList, int numActions)
+    List<string> GetAction(ref List<Room> roomList, int numActions)
     {
         if (numActions == 2)
         {
@@ -114,7 +116,7 @@ public class AI : MonoBehaviour
         }
     }
 
-    List<string>nGetMove(ref List<Room> roomList)
+    List<string> GetMove(ref List<Room> roomList)
     {
         List<string> actions;
         actions.Add("move"); //action name
@@ -143,11 +145,43 @@ public class AI : MonoBehaviour
                 }
             }
         }
+        return actions;
     }
-     
+
+    List<string> GetBuild(ref List<Room> roomList)
+    {
+        for (int r = 0; r < roomList.Count(); r++)
+        {
+            //for each room that the AI owns
+            if (roomList[r].roomOwner == -1)
+            {
+            }
+        }
+    }
+
+    List<string> GetBattle(ref List<Room> roomList)
+    {
+
+    }
+
+    List<string> GetOvertime(ref List<Room> roomList)
+    {
+
+    }
+
+    List<string> GetControl(ref List<Room> roomList)
+    {
+
+    }
+
     int stateScore(List<Room> roomList)
     {
-        return mushroomIncome + goldIncome + 10 * ownedRooms.Count();
+        int stateScore = 10 * ownedRooms.Count() + mushroomIncome + goldReserve / 2 + mushroomReserve / 2;
+        if (1/*there is gold left*/)
+        {
+            stateScore += goldIncome;
+        }
+        return stateScore;
     }
 
 

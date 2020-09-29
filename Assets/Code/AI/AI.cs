@@ -138,6 +138,7 @@ public class AI : MonoBehaviour
                         maxStateScore = currentStateScore;
                         actions[1] = roomList[r];
                         actions[2] = roomList[r].Adjacent[a];
+                        actions[3] = "num to move";
                     }
                 }
             }

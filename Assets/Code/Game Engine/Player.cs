@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
+    public string playerName;
     public bool myTurn;
     public int goldReserve;
     public int goldIncome;

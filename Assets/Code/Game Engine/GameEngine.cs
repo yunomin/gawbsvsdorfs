@@ -63,7 +63,7 @@ public class GameEngine : MonoBehaviour
        //Populates the full list of rooms. 
     }
 
-    void harvest()
+    public void harvest()
     {
         // This function is going to be called when player presses harvest button on the UI,
         // it simply update the displayed number of mushrooms and gold.

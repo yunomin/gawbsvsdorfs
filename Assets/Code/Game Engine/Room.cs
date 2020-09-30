@@ -18,6 +18,7 @@ public class Room : MonoBehaviour
     public int roomGoldIncome;
     public bool defensePresent; //For if this room has a mercenary camp or if it is a base.
     // Start is called before the first frame update
+    
     public Room()
     {
 
@@ -39,6 +40,7 @@ public class Room : MonoBehaviour
 
         builtBuildings[2 - roomSlots] = choice; //for instance, builtBuildings[0] will be the first assigned
                                                 //as [2 - 2] = 0. Then [2 - 1] = 1, and will be the second assigned.
+        
         roomSlots--;
     }
 

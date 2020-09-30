@@ -12,12 +12,16 @@ public class Player : MonoBehaviour
     public int mushroomIncome;
     public int mushroomUpkeep;
     public int actions;
-    public List<Room> ownedRooms;
+    public List<GameObject> ownedRooms;
+    public int unitCount;
+    public List<GameObject> units;
     // Start is called before the first frame update
+
     void Start()
     {
         
     }
+
     public Player()
     {
         myTurn = false;
@@ -60,15 +64,11 @@ public class Player : MonoBehaviour
             //endTurn();
         }
     }
-
-    void EndTurn()
-    {
-
-    }
-
-    void OwnRoom(Room newOwned)
+    
+    void ControlRoom(GameObject newOwned)
     {
         ownedRooms.Add(newOwned);
+
     }
 
     void CalcIncome()
@@ -77,15 +77,16 @@ public class Player : MonoBehaviour
         int newGoldIncome = 0;
         foreach (var thisRoom in ownedRooms)
         {
-            newMushroomIncome += thisRoom.GetMushroomIncome();
-            newGoldIncome += thisRoom.GetGoldIncome();
+            Room roomscript = thisRoom.GetComponent<Room>();
+            newMushroomIncome += roomscript.GetMushroomIncome();
+            newGoldIncome += roomscript.GetGoldIncome();
         }
         mushroomIncome = newMushroomIncome;
         goldIncome = newGoldIncome; 
     }
 
 
-
+    
 
 
 }

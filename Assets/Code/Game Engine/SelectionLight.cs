@@ -28,6 +28,11 @@ public class SelectionLight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isEnable)
+        {
+            
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit hit;
@@ -35,7 +40,7 @@ public class SelectionLight : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 100.0f))
             {
                 print("Hit!:" + hit.collider.name);
-                if(hit.collider.gameObject.CompareTag("room")) //Will detect if hit is on a "room" (via tag)
+                if (hit.collider.gameObject.CompareTag("room")) //Will detect if hit is on a "room" (via tag)
                 {
                     print("clicked on room:" + hit.transform.name);
                     //TODO: Add code to move light over selected room, slowly (animated)
@@ -43,16 +48,16 @@ public class SelectionLight : MonoBehaviour
                     selectionLight.transform.position = new Vector3(hit.collider.transform.position.x, hit.collider.transform.position.y + lightHeight, hit.collider.transform.position.z);
 
                     gameEngine.GetComponent<GameEngine>().selectedRoom = hit.collider.gameObject; //"Selects" the room
-                     
+
 
                 } // ensure you picked right object
                 else if (hit.collider.gameObject.CompareTag("unit")) //Need to add "if current player";
                 {
                     print("Clicked on a unit");
-                    gameEngine.GetComponent<GameEngine>().SelectUnit(hit.collider.gameObject); 
+                    gameEngine.GetComponent<GameEngine>().SelectUnit(hit.collider.gameObject);
                 }
             }
-            
+
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
@@ -43,6 +44,7 @@ public class GameEngine : MonoBehaviour
         currentTurnOwner = 1; //Player 1, (remember -1 is player 2)
         player1.StartTurn();
         PopulateRoomStart();
+        
     }
 
     void ChangeTurn()
@@ -74,7 +76,7 @@ public class GameEngine : MonoBehaviour
         // This function is going to be called when player presses harvest button on the UI,
         // it simply update the displayed number of mushrooms and gold.
         goldText.text = player1.goldReserve.ToString();
-        Debug.Log(player1.goldReserve.ToString());
+        // Debug.Log(player1.goldReserve.ToString());
         mushroomText.text = player1.mushroomReserve.ToString();
     }
 
@@ -96,7 +98,7 @@ public class GameEngine : MonoBehaviour
 
     public void Build(int choice)//The check for if the room can be built should be done in GameEngine.
     {
-
+        print(choice);
         selectedRoom.GetComponent<Room>().builtBuildings[2 - selectedRoom.GetComponent<Room>().roomSlots] = choice; //for instance, builtBuildings[0] will be the first assigned
                                                 //as [2 - 2] = 0. Then [2 - 1] = 1, and will be the second assigned.
         switch (choice)
@@ -114,4 +116,6 @@ public class GameEngine : MonoBehaviour
         }
         selectedRoom.GetComponent<Room>().roomSlots--;
     }
+
+    
 }

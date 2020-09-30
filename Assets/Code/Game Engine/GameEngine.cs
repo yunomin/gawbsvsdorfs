@@ -17,9 +17,10 @@ public class GameEngine : MonoBehaviour
 
     // UI variables
     public Text goldText;
+    public Text mushroomText;
     public Text turnText;
 
-    // Update is called ever frame
+    // Update is called every frame
     void Update()
     {
         
@@ -52,6 +53,9 @@ public class GameEngine : MonoBehaviour
             player1.StartTurn();
         }
         turnNumber++;
+
+        // Change the displayed turn number in UI
+        turnText.text = turnNumber.ToString();
     }
 
     void PopulateRoomStart()
@@ -59,5 +63,12 @@ public class GameEngine : MonoBehaviour
        //Populates the full list of rooms. 
     }
 
+    void harvest()
+    {
+        // This function is going to be called when player presses harvest button on the UI,
+        // it simply update the displayed number of mushrooms and gold.
+        goldText.text = player1.goldReserve.ToString();
+        mushroomText.text = player1.mushroomReserve.ToString();
+    }
 
 }

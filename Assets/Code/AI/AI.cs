@@ -16,6 +16,7 @@ public class AI : MonoBehaviour
     public int unitCount;
     public List<GameObject> units;
     public int stateScoreMod;
+    public GameObject gameEngine;
     // Start is called before the first frame update
     void Start()
     {

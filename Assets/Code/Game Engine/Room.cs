@@ -14,6 +14,7 @@ public class Room : MonoBehaviour
     public int emptySlots;
     public int[] builtBuildings; //0 = no building | 1 = Home Base | 2 = Camp | 3 = Upg. Camp |
                                  //4 = Gold Mine   | 5 = Upg. Mine | 6 = Farm | 7 = Upg. Farm|
+   
     public int roomMushroomIncome;
     public int roomGoldIncome;
     public bool defensePresent; //For if this room has a mercenary camp or if it is a base.
@@ -35,14 +36,7 @@ public class Room : MonoBehaviour
 
     // Update is called once per frame
 
-    public void Build(int choice)//The check for if the room can be built should be done in GameEngine.
-    {
-
-        builtBuildings[2 - roomSlots] = choice; //for instance, builtBuildings[0] will be the first assigned
-                                                //as [2 - 2] = 0. Then [2 - 1] = 1, and will be the second assigned.
-        
-        roomSlots--;
-    }
+    
 
     public void Upgrade(int choice)
     {

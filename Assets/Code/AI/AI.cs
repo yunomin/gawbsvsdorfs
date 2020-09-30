@@ -35,6 +35,7 @@ public class AI : MonoBehaviour
 
     public void StartTurn(List<Room> roomList)
     {
+        int secondActionIndex = 0;
         numActions = 2;
         myTurn = true;
         CalcIncome();
@@ -43,6 +44,7 @@ public class AI : MonoBehaviour
         stateScoreMod = 0;
         List<string> actions = new List<string>();
         List<Room> tempRoomList = roomList;
+        /*
         while (numActions > 0) { 
             List<string> currAction = GetAction(tempRoomList, numActions);
             for (int i = 0; i < currAction.Count; i++)
@@ -50,7 +52,42 @@ public class AI : MonoBehaviour
                 actions.Add(currAction[i]);
             }
         }
-
+        */
+        /*
+        actions = GetMove(tempRoomList);
+        switch (actions[0])
+        {
+            case "move":
+                //move all units in actions[1] to actions[2]
+                secondActionIndex = 4;
+                break;
+        }
+        switch (actions[secondActionIndex])
+        {
+            case "build":
+                //build building type actions[secondActionIndex + 2] in room actions[secondActionIndex + 1]
+                break;
+            case "overtime":
+                //harvest building type actions[secondActionIndex + 2] in room actions[secondActionIndex + 1]
+                break;
+        }
+        */
+        //random move selection
+        System.Random rnd = new System.Random();
+        //for each room
+        List<Room> ownedRoomList = new List<Room>();
+        for (int r = 0; r < roomList.Count; r++)
+        {
+            //if the AI owns it
+            if (roomList[r].roomOwner == -1)
+            {
+                ownedRoomList.Add(roomList[r]);
+            }
+        }
+        int moveFrom = rnd.Next(0, ownedRoomList.Count - 1);
+        int moveTo = rnd.Next(0, ownedRoomList[moveFrom].Adjacent.Count - 1);
+        //for each room the AI can move to from the current room
+        //need to add moving to owned rooms
     }
 
     void MushroomEconomy()
@@ -142,24 +179,24 @@ public class AI : MonoBehaviour
                     //adjust tempRoomList to move from roomList[r] to roomList[r].Adjacent[a]
                     List<string> nonMoveAction = GetBuild(roomList);
                     List<string> battleAction = GetBattle(roomList);
-                    if (int.Parse(battleAction[0]) > int.Parse(nonMoveAction[0]))
+                    if (false /*int.Parse(battleAction[0]) > int.Parse(nonMoveAction[0])*/)
                     {
                         nonMoveAction = battleAction;
                     }
                     List<string> overtimeAction = GetOvertime(roomList);
-                    if (int.Parse(overtimeAction[0]) > int.Parse(nonMoveAction[0]))
+                    if (false /*int.Parse(overtimeAction[0]) > int.Parse(nonMoveAction[0])*/)
                     {
                         nonMoveAction = overtimeAction;
                     }
                     List<string> controlAction = GetControl(roomList);
-                    if (int.Parse(controlAction[0]) > int.Parse(nonMoveAction[0]))
+                    if (false /*int.Parse(controlAction[0]) > int.Parse(nonMoveAction[0])*/)
                     {
                         nonMoveAction = controlAction;
                     }
                     if (int.Parse(nonMoveAction[0]) > maxStateScore)
                     {
                         maxStateScore = int.Parse(nonMoveAction[0]);
-                        //actions[1] = roomList[r].roomName;
+                        actions[1] = roomList[r].roomName;
                         //actions[2] = roomList[r].Adjacent[a].roomName;
                         actions[3] = "num to move";
                         for (int n = 4; n < 4 + nonMoveAction.Count - 1; n++)
@@ -174,18 +211,36 @@ public class AI : MonoBehaviour
     }
 
     List<string> GetBuild(List<Room> roomList)
-    {
-        List<string> tempRoomList = new List<string>();
+    {   
+        List<string> moveScore = new List<string>();
+        moveScore.Add("");
+        moveScore.Add("build");
+        moveScore.Add("");
+        moveScore.Add("");
+        int maxStateScore = 0;
         for (int r = 0; r < roomList.Count; r++)
         {
             //for each room that the AI owns
             if (roomList[r].roomOwner == -1)
             {
+                List<Room> tempRoomList = roomList;
                 //if can upgrade (priority: Gold, Mushrooms, Barraks)
-                //if can build
+                //else if can build
+                if (roomList[r].emptySlots > 0)
+                {
+                    tempRoomList[r].builtBuildings[tempRoomList[r].roomSlots - tempRoomList[r].emptySlots] = 4;
+                    int currStateScore = stateScore(tempRoomList);
+                    if (currStateScore > maxStateScore)
+                    {
+                        moveScore[0] = currStateScore.ToString();
+                        moveScore[2] = roomList[r].roomName;
+                        moveScore[3] = "4";
+                    }
+                }
+
             }
         }
-        return tempRoomList;
+        return moveScore;
     }
 
     List<string> GetBattle(List<Room> roomList)
@@ -238,10 +293,20 @@ public class AI : MonoBehaviour
 
     int stateScore(List<Room> roomList)
     {
-        int stateScore = 10 * ownedRooms.Count + mushroomIncome + goldReserve / 2 + mushroomReserve / 2 + unitCount; //+ buildings score
+        int newMushroomIncome = 0;
+        int newGoldIncome = 0;
+        foreach (var thisRoom in roomList)
+        {
+            if (thisRoom.roomOwner == -1)
+            {
+                newMushroomIncome += thisRoom.GetMushroomIncome();
+                newGoldIncome += thisRoom.GetGoldIncome();
+            }
+        }
+        int stateScore = 10 * ownedRooms.Count + newMushroomIncome + goldReserve / 4 + mushroomReserve / 4 + unitCount; //+ buildings score
         if (true/*there is gold left*/)
         {
-            stateScore += goldIncome;
+            stateScore += newGoldIncome;
         }
         return stateScore;
     }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 public class SelectionLight : MonoBehaviour
@@ -8,9 +9,19 @@ public class SelectionLight : MonoBehaviour
     public GameObject selectionLight;
     //public float speed;
     public float lightHeight;
+
+    public bool isEnable;
+
     // Start is called before the first frame update
+    public void enableSelect()
+    {
+        isEnable = true;
+    }
+
     void Start()
     {
+        // Once move/build button is triggered, 
+        isEnable = false;
         //speed = 100.0f;
     }
 

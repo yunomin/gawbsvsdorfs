@@ -41,7 +41,7 @@ public class AI : MonoBehaviour
         List<string> actions;
         List<Room> tempRoomList = roomList;
         while (actions > 0) { 
-            List<String> currAction = GetAction(ref tempRoomList, numActions);
+            List<String> currAction = GetAction(tempRoomList, numActions);
             for (int i = 0; i < currAction.Count(); i++)
             {
                 actions.Add(currAction[i]);
@@ -95,7 +95,7 @@ public class AI : MonoBehaviour
         goldIncome = newGoldIncome;
     }
 
-    List<string> GetAction(ref List<Room> roomList, int numActions)
+    List<string> GetAction(List<Room> roomList, int numActions)
     {
         if (numActions == 2)
         {
@@ -108,7 +108,7 @@ public class AI : MonoBehaviour
         List<string> actions;
         for (int a = 0; a < 2; a++)
         {
-            List<string> moveAction = GetMove(List < Room > roomList);
+            List<string> moveAction = GetMove(List<Room> roomList);
             for (int m = 0; m < 2; m++)
             {
                 actions.Add(moveAction[m]);
@@ -116,9 +116,10 @@ public class AI : MonoBehaviour
         }
     }
 
-    List<string> GetMove(ref List<Room> roomList)
+    List<string> GetMove(List<Room> roomList)
     {
         List<string> actions;
+        int[] allScores;
         actions.Add("move"); //action name
         actions.Add(""); //from room
         actions.Add(""); //to room
@@ -133,14 +134,35 @@ public class AI : MonoBehaviour
                 //need to add moving to owned rooms
                 for (int a = 0; a < roomList[r].Adjacent.count(); a++)
                 {
-                    //move from roomList[r] to roomList[r].Adjacent[a]
-                    int currStateScore = getStateScore(roomList);
-                    if (currStateScore > maxStateScore)
+                    
+                    List tempRoomList = roomList;
+                    //adjust tempRoomList to move from roomList[r] to roomList[r].Adjacent[a]
+                    List<string> nonMoveAction = GetBuild(roomList);
+                    List<string> battleAction = GetBattle(roomList);
+                    if (battleAction[0].Parse() > nonMoveAction[0].Parse())
                     {
-                        maxStateScore = currentStateScore;
+                        nonMoveAction = battleAction;
+                    }
+                    List<string> overtimeAction = GetOvertime(roomList);
+                    if (overtimeAction[0].Parse() > nonMoveAction[0].Parse())
+                    {
+                        nonMoveAction = overtimeAction;
+                    }
+                    List<string> controlAction = GetControl(roomList);
+                    if (controlAction[0].Parse() > nonMoveAction[0].Parse())
+                    {
+                        nonMoveAction = controlAction;
+                    }
+                    if (nonMoveAction[0].Parse() > maxStateScore)
+                    {
+                        maxStateScore = nonMoveAction[0].Parse();
                         actions[1] = roomList[r];
                         actions[2] = roomList[r].Adjacent[a];
                         actions[3] = "num to move";
+                        for (int n = 4; n < 4 + nonMoveAction.Count() - 1; n++)
+                        {
+                            actions[n] = nonMoveAction[n - 3];
+                        }
                     }
                 }
             }
@@ -155,28 +177,58 @@ public class AI : MonoBehaviour
             //for each room that the AI owns
             if (roomList[r].roomOwner == -1)
             {
+                //if can upgrade (priority: Gold, Mushrooms, Barraks)
+                //if can build
             }
         }
     }
 
-    List<string> GetBattle(ref List<Room> roomList)
+    List<string> GetBattle(List<Room> roomList)
     {
-
+        //how do battles work
     }
 
-    List<string> GetOvertime(ref List<Room> roomList)
+    List<string> GetOvertime(List<Room> roomList)
     {
-
+        for (int r = 0; r < roomList.Count(); r++)
+        {
+            //for each room that the AI owns
+            if (roomList[r].roomOwner == -1)
+            {
+                List<string> tempRoomList;
+                //for each building owned by AI in room
+                //adjust temp room list to whatever upgrade happens
+            }
+        }
     }
 
-    List<string> GetControl(ref List<Room> roomList)
+    List<string> GetControl(List<Room> roomList)
     {
+        int roomToControl = -1;
+        for (int r = 0; r < roomList.Count(); r++)
+        {
+            //for each room that the AI doesn't own
+            if (roomList[r].roomOwner != -1)
+            {
+                if (1 /*AI can take control*/)
+                {
+                    roomToControl = r;
+                }
+            }
+        }
+        tempRoomList = roomList;
+        //edit tempRoomList to have room r controlled
+        List<string> moveScore;
+        moveScore.Add(stateScore(tempRoomList).ToString());
+        moveScore.Add("control");
+        moveScore.Add(roomList.ToString());
+        return moveScore;
 
     }
 
     int stateScore(List<Room> roomList)
     {
-        int stateScore = 10 * ownedRooms.Count() + mushroomIncome + goldReserve / 2 + mushroomReserve / 2;
+        int stateScore = 10 * ownedRooms.Count() + mushroomIncome + goldReserve / 2 + mushroomReserve / 2; //+ buildings score
         if (1/*there is gold left*/)
         {
             stateScore += goldIncome;

@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameEngine : MonoBehaviour
 {
@@ -13,7 +15,15 @@ public class GameEngine : MonoBehaviour
     public int turnNumber;
 
 
+    // UI variables
+    public Text goldText;
+    public Text turnText;
 
+    // Update is called ever frame
+    void Update()
+    {
+        
+    }
 
     // Start is called before the first frame update
     void Start()

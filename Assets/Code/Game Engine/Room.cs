@@ -32,6 +32,7 @@ public class Room : MonoBehaviour
         roomID = ID;
         roomSlots = rSlots;
         emptySlots = eSlots;
+        builtBuildings = new int[emptySlots];
     }
 
     // Update is called once per frame

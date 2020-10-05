@@ -26,6 +26,7 @@ public class GameEngine : MonoBehaviour
     public Text goldText;
     public Text mushroomText;
     public Text turnText;
+    public int buildType;
 
     // Update is called every frame
     void Update()
@@ -95,6 +96,8 @@ public class GameEngine : MonoBehaviour
         selectedUnit.transform.position = new Vector3(selectedRoom.transform.position.x, selectedRoom.transform.position.y + 1, selectedRoom.transform.position.z);
 
     }
+
+
 
     public void Build(int choice)//The check for if the room can be built should be done in GameEngine.
     {

@@ -101,8 +101,9 @@ public class GameEngine : MonoBehaviour
 
     public void Build(int choice)//The check for if the room can be built should be done in GameEngine.
     {
-        print(choice);
-        selectedRoom.GetComponent<Room>().builtBuildings[2 - selectedRoom.GetComponent<Room>().roomSlots] = choice; //for instance, builtBuildings[0] will be the first assigned
+        print("Build called, choice: "+ choice);
+        print("selectedRoom.GetComponent<Room>().roomSlots: " + selectedRoom.GetComponent<Room>().roomSlots);
+        //selectedRoom.GetComponent<Room>().builtBuildings[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots] = choice; //for instance, builtBuildings[0] will be the first assigned
                                                 //as [2 - 2] = 0. Then [2 - 1] = 1, and will be the second assigned.
         switch (choice)
         {

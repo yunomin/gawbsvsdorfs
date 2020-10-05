@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 
-public class SelectionLight : MonoBehaviour
+public class SelectionEngine : MonoBehaviour
 {
     public GameObject gameEngine;
     public GameObject selectionLight;

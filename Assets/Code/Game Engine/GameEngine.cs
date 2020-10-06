@@ -22,11 +22,14 @@ public class GameEngine : MonoBehaviour
     public GameObject farm1Prefab; // Farm is 6
 
 
+
     // UI variables
     public Text goldText;
     public Text mushroomText;
     public Text turnText;
     public int buildType;
+
+    public bool GameIsPause;
 
     // Update is called every frame
     void Update()
@@ -45,7 +48,8 @@ public class GameEngine : MonoBehaviour
         currentTurnOwner = 1; //Player 1, (remember -1 is player 2)
         player1.StartTurn();
         PopulateRoomStart();
-        
+
+        GameIsPause = false;
     }
 
     void ChangeTurn()

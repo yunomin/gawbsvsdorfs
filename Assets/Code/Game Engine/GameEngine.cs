@@ -100,13 +100,29 @@ public class GameEngine : MonoBehaviour
     {
         print("Build called, choice: "+ choice);
         print("selectedRoom.GetComponent<Room>().roomSlots: " + selectedRoom.GetComponent<Room>().roomSlots);
-        //selectedRoom.GetComponent<Room>().builtBuildings[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots] = choice; //for instance, builtBuildings[0] will be the first assigned
-                                                //as [2 - 2] = 0. Then [2 - 1] = 1, and will be the second assigned.
+        if (selectedRoom.GetComponent<Room>().builtBuildings.Count >= selectedRoom.GetComponent<Room>().roomSlots)
+        {
+            //quit out
+        }
+        else { //if there are room slots left
+            selectedRoom.GetComponent<Room>().builtBuildings.Add(choice); //add room choice to built room list
+        }
         switch (choice)
         {
             case 2:
                 Instantiate(camp1Prefab, selectedRoom.transform.position, Quaternion.identity);
                 break;
+            case 3:
+                List<Room> builtBuildingsList = selectedRoom.builtBuildings;
+                int roomIndex = -1;
+                for (int i = 0; i < roomList.Count; i++)
+                {
+                    if (builtBuildingsList[i] == choice - 1)
+                    {
+                        builtBuildingsList[i] = choice;
+                        break;
+                    }
+                }
             case 4:
                 Instantiate(mine1Prefab, selectedRoom.transform.position, Quaternion.identity);
                 break;

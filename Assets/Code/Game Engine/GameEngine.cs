@@ -76,8 +76,68 @@ public class GameEngine : MonoBehaviour
        //Populates the full list of rooms. 
     }
 
-    public void harvest()
+    public void harvest(int buildingType)
     {
+        if (selectedRoom.GetComponent<Room>().roomOwner == currentTurnOwner)
+        {
+            switch(buildingType)
+            {
+                case 2:
+                    //double camp value
+                    break;
+                case 3:
+                    //double camp value
+                    break;
+                case 4:
+                    //add 5 gold
+                    if (currentTurnOwner == 1)
+                    {
+                        player1.goldReserve += 5;
+                    }
+                    else
+                    {
+                        player2.goldReserve += 5;
+                    }
+                    break;
+                case 5:
+                    //add 10 gold
+                    if (currentTurnOwner == 1)
+                    {
+                        player1.goldReserve += 10;
+                    }
+                    else
+                    {
+                        player2.goldReserve += 10;
+                    }
+                    break;
+                case 6:
+                    //add 1 mushroom
+                    if (currentTurnOwner == 1)
+                    {
+                        player1.mushroomReserve += 1;
+                    }
+                    else
+                    {
+                        player2.mushroomReserve += 1;
+                    }
+                    break;
+                case 7:
+                    //add 3 mushrooms
+                    if (currentTurnOwner == 1)
+                    {
+                        player1.mushroomReserve += 3;
+                    }
+                    else
+                    {
+                        player2.mushroomReserve += 3;
+                    }
+                    break;
+            }
+        }
+        else
+        {
+            //quit out
+        }
         // This function is going to be called when player presses harvest button on the UI,
         // it simply update the displayed number of mushrooms and gold.
         goldText.text = player1.goldReserve.ToString();
@@ -107,12 +167,32 @@ public class GameEngine : MonoBehaviour
     {
         print("Build called, choice: "+ choice);
         print("selectedRoom.GetComponent<Room>().roomSlots: " + selectedRoom.GetComponent<Room>().roomSlots);
-        if (selectedRoom.GetComponent<Room>().builtBuildings.Count >= selectedRoom.GetComponent<Room>().roomSlots)
+        if (choice % 2 == 0 && selectedRoom.GetComponent<Room>().emptySlots <= 0) //if there are not room slots left
         {
             //quit out
         }
         else { //if there are room slots left
-            selectedRoom.GetComponent<Room>().builtBuildings.Add(choice); //add room choice to built room list
+            //add room choice to built room list
+            selectedRoom.GetComponent<Room>().builtBuildings[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots] = choice; 
+            selectedRoom.GetComponent<Room>().emptySlots--;
+        }
+
+        int upgradeIndex = -1;
+        if (choice % 2 == 1)
+        {
+            for (int i = 0; i < roomList.Count; i++)
+            {
+                if (selectedRoom.GetComponent<Room>().builtBuildings[i] == choice - 1)
+                {
+                    selectedRoom.GetComponent<Room>().builtBuildings[i] = choice;
+                    upgradeIndex = i;
+                    break;
+                }
+            }
+        }
+        if (upgradeIndex == -1)
+        {
+            //quit out
         }
         switch (choice)
         {
@@ -120,25 +200,20 @@ public class GameEngine : MonoBehaviour
                 Instantiate(camp1Prefab, selectedRoom.transform.position, Quaternion.identity);
                 break;
             case 3:
-                List<Room> builtBuildingsList = selectedRoom.builtBuildings;
-                int roomIndex = -1;
-                for (int i = 0; i < roomList.Count; i++)
-                {
-                    if (builtBuildingsList[i] == choice - 1)
-                    {
-                        builtBuildingsList[i] = choice;
-                        break;
-                    }
-                }
+                //delete old prefab and instantiate new one
             case 4:
                 Instantiate(mine1Prefab, selectedRoom.transform.position, Quaternion.identity);
                 break;
+            case 5:
+                //delete old prefab and instantiate new one
             case 6:
                 Instantiate(farm1Prefab, selectedRoom.transform.position, Quaternion.identity);
                 break;
+            case 7:
+                //delete old prefab and instantiate new one
+                break;
 
         }
-        selectedRoom.GetComponent<Room>().roomSlots--;
     }
 
     

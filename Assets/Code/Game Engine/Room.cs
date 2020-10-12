@@ -18,6 +18,8 @@ public class Room : MonoBehaviour
     public int roomMushroomIncome;
     public int roomGoldIncome;
     public bool defensePresent; //For if this room has a mercenary camp or if it is a base.
+    public int[] units;
+
     // Start is called before the first frame update
     
     public Room()
@@ -33,6 +35,7 @@ public class Room : MonoBehaviour
         roomSlots = rSlots;
         emptySlots = eSlots;
         builtBuildings = new int[emptySlots];
+        units = new int[2];
     }
 
     // Update is called once per frame

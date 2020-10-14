@@ -76,11 +76,20 @@ public class GameEngine : MonoBehaviour
        //Populates the full list of rooms. 
     }
 
-    public void harvest(int buildingType)
+    public void harvest()
+    {
+        // This function is going to be called when player presses harvest button on the UI,
+        // it simply update the displayed number of mushrooms and gold.
+        goldText.text = player1.goldReserve.ToString();
+        // Debug.Log(player1.goldReserve.ToString());
+        mushroomText.text = player1.mushroomReserve.ToString();
+    }
+
+    public void overtime (int buildingType)
     {
         if (selectedRoom.GetComponent<Room>().roomOwner == currentTurnOwner)
         {
-            switch(buildingType)
+            switch (buildingType)
             {
                 case 2:
                     //double camp value
@@ -138,13 +147,7 @@ public class GameEngine : MonoBehaviour
         {
             //quit out
         }
-        // This function is going to be called when player presses harvest button on the UI,
-        // it simply update the displayed number of mushrooms and gold.
-        goldText.text = player1.goldReserve.ToString();
-        // Debug.Log(player1.goldReserve.ToString());
-        mushroomText.text = player1.mushroomReserve.ToString();
     }
-
     public void SelectRoom()
     {
 

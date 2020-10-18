@@ -22,11 +22,9 @@ public class GameEngine : MonoBehaviour
     public GameObject farm1Prefab; // Farm is 6
 
 
-
     // UI variables
-    public Text goldText;
-    public Text mushroomText;
-    public Text turnText;
+    public string currGold;
+    public string currMushroom;
     public int buildType;
 
     public bool GameIsPause;
@@ -34,7 +32,8 @@ public class GameEngine : MonoBehaviour
     // Update is called every frame
     void Update()
     {
-        
+
+
     }
 
     // Start is called before the first frame update
@@ -76,6 +75,21 @@ public class GameEngine : MonoBehaviour
        //Populates the full list of rooms. 
     }
 
+    public void SelectRoom()
+    {
+
+    }
+
+    public void SelectUnit(GameObject newUnitSelection)
+    {
+        selectedUnit = newUnitSelection;
+    }
+
+    public void MoveUnit()
+    {
+        selectedUnit.transform.position = new Vector3(selectedRoom.transform.position.x, selectedRoom.transform.position.y + 1, selectedRoom.transform.position.z);
+    }
+
     public void harvest()
     {
         // This function is going to be called when player presses harvest button on the UI,
@@ -85,7 +99,7 @@ public class GameEngine : MonoBehaviour
         mushroomText.text = player1.mushroomReserve.ToString();
     }
 
-    public void overtime (int buildingType)
+    public void overtime(int buildingType)
     {
         if (selectedRoom.GetComponent<Room>().roomOwner == currentTurnOwner)
         {
@@ -148,22 +162,6 @@ public class GameEngine : MonoBehaviour
             //quit out
         }
     }
-    public void SelectRoom()
-    {
-
-    }
-
-    public void SelectUnit(GameObject newUnitSelection)
-    {
-        selectedUnit = newUnitSelection;
-    }
-
-    public void MoveUnit()
-    {
-        selectedUnit.transform.position = new Vector3(selectedRoom.transform.position.x, selectedRoom.transform.position.y + 1, selectedRoom.transform.position.z);
-
-    }
-
 
     public void Control()
     {
@@ -208,6 +206,7 @@ public class GameEngine : MonoBehaviour
             }
         }
     }
+
     public void Build(int choice)//The check for if the room can be built should be done in GameEngine.
     {
         print("Build called, choice: "+ choice);

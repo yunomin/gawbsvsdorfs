@@ -62,25 +62,27 @@ public class ButtonManager : MonoBehaviour
     }
     public void BuildMine()
     {
-        buildSelection = 1;
+        buildSelection = 4;
         Build();
     }
     public void BuildFarm()
     {
-        buildSelection = 2;
+        buildSelection = 6;
         Build();
     }
     public void BuildCamp()
     {
-        buildSelection = 3;
+        buildSelection = 2;
         Build();
     }
     public void Build()
     {
+        Debug.Log("build");
         gameEngine.GetComponent<GameEngine>().Build(buildSelection);
     }
     public void MoveUnit()
     {
+        Debug.Log("move");
         gameEngine.GetComponent<GameEngine>().MoveUnit();
     }
 

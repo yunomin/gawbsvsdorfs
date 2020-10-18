@@ -16,6 +16,7 @@ public class GameEngine : MonoBehaviour
     public int turnNumber;
     public GameObject selectedRoom;
     public GameObject selectedUnit;
+    public GameObject towerPrefab;
     //Assign these prefabs in the editor. Reminder: x is num means that choice value relates to that building type.
     public GameObject camp1Prefab; // Camp is 2
     public GameObject mine1Prefab; // Mine is 4
@@ -67,7 +68,7 @@ public class GameEngine : MonoBehaviour
         turnNumber++;
 
         // Change the displayed turn number in UI
-        turnText.text = turnNumber.ToString();
+        //turnText.text = turnNumber.ToString();
     }
 
     void PopulateRoomStart()
@@ -75,31 +76,16 @@ public class GameEngine : MonoBehaviour
        //Populates the full list of rooms. 
     }
 
-    public void SelectRoom()
-    {
-
-    }
-
-    public void SelectUnit(GameObject newUnitSelection)
-    {
-        selectedUnit = newUnitSelection;
-    }
-
-    public void MoveUnit()
-    {
-        selectedUnit.transform.position = new Vector3(selectedRoom.transform.position.x, selectedRoom.transform.position.y + 1, selectedRoom.transform.position.z);
-    }
-
     public void harvest()
     {
         // This function is going to be called when player presses harvest button on the UI,
         // it simply update the displayed number of mushrooms and gold.
-        goldText.text = player1.goldReserve.ToString();
+        //goldText.text = player1.goldReserve.ToString();
         // Debug.Log(player1.goldReserve.ToString());
-        mushroomText.text = player1.mushroomReserve.ToString();
+        //mushroomText.text = player1.mushroomReserve.ToString();
     }
 
-    public void overtime(int buildingType)
+    public void overtime (int buildingType)
     {
         if (selectedRoom.GetComponent<Room>().roomOwner == currentTurnOwner)
         {
@@ -162,6 +148,20 @@ public class GameEngine : MonoBehaviour
             //quit out
         }
     }
+    public void SelectRoom()
+    {
+
+    }
+
+    public void SelectUnit(GameObject newUnitSelection)
+    {
+        selectedUnit = newUnitSelection;
+    }
+
+    public void MoveUnit()
+    {
+        selectedUnit.transform.position = new Vector3(selectedRoom.transform.position.x, selectedRoom.transform.position.y + 1, selectedRoom.transform.position.z);
+    }
 
     public void Control()
     {
@@ -169,9 +169,9 @@ public class GameEngine : MonoBehaviour
         {
             if (selectedRoom.GetComponent<Room>().roomOwner != 1)
             {
-                if (selectedRoom.GetComponent<Room>.units[0] > selectedRoom.GetComponent<Room>.units[1])
+                if (selectedRoom.GetComponent<Room>().units[0] > selectedRoom.GetComponent<Room>().units[1])
                 {
-                    selectedRoom.GetComponent<Room>.roomOwner = 1;
+                    selectedRoom.GetComponent<Room>().roomOwner = 1;
                 }
                 else
                 {
@@ -189,9 +189,9 @@ public class GameEngine : MonoBehaviour
         {
             if (selectedRoom.GetComponent<Room>().roomOwner != -1)
             {
-                if (selectedRoom.GetComponent<Room>.units[1] > selectedRoom.GetComponent<Room>.units[0])
+                if (selectedRoom.GetComponent<Room>().units[1] > selectedRoom.GetComponent<Room>().units[0])
                 {
-                    selectedRoom.GetComponent<Room>.roomOwner = -1;
+                    selectedRoom.GetComponent<Room>().roomOwner = -1;
                 }
                 else
                 {
@@ -206,20 +206,21 @@ public class GameEngine : MonoBehaviour
             }
         }
     }
-
     public void Build(int choice)//The check for if the room can be built should be done in GameEngine.
     {
         print("Build called, choice: "+ choice);
-        print("selectedRoom.GetComponent<Room>().roomSlots: " + selectedRoom.GetComponent<Room>().roomSlots);
+        //print("selectedRoom.GetComponent<Room>().roomSlots: " + selectedRoom.GetComponent<Room>().roomSlots);
         if (choice % 2 == 0 && selectedRoom.GetComponent<Room>().emptySlots <= 0) //if there are not room slots left
         {
             //quit out
             //cannot build here
+            print("cannot build here");
         }
         else { //if there are room slots left
             //add room choice to built room list
             selectedRoom.GetComponent<Room>().builtBuildings[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots] = choice; 
             selectedRoom.GetComponent<Room>().emptySlots--;
+            print("good to build here");
         }
 
         int upgradeIndex = -1;
@@ -239,21 +240,30 @@ public class GameEngine : MonoBehaviour
         {
             //quit out
             //not building of that type to upgrade
+            print("cannot build here");
         }
+        print("before switch");
+        Vector3 buildPos = selectedRoom.transform.position;
         switch (choice)
         {
             case 2:
-                Instantiate(camp1Prefab, selectedRoom.transform.position, Quaternion.identity);
+                print("build camp");
+                buildPos.y = 0.6f;
+                Instantiate(camp1Prefab, buildPos, Quaternion.identity);
                 break;
             case 3:
                 //delete old prefab and instantiate new one
             case 4:
-                Instantiate(mine1Prefab, selectedRoom.transform.position, Quaternion.identity);
+                print("build mine");
+                buildPos.y = 0.6f;
+                Instantiate(mine1Prefab, buildPos, Quaternion.identity);
                 break;
             case 5:
                 //delete old prefab and instantiate new one
             case 6:
-                Instantiate(farm1Prefab, selectedRoom.transform.position, Quaternion.identity);
+                print("build farm");
+                buildPos.y = 0.8f;
+                Instantiate(farm1Prefab, buildPos, Quaternion.identity);
                 break;
             case 7:
                 //delete old prefab and instantiate new one

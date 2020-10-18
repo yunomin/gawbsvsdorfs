@@ -165,7 +165,49 @@ public class GameEngine : MonoBehaviour
     }
 
 
-
+    public void Control()
+    {
+        if (currentTurnOwner == 1)
+        {
+            if (selectedRoom.GetComponent<Room>().roomOwner != 1)
+            {
+                if (selectedRoom.GetComponent<Room>.units[0] > selectedRoom.GetComponent<Room>.units[1])
+                {
+                    selectedRoom.GetComponent<Room>.roomOwner = 1;
+                }
+                else
+                {
+                    //quit out
+                    //can't gain control of this room
+                }
+            }
+            else
+            {
+                //quit out
+                //can't gain control of this room
+            }
+        }
+        else
+        {
+            if (selectedRoom.GetComponent<Room>().roomOwner != -1)
+            {
+                if (selectedRoom.GetComponent<Room>.units[1] > selectedRoom.GetComponent<Room>.units[0])
+                {
+                    selectedRoom.GetComponent<Room>.roomOwner = -1;
+                }
+                else
+                {
+                    //quit out
+                    //can't gain control of this room
+                }
+            }
+            else
+            {
+                //quit out
+                //can't gain control of this room
+            }
+        }
+    }
     public void Build(int choice)//The check for if the room can be built should be done in GameEngine.
     {
         print("Build called, choice: "+ choice);
@@ -173,6 +215,7 @@ public class GameEngine : MonoBehaviour
         if (choice % 2 == 0 && selectedRoom.GetComponent<Room>().emptySlots <= 0) //if there are not room slots left
         {
             //quit out
+            //cannot build here
         }
         else { //if there are room slots left
             //add room choice to built room list
@@ -196,6 +239,7 @@ public class GameEngine : MonoBehaviour
         if (upgradeIndex == -1)
         {
             //quit out
+            //not building of that type to upgrade
         }
         switch (choice)
         {

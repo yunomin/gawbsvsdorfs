@@ -13,7 +13,6 @@ public class GameEngine : MonoBehaviour
     public List<GameObject> roomList;
     public int currentTurnOwner; //Should be set to 1 for player 1 and -1 for player 2
     public int goldPool;
-    public int turnNumber;
     public GameObject selectedRoom;
     public GameObject selectedUnit;
     //Assign these prefabs in the editor. Reminder: x is num means that choice value relates to that building type.
@@ -23,16 +22,20 @@ public class GameEngine : MonoBehaviour
 
 
     // UI variables
-    public string currGold;
-    public string currMushroom;
+    public string currGoldp1;
+    public string currMushroomp1;
+
+    public string currGoldp2;
+    public string currMushroomp2;
     public int buildType;
+    public int turnNumber;
 
     public bool GameIsPause;
+    public bool enableSelection;
 
     // Update is called every frame
     void Update()
     {
-
 
     }
 
@@ -50,6 +53,11 @@ public class GameEngine : MonoBehaviour
 
         GameIsPause = false;
     }
+    private void clearSelection()
+    {
+        selectedRoom = null;
+        selectedUnit = null;
+    }
 
     void ChangeTurn()
     {
@@ -57,17 +65,15 @@ public class GameEngine : MonoBehaviour
         {
             currentTurnOwner *= -1;
             player2.StartTurn();
-
+            clearSelection();
         }
         else
         {
             currentTurnOwner *= -1;
             player1.StartTurn();
+            clearSelection();
         }
         turnNumber++;
-
-        // Change the displayed turn number in UI
-        turnText.text = turnNumber.ToString();
     }
 
     void PopulateRoomStart()
@@ -75,9 +81,9 @@ public class GameEngine : MonoBehaviour
        //Populates the full list of rooms. 
     }
     
-    public void SelectRoom()
+    public void SelectRoom(GameObject newRoomSelection)
     {
-
+        selectedRoom = newRoomSelection;
     }
 
     public void SelectUnit(GameObject newUnitSelection)
@@ -86,12 +92,25 @@ public class GameEngine : MonoBehaviour
     }
 
     // Player actions
-    public void Harvest()
+    public int Harvest()
     {
         // This function is going to be called when player presses harvest button on the UI,
         // it simply update the displayed number of mushrooms and gold.
-        currGold = player1.goldReserve.ToString();
-        currMushroom = player1.mushroomReserve.ToString();
+        if(currentTurnOwner == 1)
+        {
+            currGoldp1 = player1.goldReserve.ToString();
+            currMushroomp1 = player1.mushroomReserve.ToString();
+        }
+        else if(currentTurnOwner == -1)
+        {
+            currGoldp2 = player2.goldReserve.ToString();
+            currMushroomp2 = player2.mushroomReserve.ToString();
+        }
+        else
+        {
+            print("error inside harvest, game engine");
+        }
+        return currentTurnOwner;
     }
 
     public void MoveUnit()

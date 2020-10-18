@@ -5,6 +5,12 @@ using UnityEngine;
 
 public class SelectionEngine : MonoBehaviour
 {
+    /// <summary>
+    /// TODO:
+    /// selected object glow effect
+    /// can not select enemy unity
+    /// 
+    /// </summary>
     public GameObject gameEngine;
     public GameObject selectionLight;
     //public float speed;
@@ -16,6 +22,10 @@ public class SelectionEngine : MonoBehaviour
     public void enableSelect()
     {
         isEnable = true;
+    }
+    public void disableSelect()
+    {
+        isEnable = false;
     }
 
     void Start()
@@ -44,7 +54,7 @@ public class SelectionEngine : MonoBehaviour
                         //float step = speed * Time.deltaTime; //To be used in steps, not implemented.
                         selectionLight.transform.position = new Vector3(hit.collider.transform.position.x, hit.collider.transform.position.y + lightHeight, hit.collider.transform.position.z);
 
-                        gameEngine.GetComponent<GameEngine>().selectedRoom = hit.collider.gameObject; //"Selects" the room
+                        gameEngine.GetComponent<GameEngine>().SelectRoom(hit.collider.gameObject); //"Selects" the room
 
 
                     } // ensure you picked right object

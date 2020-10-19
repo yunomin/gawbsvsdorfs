@@ -7,6 +7,7 @@ public class ButtonManager : MonoBehaviour
 {
 
     /// <summary>
+    /// TODO:
     /// UI flow:
     /// game begin
     ///     enter player 1's turn
@@ -20,19 +21,25 @@ public class ButtonManager : MonoBehaviour
     ///     print out result
     ///
     /// Action flow
-    /// Move 
+    /// Actions start
     ///     clear selection
+    ///     enable selection
+    /// Move 
+    ///     select unit
+    ///     select room
+    ///     test for error
+    ///     in update function: (only allow moving unit, does not hold the thread)
+    ///         if isMove, room selection != null
+    ///             move to selected
+    ///             moved set to true
+    ///             enable end action
     ///     press move
     ///     disable action buttons
     ///     isMove set to true
     ///     moved set to false
     ///     enable unit selection
     ///     enable room selection
-    ///     in update function: (only allow moving unit, does not hold the thread)
-    ///         if isMove, room selection != null
-    ///             move to selected
-    ///             moved set to true
-    ///             enable end action
+    ///     
     ///     press end action 
     ///     
     /// </summary>
@@ -87,16 +94,55 @@ public class ButtonManager : MonoBehaviour
     {
         // if it is player's turn, button glows and enable
         // TODO
+        if (gameEngine.GetComponent<GameEngine>().isTurn)
+        {
+            if (gameEngine.GetComponent<GameEngine>().isAction)
+            {
+                //action
+                harvestButton.GetComponent<Button>().interactable = false;
+                actionStart();
+            }
+            else if (gameEngine.GetComponent<GameEngine>().isEnd)
+            {
+                //end turn
+                harvestButton.GetComponent<Button>().interactable = false;
+                attackButton.GetComponent<Button>().interactable = false;
+                controlButton.GetComponent<Button>().interactable = false;
+                buildButton.GetComponent<Button>().interactable = false;
+                moveButton.GetComponent<Button>().interactable = false;
+                overworkButton.GetComponent<Button>().interactable = false;
+                selectionEngine.GetComponent<SelectionEngine>().disableSelect();
+            }
+            else
+            {
+                //harvest
+                buildSelection = 0;
+                selectionEngine.GetComponent<SelectionEngine>().enableSelect();
+                harvestButton.GetComponent<Button>().interactable = true;
+            }
+        }
+        else
+        {
+            harvestButton.GetComponent<Button>().interactable = false;
 
-        //
+            attackButton.GetComponent<Button>().interactable = false;
+            controlButton.GetComponent<Button>().interactable = false;
+            buildButton.GetComponent<Button>().interactable = false;
+            moveButton.GetComponent<Button>().interactable = false;
+            overworkButton.GetComponent<Button>().interactable = false;
+
+            endTurnButton.GetComponent<Button>().interactable = false;
+        }
 
         turnText.text = gameEngine.GetComponent<GameEngine>().turnNumber.ToString();
     }
-
-    public void initialize()
+    private void actionStart()
     {
-        selectionEngine.GetComponent<SelectionEngine>().enableSelect();
-        harvestButton.GetComponent<Button>().interactable = true;
+        buildButton.GetComponent<Button>().interactable = true;
+        moveButton.GetComponent<Button>().interactable = true;
+        controlButton.GetComponent<Button>().interactable = true;
+        attackButton.GetComponent<Button>().interactable = true;
+        overworkButton.GetComponent<Button>().interactable = true;
     }
     public void Harvest()
     {
@@ -112,16 +158,7 @@ public class ButtonManager : MonoBehaviour
             goldTextp2.text = gameEngine.GetComponent<GameEngine>().currGoldp2;
             mushroomTextp2.text = gameEngine.GetComponent<GameEngine>().currMushroomp2;
         }
-        harvestButton.GetComponent<Button>().interactable = false;
-        actionOne();
-    }
-    private void actionOne()
-    {
-        buildButton.GetComponent<Button>().interactable = true;
-        moveButton.GetComponent<Button>().interactable = true;
-        controlButton.GetComponent<Button>().interactable = true;
-        attackButton.GetComponent<Button>().interactable = true;
-        overworkButton.GetComponent<Button>().interactable = true;
+        
     }
     public void Control()
     {
@@ -152,22 +189,12 @@ public class ButtonManager : MonoBehaviour
     }
     public void Build()
     {
+        // TODO: Upgrade buildings
         gameEngine.GetComponent<GameEngine>().Build(buildSelection);
     }
     public void Move()
     {
         gameEngine.GetComponent<GameEngine>().MoveUnit();
     }
-    private void endActionOne()
-    {
-
-    }
-
-    private void finishTurn()
-    {
-        selectionEngine.GetComponent<SelectionEngine>().disableSelect();
-
-    }
-
   
 }

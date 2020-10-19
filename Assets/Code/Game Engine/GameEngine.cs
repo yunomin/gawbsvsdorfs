@@ -33,6 +33,10 @@ public class GameEngine : MonoBehaviour
     public bool GameIsPause;
     public bool enableSelection;
 
+    public bool isTurn;
+    public bool isAction;
+    public bool isEnd;
+
     // Update is called every frame
     void Update()
     {

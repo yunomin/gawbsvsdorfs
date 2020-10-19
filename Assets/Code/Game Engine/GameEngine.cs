@@ -19,7 +19,7 @@ public class GameEngine : MonoBehaviour
     public GameObject towerPrefab;
     //Assign these prefabs in the editor. Reminder: x is num means that choice value relates to that building type.
     public GameObject camp1Prefab; // Camp is 2
-    public GameObject mine1Prefab; // Mine is 4
+    public GameObject goldMine_mesh; // Mine is 4
     public GameObject farm1Prefab; // Farm is 6
 
 
@@ -214,13 +214,11 @@ public class GameEngine : MonoBehaviour
         {
             //quit out
             //cannot build here
-            print("cannot build here");
         }
         else { //if there are room slots left
             //add room choice to built room list
             selectedRoom.GetComponent<Room>().builtBuildings[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots] = choice; 
             selectedRoom.GetComponent<Room>().emptySlots--;
-            print("good to build here");
         }
 
         int upgradeIndex = -1;
@@ -240,28 +238,23 @@ public class GameEngine : MonoBehaviour
         {
             //quit out
             //not building of that type to upgrade
-            print("cannot build here");
         }
-        print("before switch");
         Vector3 buildPos = selectedRoom.transform.position;
         switch (choice)
         {
             case 2:
-                print("build camp");
                 buildPos.y = 0.6f;
                 Instantiate(camp1Prefab, buildPos, Quaternion.identity);
                 break;
             case 3:
                 //delete old prefab and instantiate new one
             case 4:
-                print("build mine");
                 buildPos.y = 0.6f;
-                Instantiate(mine1Prefab, buildPos, Quaternion.identity);
+                Instantiate(goldMine_mesh, buildPos, Quaternion.identity);
                 break;
             case 5:
                 //delete old prefab and instantiate new one
             case 6:
-                print("build farm");
                 buildPos.y = 0.8f;
                 Instantiate(farm1Prefab, buildPos, Quaternion.identity);
                 break;

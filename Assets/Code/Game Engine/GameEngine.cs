@@ -21,6 +21,7 @@ public class GameEngine : MonoBehaviour
     public GameObject camp1Prefab; // Camp is 2
     public GameObject goldMine_mesh; // Mine is 4
     public GameObject farm1Prefab; // Farm is 6
+    public int numActions;
 
 
     // UI variables
@@ -46,6 +47,7 @@ public class GameEngine : MonoBehaviour
         // This should update to 2 after the turn switches.
         goldPool = 300;
         currentTurnOwner = 1; //Player 1, (remember -1 is player 2)
+        numActions = 2;
         player1.StartTurn();
         PopulateRoomStart();
 
@@ -66,6 +68,7 @@ public class GameEngine : MonoBehaviour
             player1.StartTurn();
         }
         turnNumber++;
+        numActions = 2;
 
         // Change the displayed turn number in UI
         //turnText.text = turnNumber.ToString();
@@ -142,6 +145,11 @@ public class GameEngine : MonoBehaviour
                     }
                     break;
             }
+            numActions--;
+            if (numActions == 0)
+            {
+                this.ChangeTurn();
+            }
         }
         else
         {
@@ -161,6 +169,11 @@ public class GameEngine : MonoBehaviour
     public void MoveUnit()
     {
         selectedUnit.transform.position = new Vector3(selectedRoom.transform.position.x, selectedRoom.transform.position.y + 1, selectedRoom.transform.position.z);
+        numActions--;
+        if (numActions == 0)
+        {
+            this.ChangeTurn();
+        }
     }
 
     public void Control()
@@ -172,6 +185,11 @@ public class GameEngine : MonoBehaviour
                 if (selectedRoom.GetComponent<Room>().units[0] > selectedRoom.GetComponent<Room>().units[1])
                 {
                     selectedRoom.GetComponent<Room>().roomOwner = 1;
+                    numActions--;
+                    if (numActions == 0)
+                    {
+                        this.ChangeTurn();
+                    }
                 }
                 else
                 {
@@ -192,6 +210,11 @@ public class GameEngine : MonoBehaviour
                 if (selectedRoom.GetComponent<Room>().units[1] > selectedRoom.GetComponent<Room>().units[0])
                 {
                     selectedRoom.GetComponent<Room>().roomOwner = -1;
+                    numActions--;
+                    if (numActions == 0)
+                    {
+                        this.ChangeTurn();
+                    }
                 }
                 else
                 {
@@ -261,7 +284,11 @@ public class GameEngine : MonoBehaviour
             case 7:
                 //delete old prefab and instantiate new one
                 break;
-
+        }
+        numActions--;
+        if (numActions == 0)
+        {
+            this.ChangeTurn();
         }
     }
 

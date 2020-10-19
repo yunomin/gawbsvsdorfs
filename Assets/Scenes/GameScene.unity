@@ -3047,11 +3047,11 @@ MonoBehaviour:
   selectedRoom: {fileID: 0}
   selectedUnit: {fileID: 0}
   towerPrefab: {fileID: 0}
-  camp1Prefab: {fileID: 6493278025596383497, guid: d886d580282278c479b8b7f56a7b89e0,
+  camp1Prefab: {fileID: 919132149155446097, guid: 6874e928ad038e5409003e2282b0b7d0,
     type: 3}
-  mine1Prefab: {fileID: 3124530457754912534, guid: ea8ccfc4021ff88469bec3f4b8e88f0c,
+  goldMine_mesh: {fileID: 919132149155446097, guid: 3db02cea08e3a8f488cb3c849ef09fb3,
     type: 3}
-  farm1Prefab: {fileID: 151375044695322953, guid: 9a9458946499ca3449a838d45d63daa9,
+  farm1Prefab: {fileID: 919132149155446097, guid: 310a6aa783fb4224ca21d4ceacfa9362,
     type: 3}
   currGold: 
   currMushroom: 

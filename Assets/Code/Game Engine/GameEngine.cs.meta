@@ -3,7 +3,15 @@ guid: d4c46405c79996142b4ee68afed07a3b
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - player1: {instanceID: 0}
+  - player2: {instanceID: 0}
+  - selectedRoom: {instanceID: 0}
+  - selectedUnit: {instanceID: 0}
+  - towerPrefab: {instanceID: 0}
+  - camp1Prefab: {instanceID: 0}
+  - mine1Prefab: {instanceID: 0}
+  - farm1Prefab: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

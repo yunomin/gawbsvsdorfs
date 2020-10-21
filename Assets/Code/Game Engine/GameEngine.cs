@@ -13,28 +13,85 @@ public class GameEngine : MonoBehaviour
     public List<GameObject> roomList;
     public int currentTurnOwner; //Should be set to 1 for player 1 and -1 for player 2
     public int goldPool;
-    public int turnNumber;
-    public GameObject selectedRoom;
-    public GameObject selectedUnit;
+    private GameObject selectedRoom;
+    private GameObject selectedUnit;
+    private GameObject selectedBuilding;
+    public string lastSelection; // save the tag name of the last selection
+
+    public GameObject towerPrefab;
     //Assign these prefabs in the editor. Reminder: x is num means that choice value relates to that building type.
     public GameObject camp1Prefab; // Camp is 2
-    public GameObject mine1Prefab; // Mine is 4
+    public GameObject goldMine_mesh; // Mine is 4
     public GameObject farm1Prefab; // Farm is 6
-
+    public int numActions;
 
 
     // UI variables
-    public Text goldText;
-    public Text mushroomText;
-    public Text turnText;
+    public string currGoldp1;
+    public string currMushroomp1;
+
+    public string currGoldp2;
+    public string currMushroomp2;
     public int buildType;
+    public int turnNumber;
 
     public bool GameIsPause;
+    public bool enableSelection;
 
-    // Update is called every frame
+    public bool isTurn;
+    public bool isAction;
+    public bool isEnd;
+
+    // selection variables
+    public GameObject selectionLight;
+    public float lightHeight;
+    public bool isEnable;
+
     void Update()
     {
-        
+        // Selection
+        if (isEnable)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //Determines what is clicked
+                if (Physics.Raycast(ray, out hit, 100.0f))
+                {
+                    print("Hit!:" + hit.collider.name);
+                    if (hit.collider.gameObject.CompareTag("room")) //Will detect if hit is on a "room" (via tag)
+                    {
+                        print("clicked on room:" + hit.transform.name);
+                        //TODO: Add code to move light over selected room, slowly (animated)
+                        //float step = speed * Time.deltaTime; //To be used in steps, not implemented.
+                        selectionLight.transform.position = new Vector3(hit.collider.transform.position.x, hit.collider.transform.position.y + lightHeight, hit.collider.transform.position.z);
+
+                        SelectRoom(hit.collider.gameObject); //"Selects" the room
+                        lastSelection = hit.collider.gameObject.tag;
+                    }
+                    else if (hit.collider.gameObject.CompareTag("unit")) //Need to add "if current player";
+                    {
+                        SelectUnit(hit.collider.gameObject);
+                        lastSelection = hit.collider.gameObject.tag;
+                    }
+                    else if (hit.collider.gameObject.CompareTag("building"))
+                    {
+                        SelectBuilding(hit.collider.gameObject);
+                        lastSelection = hit.collider.gameObject.tag;
+                    }
+                }
+
+            }
+        }
+    }
+
+    public void enableSelect()
+    {
+        isEnable = true;
+    }
+    public void disableSelect()
+    {
+        isEnable = false;
     }
 
     // Start is called before the first frame update
@@ -46,29 +103,35 @@ public class GameEngine : MonoBehaviour
         // This should update to 2 after the turn switches.
         goldPool = 300;
         currentTurnOwner = 1; //Player 1, (remember -1 is player 2)
+        numActions = 2;
         player1.StartTurn();
         PopulateRoomStart();
 
         GameIsPause = false;
     }
+    private void clearSelection()
+    {
+        selectedRoom = null;
+        selectedUnit = null;
+    }
 
     void ChangeTurn()
     {
+        print("changing turn");
         if(currentTurnOwner > 0)
         {
             currentTurnOwner *= -1;
             player2.StartTurn();
-
+            clearSelection();
         }
         else
         {
             currentTurnOwner *= -1;
             player1.StartTurn();
+            clearSelection();
         }
-        turnNumber++;
-
-        // Change the displayed turn number in UI
-        turnText.text = turnNumber.ToString();
+        this.turnNumber++;
+        numActions = 2;
     }
 
     void PopulateRoomStart()
@@ -80,49 +143,241 @@ public class GameEngine : MonoBehaviour
     {
         // This function is going to be called when player presses harvest button on the UI,
         // it simply update the displayed number of mushrooms and gold.
-        goldText.text = player1.goldReserve.ToString();
+        //goldText.text = player1.goldReserve.ToString();
         // Debug.Log(player1.goldReserve.ToString());
-        mushroomText.text = player1.mushroomReserve.ToString();
+        //mushroomText.text = player1.mushroomReserve.ToString();
     }
 
-    public void SelectRoom()
+    public void overwork (int buildingType)
     {
-
+        if (selectedRoom.GetComponent<Room>().roomOwner == currentTurnOwner)
+        {
+            switch (buildingType)
+            {
+                case 2:
+                    //double camp value
+                    break;
+                case 3:
+                    //double camp value
+                    break;
+                case 4:
+                    //add 5 gold
+                    if (currentTurnOwner == 1)
+                    {
+                        player1.goldReserve += 5;
+                    }
+                    else
+                    {
+                        player2.goldReserve += 5;
+                    }
+                    break;
+                case 5:
+                    //add 10 gold
+                    if (currentTurnOwner == 1)
+                    {
+                        player1.goldReserve += 10;
+                    }
+                    else
+                    {
+                        player2.goldReserve += 10;
+                    }
+                    break;
+                case 6:
+                    //add 1 mushroom
+                    if (currentTurnOwner == 1)
+                    {
+                        player1.mushroomReserve += 1;
+                    }
+                    else
+                    {
+                        player2.mushroomReserve += 1;
+                    }
+                    break;
+                case 7:
+                    //add 3 mushrooms
+                    if (currentTurnOwner == 1)
+                    {
+                        player1.mushroomReserve += 3;
+                    }
+                    else
+                    {
+                        player2.mushroomReserve += 3;
+                    }
+                    break;
+            }
+            numActions--;
+            if (numActions == 0)
+            {
+                this.ChangeTurn();
+            }
+        }
+        else
+        {
+            //quit out
+        }
+    }
+    
+    private void SelectRoom(GameObject newRoomSelection)
+    {
+        selectedRoom = newRoomSelection;
     }
 
-    public void SelectUnit(GameObject newUnitSelection)
+    private void SelectUnit(GameObject newUnitSelection)
     {
         selectedUnit = newUnitSelection;
+    }
+
+    private void SelectBuilding(GameObject newBuildingSelection)
+    {
+        selectedBuilding = newBuildingSelection;
+    }
+
+    // Player actions
+    public int Harvest()
+    {
+        // This function is going to be called when player presses harvest button on the UI,
+        // it simply update the displayed number of mushrooms and gold.
+        if(currentTurnOwner == 1)
+        {
+            currGoldp1 = player1.goldReserve.ToString();
+            currMushroomp1 = player1.mushroomReserve.ToString();
+        }
+        else if(currentTurnOwner == -1)
+        {
+            currGoldp2 = player2.goldReserve.ToString();
+            currMushroomp2 = player2.mushroomReserve.ToString();
+        }
+        else
+        {
+            print("error inside harvest, game engine");
+        }
+        return currentTurnOwner;
     }
 
     public void MoveUnit()
     {
         selectedUnit.transform.position = new Vector3(selectedRoom.transform.position.x, selectedRoom.transform.position.y + 1, selectedRoom.transform.position.z);
-
+        numActions--;
+        if (numActions == 0)
+        {
+            this.ChangeTurn();
+        }
     }
 
-
-
+    public void Control()
+    {
+        if (currentTurnOwner == 1)
+        {
+            if (selectedRoom.GetComponent<Room>().roomOwner != 1)
+            {
+                if (selectedRoom.GetComponent<Room>().units[0] > selectedRoom.GetComponent<Room>().units[1])
+                {
+                    selectedRoom.GetComponent<Room>().roomOwner = 1;
+                    numActions--;
+                    if (numActions == 0)
+                    {
+                        this.ChangeTurn();
+                    }
+                }
+                else
+                {
+                    //quit out
+                    //can't gain control of this room
+                }
+            }
+            else
+            {
+                //quit out
+                //can't gain control of this room
+            }
+        }
+        else
+        {
+            if (selectedRoom.GetComponent<Room>().roomOwner != -1)
+            {
+                if (selectedRoom.GetComponent<Room>().units[1] > selectedRoom.GetComponent<Room>().units[0])
+                {
+                    selectedRoom.GetComponent<Room>().roomOwner = -1;
+                    numActions--;
+                    if (numActions == 0)
+                    {
+                        this.ChangeTurn();
+                    }
+                }
+                else
+                {
+                    //quit out
+                    //can't gain control of this room
+                }
+            }
+            else
+            {
+                //quit out
+                //can't gain control of this room
+            }
+        }
+    }
     public void Build(int choice)//The check for if the room can be built should be done in GameEngine.
     {
         print("Build called, choice: "+ choice);
-        print("selectedRoom.GetComponent<Room>().roomSlots: " + selectedRoom.GetComponent<Room>().roomSlots);
-        //selectedRoom.GetComponent<Room>().builtBuildings[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots] = choice; //for instance, builtBuildings[0] will be the first assigned
-                                                //as [2 - 2] = 0. Then [2 - 1] = 1, and will be the second assigned.
+        //print("selectedRoom.GetComponent<Room>().roomSlots: " + selectedRoom.GetComponent<Room>().roomSlots);
+        if (choice % 2 == 0 && selectedRoom.GetComponent<Room>().emptySlots <= 0) //if there are not room slots left
+        {
+            //quit out
+            //cannot build here
+        }
+        else { //if there are room slots left
+            //add room choice to built room list
+            selectedRoom.GetComponent<Room>().builtBuildings[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots] = choice; 
+            selectedRoom.GetComponent<Room>().emptySlots--;
+        }
+
+        int upgradeIndex = -1;
+        if (choice % 2 == 1)
+        {
+            for (int i = 0; i < roomList.Count; i++)
+            {
+                if (selectedRoom.GetComponent<Room>().builtBuildings[i] == choice - 1)
+                {
+                    selectedRoom.GetComponent<Room>().builtBuildings[i] = choice;
+                    upgradeIndex = i;
+                    break;
+                }
+            }
+        }
+        if (upgradeIndex == -1)
+        {
+            //quit out
+            //not building of that type to upgrade
+        }
+        Vector3 buildPos = selectedRoom.transform.position;
         switch (choice)
         {
             case 2:
-                Instantiate(camp1Prefab, selectedRoom.transform.position, Quaternion.identity);
+                buildPos.y = 0.6f;
+                Instantiate(camp1Prefab, buildPos, Quaternion.identity);
                 break;
+            case 3:
+                //delete old prefab and instantiate new one
             case 4:
-                Instantiate(mine1Prefab, selectedRoom.transform.position, Quaternion.identity);
+                buildPos.y = 0.6f;
+                Instantiate(goldMine_mesh, buildPos, Quaternion.identity);
                 break;
+            case 5:
+                //delete old prefab and instantiate new one
             case 6:
-                Instantiate(farm1Prefab, selectedRoom.transform.position, Quaternion.identity);
+                buildPos.y = 0.8f;
+                Instantiate(farm1Prefab, buildPos, Quaternion.identity);
                 break;
-
+            case 7:
+                //delete old prefab and instantiate new one
+                break;
         }
-        selectedRoom.GetComponent<Room>().roomSlots--;
+        numActions--;
+        if (numActions == 0)
+        {
+            this.ChangeTurn();
+        }
     }
 
     

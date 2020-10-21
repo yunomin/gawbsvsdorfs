@@ -3887,9 +3887,16 @@ MonoBehaviour:
   roomList: []
   currentTurnOwner: 0
   goldPool: 0
+<<<<<<< HEAD
   lastSelection: 
+  camp1Prefab: {fileID: 6493278025596383497, guid: d886d580282278c479b8b7f56a7b89e0,
+=======
+  turnNumber: 0
+  selectedRoom: {fileID: 0}
+  selectedUnit: {fileID: 0}
   towerPrefab: {fileID: 0}
   camp1Prefab: {fileID: 919132149155446097, guid: 6874e928ad038e5409003e2282b0b7d0,
+>>>>>>> 975275acab45562f8b9abe44a0dcc825386d79be
     type: 3}
   goldMine_mesh: {fileID: 919132149155446097, guid: 3db02cea08e3a8f488cb3c849ef09fb3,
     type: 3}
@@ -3902,7 +3909,6 @@ MonoBehaviour:
   currGold: 
   currMushroom: 
   buildType: 0
-  turnNumber: 0
   GameIsPause: 0
   enableSelection: 0
   isTurn: 0
@@ -6299,19 +6305,11 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1124794990}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1243660717}
-        m_TargetAssemblyTypeName: ButtonManager, Assembly-CSharp
-        m_MethodName: BuildCamp
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: [{m_Target: {fileID: 1243660717}, m_TargetAssemblyTypeName: 'ButtonManager,
+            Assembly-CSharp', m_MethodName: BuildCamp, m_Mode: 1, m_Arguments: {m_ObjectArgument: {
+              fileID: 0}, m_ObjectArgumentAssemblyTypeName: 'UnityEngine.Object, UnityEngine',
+            m_IntArgument: 0, m_FloatArgument: 0, m_StringArgument: '', m_BoolArgument: 0},
+          m_CallState: 2}]
 --- !u!114 &1124794990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6897,11 +6895,15 @@ MonoBehaviour:
   mushroomTextp1: {fileID: 2075246234}
   goldTextp2: {fileID: 1083015598}
   mushroomTextp2: {fileID: 1605087784}
+<<<<<<< HEAD
+  turnText: {fileID: 318667802}
+  upgradePanel: {fileID: 217233389}
+  buildOptionPanel: {fileID: 300945966}
+=======
   turnText: {fileID: 0}
   goldText: {fileID: 0}
   mushroomText: {fileID: 0}
-  upgradePanel: {fileID: 217233389}
-  buildOptionPanel: {fileID: 300945966}
+>>>>>>> 975275acab45562f8b9abe44a0dcc825386d79be
 --- !u!1 &1246719268
 GameObject:
   m_ObjectHideFlags: 0
@@ -7506,11 +7508,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1301576570}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: [{m_Target: {fileID: 1561797860}, m_TargetAssemblyTypeName: 'UnityEngine.GameObject,
-            UnityEngine', m_MethodName: SetActive, m_Mode: 6, m_Arguments: {m_ObjectArgument: {
-              fileID: 0}, m_ObjectArgumentAssemblyTypeName: 'UnityEngine.Object, UnityEngine',
-            m_IntArgument: 0, m_FloatArgument: 0, m_StringArgument: '', m_BoolArgument: 0},
-          m_CallState: 2}]
+      m_Calls:
+      - m_Target: {fileID: 1561797860}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1301576570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8602,19 +8612,11 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1516821548}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1243660717}
-        m_TargetAssemblyTypeName: ButtonManager, Assembly-CSharp
-        m_MethodName: BuildFarm
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: [{m_Target: {fileID: 1243660717}, m_TargetAssemblyTypeName: 'ButtonManager,
+            Assembly-CSharp', m_MethodName: BuildFarm, m_Mode: 1, m_Arguments: {m_ObjectArgument: {
+              fileID: 0}, m_ObjectArgumentAssemblyTypeName: 'UnityEngine.Object, UnityEngine',
+            m_IntArgument: 0, m_FloatArgument: 0, m_StringArgument: '', m_BoolArgument: 0},
+          m_CallState: 2}]
 --- !u!114 &1516821548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12940,19 +12942,11 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2145910689}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1243660717}
-        m_TargetAssemblyTypeName: ButtonManager, Assembly-CSharp
-        m_MethodName: Attack
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: [{m_Target: {fileID: 1243660717}, m_TargetAssemblyTypeName: 'ButtonManager,
+            Assembly-CSharp', m_MethodName: Attack, m_Mode: 1, m_Arguments: {m_ObjectArgument: {
+              fileID: 0}, m_ObjectArgumentAssemblyTypeName: 'UnityEngine.Object, UnityEngine',
+            m_IntArgument: 0, m_FloatArgument: 0, m_StringArgument: '', m_BoolArgument: 0},
+          m_CallState: 2}]
 --- !u!114 &2145910689
 MonoBehaviour:
   m_ObjectHideFlags: 0

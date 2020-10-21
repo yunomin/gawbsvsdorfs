@@ -179,6 +179,8 @@ public class ButtonManager : MonoBehaviour
     }
     public void Overwork()
     {
+        gameEngine.GetComponent<GameEngine>().overwork(4);
+        Harvest();
         print("test");
     }
     public void Upgrade()
@@ -189,17 +191,17 @@ public class ButtonManager : MonoBehaviour
     }
     public void BuildMine()
     {
-        buildSelection = 1;
+        buildSelection = 4;
         Build();
     }
     public void BuildFarm()
     {
-        buildSelection = 2;
+        buildSelection = 6;
         Build();
     }
     public void BuildCamp()
     {
-        buildSelection = 3;
+        buildSelection = 2;
         Build();
     }
     public void BuildClicked()
@@ -225,6 +227,7 @@ public class ButtonManager : MonoBehaviour
     }
     public void Move()
     {
+        Debug.Log("move");
         gameEngine.GetComponent<GameEngine>().MoveUnit();
     }
   

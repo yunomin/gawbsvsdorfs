@@ -124,13 +124,11 @@ public class ButtonManager : MonoBehaviour
         else
         {
             harvestButton.GetComponent<Button>().interactable = false;
-
             attackButton.GetComponent<Button>().interactable = false;
             controlButton.GetComponent<Button>().interactable = false;
             buildButton.GetComponent<Button>().interactable = false;
             moveButton.GetComponent<Button>().interactable = false;
             overworkButton.GetComponent<Button>().interactable = false;
-
             endTurnButton.GetComponent<Button>().interactable = false;
         }
 
@@ -170,6 +168,8 @@ public class ButtonManager : MonoBehaviour
     }
     public void Overwork()
     {
+        gameEngine.GetComponent<GameEngine>().overwork(4);
+        Harvest();
         print("test");
     }
     public void BuildMine()

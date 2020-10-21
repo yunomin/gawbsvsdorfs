@@ -68,6 +68,7 @@ public class GameEngine : MonoBehaviour
 
     void ChangeTurn()
     {
+        print("changing turn");
         if(currentTurnOwner > 0)
         {
             currentTurnOwner *= -1;
@@ -80,7 +81,7 @@ public class GameEngine : MonoBehaviour
             player1.StartTurn();
             clearSelection();
         }
-        turnNumber++;
+        this.turnNumber++;
         numActions = 2;
     }
 
@@ -98,7 +99,7 @@ public class GameEngine : MonoBehaviour
         //mushroomText.text = player1.mushroomReserve.ToString();
     }
 
-    public void overtime (int buildingType)
+    public void overwork (int buildingType)
     {
         if (selectedRoom.GetComponent<Room>().roomOwner == currentTurnOwner)
         {

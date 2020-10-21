@@ -40,7 +40,18 @@ public class ButtonManager : MonoBehaviour
     ///     enable unit selection
     ///     enable room selection
     ///     
-    ///     press end action 
+    /// inbetween selection
+    ///     clear selection(all)
+    ///     
+    /// Build
+    ///     select room, select building
+    ///     if last selection is building
+    ///         upgrade menu shows up and build 
+    ///     if last selection is room 
+    ///         build menu shows up
+    ///     in the end of upgrade and build , close two menus
+    ///     
+    /// press end action 
     ///     
     /// </summary>
 
@@ -72,6 +83,10 @@ public class ButtonManager : MonoBehaviour
     public Text mushroomTextp2;
     public Text turnText;
 
+    // panel
+    public GameObject upgradePanel;
+    public GameObject buildOptionPanel;
+
     // UI variable
     private int buildSelection;
 
@@ -82,61 +97,55 @@ public class ButtonManager : MonoBehaviour
         buildSelection = 0;
 
         harvestButton.GetComponent<Button>().interactable = false;
-        attackButton.GetComponent<Button>().interactable = false;
-        controlButton.GetComponent<Button>().interactable = false;
-        buildButton.GetComponent<Button>().interactable = false;
-        moveButton.GetComponent<Button>().interactable = false;
-        overworkButton.GetComponent<Button>().interactable = false;
+        actionOff();
+        endTurnButton.GetComponent<Button>().interactable = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // if it is player's turn, button glows and enable
-        // TODO
+        // Button enable and disable (ok I ve been changing ways of doing this but I am sure this code below is final!)
         if (gameEngine.GetComponent<GameEngine>().isTurn)
         {
             if (gameEngine.GetComponent<GameEngine>().isAction)
             {
                 //action
+                gameEngine.GetComponent<GameEngine>().enableSelect();
                 harvestButton.GetComponent<Button>().interactable = false;
-                actionStart();
+                actionOn();
             }
             else if (gameEngine.GetComponent<GameEngine>().isEnd)
             {
                 //end turn
-                harvestButton.GetComponent<Button>().interactable = false;
-                attackButton.GetComponent<Button>().interactable = false;
-                controlButton.GetComponent<Button>().interactable = false;
-                buildButton.GetComponent<Button>().interactable = false;
-                moveButton.GetComponent<Button>().interactable = false;
-                overworkButton.GetComponent<Button>().interactable = false;
-                selectionEngine.GetComponent<SelectionEngine>().disableSelect();
+                actionOff();
+                gameEngine.GetComponent<GameEngine>().disableSelect();
             }
             else
             {
                 //harvest
                 buildSelection = 0;
-                selectionEngine.GetComponent<SelectionEngine>().enableSelect();
                 harvestButton.GetComponent<Button>().interactable = true;
             }
         }
         else
         {
             harvestButton.GetComponent<Button>().interactable = false;
-
-            attackButton.GetComponent<Button>().interactable = false;
-            controlButton.GetComponent<Button>().interactable = false;
-            buildButton.GetComponent<Button>().interactable = false;
-            moveButton.GetComponent<Button>().interactable = false;
-            overworkButton.GetComponent<Button>().interactable = false;
-
+            actionOff();
             endTurnButton.GetComponent<Button>().interactable = false;
         }
 
+        // change 
         turnText.text = gameEngine.GetComponent<GameEngine>().turnNumber.ToString();
     }
-    private void actionStart()
+    private void actionOff()
+    {
+        attackButton.GetComponent<Button>().interactable = false;
+        controlButton.GetComponent<Button>().interactable = false;
+        buildButton.GetComponent<Button>().interactable = false;
+        moveButton.GetComponent<Button>().interactable = false;
+        overworkButton.GetComponent<Button>().interactable = false;
+    }
+    private void actionOn()
     {
         buildButton.GetComponent<Button>().interactable = true;
         moveButton.GetComponent<Button>().interactable = true;
@@ -172,6 +181,12 @@ public class ButtonManager : MonoBehaviour
     {
         print("test");
     }
+    public void Upgrade()
+    {
+        // need to call upgrade method in GE
+
+        upgradePanel.SetActive(false);
+    }
     public void BuildMine()
     {
         buildSelection = 1;
@@ -187,10 +202,26 @@ public class ButtonManager : MonoBehaviour
         buildSelection = 3;
         Build();
     }
+    public void BuildClicked()
+    {
+        if (gameEngine.GetComponent<GameEngine>().lastSelection.Equals("room"))
+        {
+            buildOptionPanel.SetActive(true);
+        }
+        else if (gameEngine.GetComponent<GameEngine>().lastSelection.Equals("building"))
+        {
+            upgradePanel.SetActive(true);
+        }
+        else
+        {
+            // print error saying no selection room or building
+        }
+    }
     public void Build()
     {
         // TODO: Upgrade buildings
         gameEngine.GetComponent<GameEngine>().Build(buildSelection);
+        buildOptionPanel.SetActive(false);
     }
     public void Move()
     {

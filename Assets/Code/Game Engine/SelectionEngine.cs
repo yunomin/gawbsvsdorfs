@@ -54,14 +54,17 @@ public class SelectionEngine : MonoBehaviour
                         //float step = speed * Time.deltaTime; //To be used in steps, not implemented.
                         selectionLight.transform.position = new Vector3(hit.collider.transform.position.x, hit.collider.transform.position.y + lightHeight, hit.collider.transform.position.z);
 
-                        gameEngine.GetComponent<GameEngine>().SelectRoom(hit.collider.gameObject); //"Selects" the room
+                        //gameEngine.GetComponent<GameEngine>().SelectRoom(hit.collider.gameObject); //"Selects" the room
 
 
                     } // ensure you picked right object
                     else if (hit.collider.gameObject.CompareTag("unit")) //Need to add "if current player";
                     {
-                        print("Clicked on a unit");
-                        gameEngine.GetComponent<GameEngine>().SelectUnit(hit.collider.gameObject);
+                        //gameEngine.GetComponent<GameEngine>().SelectUnit(hit.collider.gameObject);
+                    }
+                    else if (hit.collider.gameObject.CompareTag("building"))
+                    {
+                        //gameEngine.GetComponent<GameEngine>().SelectBuilding(hit.collider.gameObject);
                     }
                 }
 

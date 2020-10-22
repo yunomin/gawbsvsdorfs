@@ -6,6 +6,7 @@ TagManager:
   tags:
   - room
   - unit
+  - building
   layers:
   - Default
   - TransparentFX

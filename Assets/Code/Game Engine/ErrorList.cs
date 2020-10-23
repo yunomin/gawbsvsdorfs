@@ -8,6 +8,7 @@ public class ErrorList : MonoBehaviour
     public string[] buildError;
     public string[] moveError;
     public string[] selectionError;
+    public string[] attackError;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +36,9 @@ public class ErrorList : MonoBehaviour
         moveError[0] = "Unit not selected";
         moveError[1] = "Room not selected";
         moveError[2] = "Unable to move to destination";
+
+        attackError = new string[10];
+        attackError[0] = "Room not selected";
 
     }
 }

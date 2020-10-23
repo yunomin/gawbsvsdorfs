@@ -13,7 +13,7 @@ public class GameEngine : MonoBehaviour
     public List<GameObject> roomList;
     public int currentTurnOwner; //Should be set to 1 for player 1 and -1 for player 2
     public int goldPool;
-    private GameObject selectedRoom;
+    private GameObject selectedRoom; // this are not assigned to actual rooms 
     private GameObject selectedUnit;
     private GameObject selectedBuilding;
     public string lastSelection; // save the tag name of the last selection
@@ -108,6 +108,9 @@ public class GameEngine : MonoBehaviour
         PopulateRoomStart();
 
         GameIsPause = false;
+
+        // testing code
+        isTurn = true;
     }
     private void clearSelection()
     {
@@ -139,17 +142,10 @@ public class GameEngine : MonoBehaviour
        //Populates the full list of rooms. 
     }
 
-    public void harvest()
-    {
-        // This function is going to be called when player presses harvest button on the UI,
-        // it simply update the displayed number of mushrooms and gold.
-        //goldText.text = player1.goldReserve.ToString();
-        // Debug.Log(player1.goldReserve.ToString());
-        //mushroomText.text = player1.mushroomReserve.ToString();
-    }
-
     public void overwork (int buildingType)
     {
+
+        // shouldn't be needing arguments
         if (selectedRoom.GetComponent<Room>().roomOwner == currentTurnOwner)
         {
             switch (buildingType)
@@ -251,6 +247,7 @@ public class GameEngine : MonoBehaviour
         {
             print("error inside harvest, game engine");
         }
+        isAction = true;
         return currentTurnOwner;
     }
 
@@ -317,6 +314,11 @@ public class GameEngine : MonoBehaviour
             }
         }
     }
+    public void Upgrade()
+    {
+        // TODO get information of the selected 
+        //Build();
+    }
     public void Build(int choice)//The check for if the room can be built should be done in GameEngine.
     {
         print("Build called, choice: "+ choice);
@@ -378,6 +380,44 @@ public class GameEngine : MonoBehaviour
         {
             this.ChangeTurn();
         }
+    }
+
+    public void Attack()
+    {
+        if(selectedRoom == null) // check for room selection
+        {
+            print("error, no room selected");
+            return;
+        }
+        int attacker;
+        int defender;
+
+        int aUnit;
+        int dUnit;
+
+        int aDies = 0;
+        int dDies = 0;
+
+        int removedUnit = 0;
+
+
+        attacker = currentTurnOwner;
+        defender = 0 - attacker;
+
+        if(attacker == 1)
+        {
+            // attacker is player 1
+            //aUnit = selectedRoom.units[0];
+            //dUnit = selectedRoom.units[1];
+        }
+        else
+        {
+            // attacker is player 2
+            //aUnit = selectedRoom.units[1];
+            //dUnit = selectedRoom.units[0];
+        }
+
+        // check for adjecent clearing
     }
 
     

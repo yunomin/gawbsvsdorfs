@@ -142,65 +142,70 @@ public class GameEngine : MonoBehaviour
        //Populates the full list of rooms. 
     }
 
-    public void overwork (int buildingType)
+    public void overwork ()
     {
 
         // shouldn't be needing arguments
         if (selectedRoom.GetComponent<Room>().roomOwner == currentTurnOwner)
         {
-            switch (buildingType)
+            int[] roomBuildings = selectedRoom.GetComponent<Room>().builtBuildings;
+            foreach (int building in roomBuildings)
             {
-                case 2:
-                    //double camp value
-                    break;
-                case 3:
-                    //double camp value
-                    break;
-                case 4:
-                    //add 5 gold
-                    if (currentTurnOwner == 1)
-                    {
-                        player1.goldReserve += 5;
-                    }
-                    else
-                    {
-                        player2.goldReserve += 5;
-                    }
-                    break;
-                case 5:
-                    //add 10 gold
-                    if (currentTurnOwner == 1)
-                    {
-                        player1.goldReserve += 10;
-                    }
-                    else
-                    {
-                        player2.goldReserve += 10;
-                    }
-                    break;
-                case 6:
-                    //add 1 mushroom
-                    if (currentTurnOwner == 1)
-                    {
-                        player1.mushroomReserve += 1;
-                    }
-                    else
-                    {
-                        player2.mushroomReserve += 1;
-                    }
-                    break;
-                case 7:
-                    //add 3 mushrooms
-                    if (currentTurnOwner == 1)
-                    {
-                        player1.mushroomReserve += 3;
-                    }
-                    else
-                    {
-                        player2.mushroomReserve += 3;
-                    }
-                    break;
+                switch (building)
+                {
+                    case 2:
+                        //double camp value
+                        break;
+                    case 3:
+                        //double camp value
+                        break;
+                    case 4:
+                        //add 5 gold
+                        if (currentTurnOwner == 1)
+                        {
+                            player1.goldReserve += 5;
+                        }
+                        else
+                        {
+                            player2.goldReserve += 5;
+                        }
+                        break;
+                    case 5:
+                        //add 10 gold
+                        if (currentTurnOwner == 1)
+                        {
+                            player1.goldReserve += 10;
+                        }
+                        else
+                        {
+                            player2.goldReserve += 10;
+                        }
+                        break;
+                    case 6:
+                        //add 1 mushroom
+                        if (currentTurnOwner == 1)
+                        {
+                            player1.mushroomReserve += 1;
+                        }
+                        else
+                        {
+                            player2.mushroomReserve += 1;
+                        }
+                        break;
+                    case 7:
+                        //add 3 mushrooms
+                        if (currentTurnOwner == 1)
+                        {
+                            player1.mushroomReserve += 3;
+                        }
+                        else
+                        {
+                            player2.mushroomReserve += 3;
+                        }
+                        break;
+                }
             }
+            
             numActions--;
             if (numActions == 0)
             {
@@ -321,18 +326,55 @@ public class GameEngine : MonoBehaviour
     }
     public int Build(int choice)//The check for if the room can be built should be done in GameEngine.
     {
+        //a player can build in a room if there are slots left, they control the room, and they have at least unit in the room
         print("Build called, choice: "+ choice);
         //print("selectedRoom.GetComponent<Room>().roomSlots: " + selectedRoom.GetComponent<Room>().roomSlots);
-        if (choice % 2 == 0 && selectedRoom.GetComponent<Room>().emptySlots <= 0) //if there are not room slots left
-        {
-            //quit out
-            //cannot build here
-            return 0;
-        }
-        else if (choice % 2 == 0) { //if there are room slots left
-            //add room choice to built room list
-            selectedRoom.GetComponent<Room>().builtBuildings[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots] = choice; 
-            selectedRoom.GetComponent<Room>().emptySlots--;
+        Vector3 buildPos;
+        if (choice % 2 == 0) { //if action is build
+            if (selectedRoom.GetComponent<Room>().emptySlots <= 0 || selectedRoom.GetComponent<Room>().roomOwner != currentTurnOwner)
+            { //no slots left or does not own room
+                //quit out
+                //cannot build here
+                return 0;
+            }
+            else if (currentTurnOwner == 1 && selectedRoom.GetComponent<Room>().units[0] < 1) //player has no units in room
+            {
+                //quit out
+                //cannot build here
+                return 0;
+            }
+            else if (currentTurnOwner == -1 && selectedRoom.GetComponent<Room>().units[1] < 1) //player has no units in room
+            {
+                //quit out
+                //cannot build here
+                return 0;
+            }
+            else //build conditions are met
+            {
+                //add room choice to built room list
+                selectedRoom.GetComponent<Room>().builtBuildings[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots] = choice;
+                buildPos = selectedRoom.GetComponent<Room>().buildingPlacementSlots[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots].transform.position;
+                switch (choice)
+                {
+                    case 2:
+                        buildPos.y = 0.6f;
+                        buildPos.x += 0.6f;
+                        Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots]);
+                        selectedRoom.GetComponent<Room>().buildingPlacementSlots[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots] = Instantiate(camp1Prefab, buildPos, Quaternion.identity);
+                        break;
+                    case 4:
+                        buildPos.y = 0.6f;
+                        Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots]);
+                        selectedRoom.GetComponent<Room>().buildingPlacementSlots[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots] = Instantiate(goldMine_mesh, buildPos, Quaternion.identity);
+                        break;
+                    case 6:
+                        buildPos.y = 0.8f;
+                        Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots]);
+                        selectedRoom.GetComponent<Room>().buildingPlacementSlots[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots] = Instantiate(farm1Prefab, buildPos, Quaternion.identity);
+                        break;
+                }
+                selectedRoom.GetComponent<Room>().emptySlots--; 
+            }
         }
 
         int upgradeIndex = -1;
@@ -355,25 +397,14 @@ public class GameEngine : MonoBehaviour
             }
         }
         
-        Vector3 buildPos = selectedRoom.transform.position;
+        buildPos = selectedRoom.transform.position;
         switch (choice)
         {
-            case 2:
-                buildPos.y = 0.6f;
-                buildPos.x += 0.6f;
-                Instantiate(camp1Prefab, buildPos, Quaternion.identity);
-                break;
             case 3:
                 //delete old prefab and instantiate new one
-            case 4:
-                buildPos.y = 0.6f;
-                Instantiate(goldMine_mesh, buildPos, Quaternion.identity);
                 break;
             case 5:
                 //delete old prefab and instantiate new one
-            case 6:
-                buildPos.y = 0.8f;
-                Instantiate(farm1Prefab, buildPos, Quaternion.identity);
                 break;
             case 7:
                 //delete old prefab and instantiate new one

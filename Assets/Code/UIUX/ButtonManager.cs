@@ -206,6 +206,7 @@ public class ButtonManager : MonoBehaviour
     }
     public void BuildClicked()
     {
+        print("button Clicked build" + gameEngine.GetComponent<GameEngine>().lastSelection.Equals("room"));
         if (gameEngine.GetComponent<GameEngine>().lastSelection.Equals("room"))
         {
             buildOptionPanel.SetActive(true);

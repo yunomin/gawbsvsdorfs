@@ -145,7 +145,6 @@ public class GameEngine : MonoBehaviour
     public void overwork ()
     {
 
-        // shouldn't be needing arguments
         if (selectedRoom.GetComponent<Room>().roomOwner == currentTurnOwner)
         {
             int[] roomBuildings = selectedRoom.GetComponent<Room>().builtBuildings;
@@ -215,6 +214,7 @@ public class GameEngine : MonoBehaviour
         else
         {
             //quit out
+            return 0;
         }
     }
     
@@ -361,7 +361,9 @@ public class GameEngine : MonoBehaviour
                 break;
             case 7:
                 buildPos = selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex].transform.position;
+                System.Threading.Thread.Sleep(50);
                 Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex]);
+                System.Threading.Thread.Sleep(50);
                 selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex] = Instantiate(farm1Prefab, buildPos, Quaternion.identity);
                 //delete old prefab and instantiate new one
                 break;

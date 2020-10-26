@@ -61,7 +61,7 @@ public class GameEngine : MonoBehaviour
                     print("Hit!:" + hit.collider.name);
                     if (hit.collider.gameObject.CompareTag("room")) //Will detect if hit is on a "room" (via tag)
                     {
-                        print("clicked on room:" + hit.transform.name);
+                        //print("clicked on room:" + hit.transform.name);
                         //TODO: Add code to move light over selected room, slowly (animated)
                         //float step = speed * Time.deltaTime; //To be used in steps, not implemented.
                         selectionLight.transform.position = new Vector3(hit.collider.transform.position.x, hit.collider.transform.position.y + lightHeight, hit.collider.transform.position.z);
@@ -269,7 +269,7 @@ public class GameEngine : MonoBehaviour
             {
                 if (selectedRoom.GetComponent<Room>().units[0] > selectedRoom.GetComponent<Room>().units[1])
                 {
-                    selectedRoom.GetComponent<Room>().roomOwner = 1;
+                    selectedRoom.GetComponent<Room>().ChangeOwner(1);
                     numActions--;
                     if (numActions == 0)
                     {
@@ -294,7 +294,7 @@ public class GameEngine : MonoBehaviour
             {
                 if (selectedRoom.GetComponent<Room>().units[1] > selectedRoom.GetComponent<Room>().units[0])
                 {
-                    selectedRoom.GetComponent<Room>().roomOwner = -1;
+                    selectedRoom.GetComponent<Room>().ChangeOwner(-1);
                     numActions--;
                     if (numActions == 0)
                     {
@@ -319,7 +319,7 @@ public class GameEngine : MonoBehaviour
         // TODO get information of the selected 
         //Build();
     }
-    public void Build(int choice)//The check for if the room can be built should be done in GameEngine.
+    public int Build(int choice)//The check for if the room can be built should be done in GameEngine.
     {
         print("Build called, choice: "+ choice);
         //print("selectedRoom.GetComponent<Room>().roomSlots: " + selectedRoom.GetComponent<Room>().roomSlots);
@@ -327,8 +327,9 @@ public class GameEngine : MonoBehaviour
         {
             //quit out
             //cannot build here
+            return 0;
         }
-        else { //if there are room slots left
+        else if (choice % 2 == 0) { //if there are room slots left
             //add room choice to built room list
             selectedRoom.GetComponent<Room>().builtBuildings[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots] = choice; 
             selectedRoom.GetComponent<Room>().emptySlots--;
@@ -346,17 +347,20 @@ public class GameEngine : MonoBehaviour
                     break;
                 }
             }
+            if (upgradeIndex == -1)
+            {
+                //quit out
+                //not building of that type to upgrade
+                return 0;
+            }
         }
-        if (upgradeIndex == -1)
-        {
-            //quit out
-            //not building of that type to upgrade
-        }
+        
         Vector3 buildPos = selectedRoom.transform.position;
         switch (choice)
         {
             case 2:
                 buildPos.y = 0.6f;
+                buildPos.x += 0.6f;
                 Instantiate(camp1Prefab, buildPos, Quaternion.identity);
                 break;
             case 3:
@@ -380,6 +384,7 @@ public class GameEngine : MonoBehaviour
         {
             this.ChangeTurn();
         }
+        return 0;
     }
 
     public void Attack()

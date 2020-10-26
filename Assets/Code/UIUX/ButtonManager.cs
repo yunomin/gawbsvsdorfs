@@ -157,6 +157,8 @@ public class ButtonManager : MonoBehaviour
     {
         int turnOwner = gameEngine.GetComponent<GameEngine>().Harvest(); // information updated inside game engine returned the turn owner
 
+        gameEngine.GetComponent<GameEngine>().Harvest();
+
         if (turnOwner == 1)
         {
             goldTextp1.text = gameEngine.GetComponent<GameEngine>().currGoldp1;
@@ -167,7 +169,7 @@ public class ButtonManager : MonoBehaviour
             goldTextp2.text = gameEngine.GetComponent<GameEngine>().currGoldp2;
             mushroomTextp2.text = gameEngine.GetComponent<GameEngine>().currMushroomp2;
         }
-        gameEngine.GetComponent<GameEngine>().Harvest();
+        
     }
     public void Control()
     {
@@ -179,7 +181,7 @@ public class ButtonManager : MonoBehaviour
     }
     public void Overwork()
     {
-        gameEngine.GetComponent<GameEngine>().overwork(4);
+        gameEngine.GetComponent<GameEngine>().overwork();
         Harvest();
         print("test");
     }

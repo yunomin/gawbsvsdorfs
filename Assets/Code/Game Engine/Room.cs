@@ -12,6 +12,7 @@ public class Room : MonoBehaviour
     public int[] roomID;
     public int roomSlots;
     public int emptySlots;
+    public List<GameObject> buildingPlacementSlots;
     public int[] builtBuildings; //0 = no building | 1 = Home Base | 2 = Camp | 3 = Upg. Camp |
                                  //4 = Gold Mine   | 5 = Upg. Mine | 6 = Farm | 7 = Upg. Farm|
    

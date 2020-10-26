@@ -2862,7 +2862,7 @@ GameObject:
   - component: {fileID: 530087848}
   - component: {fileID: 530087847}
   m_Layer: 5
-  m_Name: PlayerImage
+  m_Name: P2Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2937,7 +2937,7 @@ GameObject:
   - component: {fileID: 545056849}
   - component: {fileID: 545056848}
   m_Layer: 5
-  m_Name: EnemyInfo
+  m_Name: P1Info
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4627,6 +4627,7 @@ MonoBehaviour:
   roomID: 
   roomSlots: 0
   emptySlots: 0
+  buildingPlacementSlots: []
   builtBuildings: 
   roomMushroomIncome: 0
   roomGoldIncome: 0
@@ -5014,7 +5015,7 @@ GameObject:
   - component: {fileID: 1008015491}
   - component: {fileID: 1008015490}
   m_Layer: 5
-  m_Name: EnemyImage
+  m_Name: P1Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5643,7 +5644,7 @@ GameObject:
   - component: {fileID: 1083015597}
   - component: {fileID: 1083015598}
   m_Layer: 5
-  m_Name: GoldNumber
+  m_Name: P1GoldNumber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6749,6 +6750,8 @@ MonoBehaviour:
   roomID: 
   roomSlots: 1
   emptySlots: 1
+  buildingPlacementSlots:
+  - {fileID: 485399184}
   builtBuildings: 00000000
   roomMushroomIncome: 0
   roomGoldIncome: 0
@@ -6812,10 +6815,10 @@ MonoBehaviour:
   Mine: {fileID: 444203348}
   Farm: {fileID: 1516821547}
   Camp: {fileID: 1124794989}
-  goldTextp1: {fileID: 2060799115}
+  goldTextp1: {fileID: 1083015598}
   mushroomTextp1: {fileID: 2075246234}
-  goldTextp2: {fileID: 1083015598}
-  mushroomTextp2: {fileID: 1605087784}
+  goldTextp2: {fileID: 2060799115}
+  mushroomTextp2: {fileID: 2075246234}
   turnText: {fileID: 318667802}
   upgradePanel: {fileID: 217233389}
   buildOptionPanel: {fileID: 300945966}
@@ -6941,6 +6944,9 @@ MonoBehaviour:
   roomID: 
   roomSlots: 2
   emptySlots: 2
+  buildingPlacementSlots:
+  - {fileID: 1740357555}
+  - {fileID: 1878210393}
   builtBuildings: 0000000000000000
   roomMushroomIncome: 0
   roomGoldIncome: 0
@@ -7804,7 +7810,7 @@ GameObject:
   - component: {fileID: 1337910040}
   - component: {fileID: 1337910039}
   m_Layer: 5
-  m_Name: PlayerInfo
+  m_Name: P2Info
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8532,6 +8538,9 @@ MonoBehaviour:
   roomID: 
   roomSlots: 2
   emptySlots: 2
+  buildingPlacementSlots:
+  - {fileID: 1036111679}
+  - {fileID: 1316189074}
   builtBuildings: 0000000000000000
   roomMushroomIncome: 0
   roomGoldIncome: 0
@@ -9187,6 +9196,9 @@ MonoBehaviour:
   roomID: 
   roomSlots: 2
   emptySlots: 2
+  buildingPlacementSlots:
+  - {fileID: 1037977376}
+  - {fileID: 917453461}
   builtBuildings: 0000000000000000
   roomMushroomIncome: 0
   roomGoldIncome: 0
@@ -9319,6 +9331,8 @@ MonoBehaviour:
   roomID: 
   roomSlots: 1
   emptySlots: 1
+  buildingPlacementSlots:
+  - {fileID: 1694218748}
   builtBuildings: 00000000
   roomMushroomIncome: 0
   roomGoldIncome: 0
@@ -9627,7 +9641,7 @@ GameObject:
   - component: {fileID: 1605087783}
   - component: {fileID: 1605087784}
   m_Layer: 5
-  m_Name: MushroomNumber
+  m_Name: P1MushroomNumber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10008,6 +10022,9 @@ MonoBehaviour:
   roomID: 
   roomSlots: 2
   emptySlots: 2
+  buildingPlacementSlots:
+  - {fileID: 377387408}
+  - {fileID: 2118236228}
   builtBuildings: 0000000000000000
   roomMushroomIncome: 0
   roomGoldIncome: 0
@@ -10964,6 +10981,8 @@ MonoBehaviour:
   roomID: 
   roomSlots: 1
   emptySlots: 1
+  buildingPlacementSlots:
+  - {fileID: 616825034}
   builtBuildings: 00000000
   roomMushroomIncome: 0
   roomGoldIncome: 0
@@ -11301,6 +11320,8 @@ MonoBehaviour:
   roomID: 
   roomSlots: 1
   emptySlots: 1
+  buildingPlacementSlots:
+  - {fileID: 103722009}
   builtBuildings: 00000000
   roomMushroomIncome: 0
   roomGoldIncome: 0
@@ -11957,6 +11978,8 @@ MonoBehaviour:
   roomID: 
   roomSlots: 1
   emptySlots: 1
+  buildingPlacementSlots:
+  - {fileID: 1656344396}
   builtBuildings: 00000000
   roomMushroomIncome: 0
   roomGoldIncome: 0
@@ -12072,7 +12095,7 @@ GameObject:
   - component: {fileID: 2060799116}
   - component: {fileID: 2060799115}
   m_Layer: 5
-  m_Name: GoldNumber
+  m_Name: P2GoldNumber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12153,7 +12176,7 @@ GameObject:
   - component: {fileID: 2075246235}
   - component: {fileID: 2075246234}
   m_Layer: 5
-  m_Name: MushroomNumber
+  m_Name: P2MushroomNumber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12540,6 +12563,7 @@ MonoBehaviour:
   roomID: 
   roomSlots: 0
   emptySlots: 0
+  buildingPlacementSlots: []
   builtBuildings: 
   roomMushroomIncome: 0
   roomGoldIncome: 0

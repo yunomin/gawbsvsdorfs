@@ -319,10 +319,59 @@ public class GameEngine : MonoBehaviour
             }
         }
     }
-    public void Upgrade()
+    public int Upgrade(int choice)
     {
         // TODO get information of the selected 
         //Build();
+        Vector3 buildPos;
+        int upgradeIndex = -1;
+        if (choice % 2 == 1)
+        {
+            for (int i = 0; i < roomList.Count; i++)
+            {
+                if (selectedRoom.GetComponent<Room>().builtBuildings[i] == choice - 1)
+                {
+                    selectedRoom.GetComponent<Room>().builtBuildings[i] = choice;
+                    upgradeIndex = i;
+                    break;
+                }
+            }
+            if (upgradeIndex == -1)
+            {
+                //quit out
+                //not building of that type to upgrade
+                return 0;
+            }
+        }
+
+        selectedRoom.GetComponent<Room>().builtBuildings[upgradeIndex] = choice;
+        switch (choice)
+        {
+            case 3:
+                //delete old prefab and instantiate new one
+                buildPos = selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex].transform.position;
+                Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex]);
+                selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex] = Instantiate(camp1Prefab, buildPos, Quaternion.identity);
+                break;
+            case 5:
+                //delete old prefab and instantiate new one
+                buildPos = selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex].transform.position;
+                Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex]);
+                selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex] = Instantiate(goldMine_mesh, buildPos, Quaternion.identity);
+                break;
+            case 7:
+                buildPos = selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex].transform.position;
+                Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex]);
+                selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex] = Instantiate(farm1Prefab, buildPos, Quaternion.identity);
+                //delete old prefab and instantiate new one
+                break;
+        }
+        numActions--;
+        if (numActions == 0)
+        {
+            this.ChangeTurn();
+        }
+        return 0;
     }
     public int Build(int choice)//The check for if the room can be built should be done in GameEngine.
     {
@@ -371,49 +420,11 @@ public class GameEngine : MonoBehaviour
                         buildPos.y = 0.8f;
                         Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots]);
                         selectedRoom.GetComponent<Room>().buildingPlacementSlots[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots] = Instantiate(farm1Prefab, buildPos, Quaternion.identity);
+                        Upgrade(7);
                         break;
                 }
                 selectedRoom.GetComponent<Room>().emptySlots--; 
             }
-        }
-
-        int upgradeIndex = -1;
-        if (choice % 2 == 1)
-        {
-            for (int i = 0; i < roomList.Count; i++)
-            {
-                if (selectedRoom.GetComponent<Room>().builtBuildings[i] == choice - 1)
-                {
-                    selectedRoom.GetComponent<Room>().builtBuildings[i] = choice;
-                    upgradeIndex = i;
-                    break;
-                }
-            }
-            if (upgradeIndex == -1)
-            {
-                //quit out
-                //not building of that type to upgrade
-                return 0;
-            }
-        }
-        
-        buildPos = selectedRoom.transform.position;
-        switch (choice)
-        {
-            case 3:
-                //delete old prefab and instantiate new one
-                break;
-            case 5:
-                //delete old prefab and instantiate new one
-                break;
-            case 7:
-                //delete old prefab and instantiate new one
-                break;
-        }
-        numActions--;
-        if (numActions == 0)
-        {
-            this.ChangeTurn();
         }
         return 0;
     }

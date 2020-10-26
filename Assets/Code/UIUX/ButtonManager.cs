@@ -167,15 +167,15 @@ public class ButtonManager : MonoBehaviour
             goldTextp2.text = gameEngine.GetComponent<GameEngine>().currGoldp2;
             mushroomTextp2.text = gameEngine.GetComponent<GameEngine>().currMushroomp2;
         }
-        
+        gameEngine.GetComponent<GameEngine>().Harvest();
     }
     public void Control()
     {
-        print("test");
+        gameEngine.GetComponent<GameEngine>().Control();
     }
     public void Attack()
     {
-        print("test");
+        gameEngine.GetComponent<GameEngine>().Attack();
     }
     public void Overwork()
     {
@@ -186,8 +186,13 @@ public class ButtonManager : MonoBehaviour
     public void Upgrade()
     {
         // need to call upgrade method in GE
-
+        gameEngine.GetComponent<GameEngine>().Upgrade();
         upgradePanel.SetActive(false);
+    }
+    public void BuildCamp()
+    {
+        buildSelection = 2;
+        Build();
     }
     public void BuildMine()
     {
@@ -197,11 +202,6 @@ public class ButtonManager : MonoBehaviour
     public void BuildFarm()
     {
         buildSelection = 6;
-        Build();
-    }
-    public void BuildCamp()
-    {
-        buildSelection = 2;
         Build();
     }
     public void BuildClicked()

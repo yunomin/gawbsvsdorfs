@@ -18,10 +18,14 @@ public class Room : MonoBehaviour
     public int roomMushroomIncome;
     public int roomGoldIncome;
     public bool defensePresent; //For if this room has a mercenary camp or if it is a base.
-    public int[] units;
+    public int[] units; //0 = player1 , 1 = player2?
+
+    //materials
+    public Material player1Material;
+    public Material player2Material;
 
     // Start is called before the first frame update
-    
+
     public Room()
     {
 
@@ -55,6 +59,18 @@ public class Room : MonoBehaviour
     public void ChangeOwner(int newOwner)
     {
         roomOwner = newOwner;
+        if (roomOwner == 1)
+        {
+            //roomMaterial = Resources.Load<Material>("P1_Own_Hi");
+            MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
+            meshRenderer.material = player1Material;
+        }
+        else
+        {
+            //roomMaterial = Resources.Load<Material>("Player 2 Owned");
+            MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
+            meshRenderer.material = player2Material;
+        }
     }
 
     public int GetGoldIncome()

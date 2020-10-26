@@ -49,6 +49,9 @@ public class GameEngine : MonoBehaviour
 
     void Update()
     {
+        camp1Prefab.gameObject.tag = "building";
+        goldMine_mesh.gameObject.tag = "building";
+        farm1Prefab.gameObject.tag = "building";
         // Selection
         if (isEnable)
         {

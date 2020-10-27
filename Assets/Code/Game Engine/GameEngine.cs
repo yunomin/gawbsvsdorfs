@@ -18,6 +18,13 @@ public class GameEngine : MonoBehaviour
     private GameObject selectedBuilding;
     public string lastSelection; // save the tag name of the last selection
 
+    //movement variables
+    public GameObject liftedUnit;
+    public bool unitLifted;
+    public int numToMove;
+    public GameObject previouslySelectedRoom;
+
+
     public GameObject towerPrefab;
     //Assign these prefabs in the editor. Reminder: x is num means that choice value relates to that building type.
     public GameObject camp1Prefab; // Camp is 2
@@ -64,11 +71,21 @@ public class GameEngine : MonoBehaviour
                         //print("clicked on room:" + hit.transform.name);
                         //TODO: Add code to move light over selected room, slowly (animated)
                         //float step = speed * Time.deltaTime; //To be used in steps, not implemented.
+                        previouslySelectedRoom = selectedRoom;
                         selectionLight.transform.position = new Vector3(hit.collider.transform.position.x, hit.collider.transform.position.y + lightHeight, hit.collider.transform.position.z);
 
                         SelectRoom(hit.collider.gameObject); //"Selects" the room
+                        if (currentTurnOwner == 1)
+                        {
+                            SelectUnit(selectedRoom.GetComponent<Room>().unitSpawns[0]);
+                        }
+                        else
+                        {
+                            SelectUnit(selectedRoom.GetComponent<Room>().unitSpawns[1]);
+                        }
                         lastSelection = hit.collider.gameObject.tag;
                     }
+                    /*
                     else if (hit.collider.gameObject.CompareTag("unit")) //Need to add "if current player";
                     {
                         SelectUnit(hit.collider.gameObject);
@@ -78,7 +95,7 @@ public class GameEngine : MonoBehaviour
                     {
                         SelectBuilding(hit.collider.gameObject);
                         lastSelection = hit.collider.gameObject.tag;
-                    }
+                    }*/
                 }
 
             }
@@ -106,6 +123,7 @@ public class GameEngine : MonoBehaviour
         numActions = 2;
         player1.StartTurn();
         PopulateRoomStart();
+        unitLifted = false;
 
         GameIsPause = false;
 
@@ -182,6 +200,69 @@ public class GameEngine : MonoBehaviour
     }
 
     //Player actions
+    public void MoveUnit()
+    {
+        if (unitLifted)
+        {
+            //visual
+            liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 1, liftedUnit.transform.position.z);
+            unitLifted = false;
+
+            //mechanical
+            if (currentTurnOwner == 1)
+            {
+                previouslySelectedRoom.GetComponent<Room>().units[0] -= 1;
+                if (previouslySelectedRoom.GetComponent<Room>().units[0] == 0)
+                {
+                    previouslySelectedRoom.GetComponent<Room>().unitSpawns[0].active = false;
+                }
+                if (selectedRoom.GetComponent<Room>().units[0] == 0)
+                {
+                    selectedRoom.GetComponent<Room>().unitSpawns[0].active = true;
+                }
+                selectedRoom.GetComponent<Room>().units[0] += 1;
+            }
+            else
+            {
+                previouslySelectedRoom.GetComponent<Room>().units[1] -= 1;
+                if (previouslySelectedRoom.GetComponent<Room>().units[1] == 0)
+                {
+                    previouslySelectedRoom.GetComponent<Room>().unitSpawns[1].active = false;
+                }
+                if (selectedRoom.GetComponent<Room>().units[1] == 0)
+                {
+                    selectedRoom.GetComponent<Room>().unitSpawns[1].active = true;
+                }
+                selectedRoom.GetComponent<Room>().units[1] += 1;
+            }
+
+            numActions--;
+            if (numActions == 0)
+            {
+                this.ChangeTurn();
+            }
+        }
+        else
+        {
+            //visual
+            selectedUnit.transform.position = new Vector3(selectedUnit.transform.position.x, selectedUnit.transform.position.y + 1, selectedUnit.transform.position.z);
+            liftedUnit = selectedUnit;
+            unitLifted = true;
+
+            //mechanical
+
+
+            if (currentTurnOwner == 1)
+            {
+                numToMove = 1; //selectedRoom.GetComponent<Room>().units[0];
+            }
+            else
+            {
+                numToMove = 1; //selectedRoom.GetComponent<Room>().units[1];
+            }
+        }
+    }
+
     public int overwork ()
     {
 
@@ -258,16 +339,6 @@ public class GameEngine : MonoBehaviour
         {
             //quit out
             return 0;
-        }
-    }
-
-    public void MoveUnit()
-    {
-        selectedUnit.transform.position = new Vector3(selectedRoom.transform.position.x, selectedRoom.transform.position.y + 1, selectedRoom.transform.position.z);
-        numActions--;
-        if (numActions == 0)
-        {
-            this.ChangeTurn();
         }
     }
 
@@ -397,13 +468,15 @@ public class GameEngine : MonoBehaviour
                 //cannot build here
                 return 0;
             }
-            else if (currentTurnOwner == 1 && (selectedRoom.GetComponent<Room>().units[0] < 1 || player1.goldReserve < 10)) //player has no units in room or doesn't have enough gold
+            else if (currentTurnOwner == 1 && (selectedRoom.GetComponent<Room>().units[0] < 1 || 
+                ((player1.goldReserve < 10 && (choice == 2 || choice == 4)) || (player1.goldReserve < 5 && choice == 6)))) //player has no units in room or doesn't have enough gold
             {
                 //quit out
                 //cannot build here
                 return 0;
             }
-            else if (currentTurnOwner == -1 && (selectedRoom.GetComponent<Room>().units[1] < 1 || player2.goldReserve < 10)) //player has no units in room or doesn't have enough gold
+            else if (currentTurnOwner == -1 && (selectedRoom.GetComponent<Room>().units[1] < 1 ||
+                ((player2.goldReserve < 10 && (choice == 2 || choice == 4)) || (player2.goldReserve < 5 && choice == 6)))) //player has no units in room or doesn't have enough gold
             {
                 //quit out
                 //cannot build here
@@ -418,7 +491,6 @@ public class GameEngine : MonoBehaviour
                 {
                     case 2:
                         buildPos.y = 0.6f;
-                        buildPos.x += 0.6f;
                         Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots]);
                         selectedRoom.GetComponent<Room>().buildingPlacementSlots[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots] = Instantiate(camp1Prefab, buildPos, Quaternion.identity);
                         if (currentTurnOwner == 1)

@@ -19,7 +19,8 @@ public class Room : MonoBehaviour
     public int roomMushroomIncome;
     public int roomGoldIncome;
     public bool defensePresent; //For if this room has a mercenary camp or if it is a base.
-    public int[] units; //0 = player1 , 1 = player2?
+    public int[] units; //0 = player1 , 1 = player2
+    public List<GameObject> unitSpawns; //0 = player1 (dorf) , 1 = player2 (gowb)
 
     //materials
     public Material player1Material;

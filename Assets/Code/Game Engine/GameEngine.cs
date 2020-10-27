@@ -100,7 +100,7 @@ public class GameEngine : MonoBehaviour
         playerList.Add(player1);
         playerList.Add(player2);
         //Set up first turn parameters.
-        // This should update to 2 after the turn switches.
+        //This should update to 2 after the turn switches.
         goldPool = 300;
         currentTurnOwner = 1; //Player 1, (remember -1 is player 2)
         numActions = 2;
@@ -121,6 +121,7 @@ public class GameEngine : MonoBehaviour
     void ChangeTurn()
     {
         print("changing turn");
+        isGameOver();
         if(currentTurnOwner > 0)
         {
             currentTurnOwner *= -1;
@@ -135,6 +136,15 @@ public class GameEngine : MonoBehaviour
         }
         this.turnNumber++;
         numActions = 2;
+        Harvest();
+    }
+
+    void isGameOver()
+    {
+        if (goldPool <= 0 /*|| a player's base is controlled by their enemy*/)
+        {
+            //end game
+        }
     }
 
     void PopulateRoomStart()
@@ -142,7 +152,37 @@ public class GameEngine : MonoBehaviour
        //Populates the full list of rooms. 
     }
 
-    public void overwork ()
+    private void SelectRoom(GameObject newRoomSelection)
+    {
+        selectedRoom = newRoomSelection;
+    }
+
+    private void SelectUnit(GameObject newUnitSelection)
+    {
+        selectedUnit = newUnitSelection;
+    }
+
+    private void SelectBuilding(GameObject newBuildingSelection)
+    {
+        selectedBuilding = newBuildingSelection;
+    }
+
+    public int Harvest()
+    {
+        // This function is going to be called when player presses harvest button on the UI,
+        // it simply update the displayed number of mushrooms and gold.
+
+        currGoldp1 = player1.goldReserve.ToString();
+        currMushroomp1 = player1.mushroomReserve.ToString();
+        currGoldp2 = player2.goldReserve.ToString();
+        currMushroomp2 = player2.mushroomReserve.ToString();
+
+        isAction = true;
+        return currentTurnOwner;
+    }
+
+    //Player actions
+    public int overwork ()
     {
 
         if (selectedRoom.GetComponent<Room>().roomOwner == currentTurnOwner)
@@ -168,6 +208,7 @@ public class GameEngine : MonoBehaviour
                         {
                             player2.goldReserve += 5;
                         }
+                        goldPool -= 5;
                         break;
                     case 5:
                         //add 10 gold
@@ -179,6 +220,7 @@ public class GameEngine : MonoBehaviour
                         {
                             player2.goldReserve += 10;
                         }
+                        goldPool -= 10;
                         break;
                     case 6:
                         //add 1 mushroom
@@ -210,50 +252,13 @@ public class GameEngine : MonoBehaviour
             {
                 this.ChangeTurn();
             }
+            return 0;
         }
         else
         {
             //quit out
             return 0;
         }
-    }
-    
-    private void SelectRoom(GameObject newRoomSelection)
-    {
-        selectedRoom = newRoomSelection;
-    }
-
-    private void SelectUnit(GameObject newUnitSelection)
-    {
-        selectedUnit = newUnitSelection;
-    }
-
-    private void SelectBuilding(GameObject newBuildingSelection)
-    {
-        selectedBuilding = newBuildingSelection;
-    }
-
-    // Player actions
-    public int Harvest()
-    {
-        // This function is going to be called when player presses harvest button on the UI,
-        // it simply update the displayed number of mushrooms and gold.
-        if(currentTurnOwner == 1)
-        {
-            currGoldp1 = player1.goldReserve.ToString();
-            currMushroomp1 = player1.mushroomReserve.ToString();
-        }
-        else if(currentTurnOwner == -1)
-        {
-            currGoldp2 = player2.goldReserve.ToString();
-            currMushroomp2 = player2.mushroomReserve.ToString();
-        }
-        else
-        {
-            print("error inside harvest, game engine");
-        }
-        isAction = true;
-        return currentTurnOwner;
     }
 
     public void MoveUnit()
@@ -275,6 +280,8 @@ public class GameEngine : MonoBehaviour
                 if (selectedRoom.GetComponent<Room>().units[0] > selectedRoom.GetComponent<Room>().units[1])
                 {
                     selectedRoom.GetComponent<Room>().ChangeOwner(1);
+                    player2.ownedRooms.Remove(selectedRoom);
+                    player1.ownedRooms.Add(selectedRoom);
                     numActions--;
                     if (numActions == 0)
                     {
@@ -300,6 +307,8 @@ public class GameEngine : MonoBehaviour
                 if (selectedRoom.GetComponent<Room>().units[1] > selectedRoom.GetComponent<Room>().units[0])
                 {
                     selectedRoom.GetComponent<Room>().ChangeOwner(-1);
+                    player1.ownedRooms.Remove(selectedRoom);
+                    player2.ownedRooms.Add(selectedRoom);
                     numActions--;
                     if (numActions == 0)
                     {
@@ -388,13 +397,13 @@ public class GameEngine : MonoBehaviour
                 //cannot build here
                 return 0;
             }
-            else if (currentTurnOwner == 1 && selectedRoom.GetComponent<Room>().units[0] < 1) //player has no units in room
+            else if (currentTurnOwner == 1 && (selectedRoom.GetComponent<Room>().units[0] < 1 || player1.goldReserve < 10)) //player has no units in room or doesn't have enough gold
             {
                 //quit out
                 //cannot build here
                 return 0;
             }
-            else if (currentTurnOwner == -1 && selectedRoom.GetComponent<Room>().units[1] < 1) //player has no units in room
+            else if (currentTurnOwner == -1 && (selectedRoom.GetComponent<Room>().units[1] < 1 || player2.goldReserve < 10)) //player has no units in room or doesn't have enough gold
             {
                 //quit out
                 //cannot build here
@@ -412,23 +421,58 @@ public class GameEngine : MonoBehaviour
                         buildPos.x += 0.6f;
                         Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots]);
                         selectedRoom.GetComponent<Room>().buildingPlacementSlots[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots] = Instantiate(camp1Prefab, buildPos, Quaternion.identity);
+                        if (currentTurnOwner == 1)
+                        {
+                            player1.goldReserve -= 10;
+                        }
+                        else
+                        {
+                            player2.goldReserve -= 10;
+                        }
                         break;
                     case 4:
                         buildPos.y = 0.6f;
                         Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots]);
                         selectedRoom.GetComponent<Room>().buildingPlacementSlots[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots] = Instantiate(goldMine_mesh, buildPos, Quaternion.identity);
+                        if (currentTurnOwner == 1)
+                        {
+                            player1.goldReserve -= 10;
+                        }
+                        else
+                        {
+                            player2.goldReserve -= 10;
+                        }
                         break;
                     case 6:
                         buildPos.y = 0.8f;
                         Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots]);
                         selectedRoom.GetComponent<Room>().buildingPlacementSlots[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots] = Instantiate(farm1Prefab, buildPos, Quaternion.identity);
-                        Upgrade(7);
+                        if (currentTurnOwner == 1)
+                        {
+                            player1.goldReserve -= 5;
+                        }
+                        else
+                        {
+                            player2.goldReserve -= 5;
+                        }
+                        //Upgrade(7);
                         break;
                 }
-                selectedRoom.GetComponent<Room>().emptySlots--; 
+                selectedRoom.GetComponent<Room>().emptySlots--;
+                Harvest();
+                numActions--;
+                if (numActions == 0)
+                {
+                    this.ChangeTurn();
+                }
+                return 0;
             }
         }
-        return 0;
+        else
+        {
+            //invalid building choice
+            return 0;
+        }
     }
 
     public void Attack()

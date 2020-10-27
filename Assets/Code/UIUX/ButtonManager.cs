@@ -157,19 +157,12 @@ public class ButtonManager : MonoBehaviour
     {
         int turnOwner = gameEngine.GetComponent<GameEngine>().Harvest(); // information updated inside game engine returned the turn owner
 
-        gameEngine.GetComponent<GameEngine>().Harvest();
+        goldTextp1.text = gameEngine.GetComponent<GameEngine>().currGoldp1;
+        mushroomTextp1.text = gameEngine.GetComponent<GameEngine>().currMushroomp1;
+        goldTextp2.text = gameEngine.GetComponent<GameEngine>().currGoldp2;
+        mushroomTextp2.text = gameEngine.GetComponent<GameEngine>().currMushroomp2;
 
-        if (turnOwner == 1)
-        {
-            goldTextp1.text = gameEngine.GetComponent<GameEngine>().currGoldp1;
-            mushroomTextp1.text = gameEngine.GetComponent<GameEngine>().currMushroomp1;
-        }
-        else
-        {
-            goldTextp2.text = gameEngine.GetComponent<GameEngine>().currGoldp2;
-            mushroomTextp2.text = gameEngine.GetComponent<GameEngine>().currMushroomp2;
-        }
-        
+        gameEngine.GetComponent<GameEngine>().Harvest();
     }
     public void Control()
     {
@@ -226,6 +219,7 @@ public class ButtonManager : MonoBehaviour
         // TODO: Upgrade buildings
         gameEngine.GetComponent<GameEngine>().Build(buildSelection);
         buildOptionPanel.SetActive(false);
+        Harvest();
     }
     public void Move()
     {

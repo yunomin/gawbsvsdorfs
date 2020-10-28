@@ -201,8 +201,6 @@ public class GameEngine : MonoBehaviour
         currMushroomp1 = player1.mushroomReserve.ToString();
         currGoldp2 = player2.goldReserve.ToString();
         currMushroomp2 = player2.mushroomReserve.ToString();
-
-        isAction = true;
         return currentTurnOwner;
     }
 
@@ -557,15 +555,27 @@ public class GameEngine : MonoBehaviour
 
     public void Attack()
     {
-
+        // errors:
+        // no room selected
+        // no unit of the turn owner 
+        
         //TODO, ONLY RETREAT TO BASE RN
         //TODO, SPEND MUSHROOM
 
-        if(selectedRoom == null) // check for room selection
-        {
-            print("error, no room selected");
-            return;
-        }
+        ////////// situations:
+        /// attacker to be the room owner,
+        ///     tie
+        ///         both remove unit and building
+        ///         nobody retreat
+        ///     attacker win 
+        ///         defender remove unit
+        ///         remining unit retreat
+        ///     defender win
+        ///         attacker remove unit
+        ///         attacker remove building
+        ///         attacker retreat
+
+        
         int attacker;
         int defender; 
         int defeat = -1;
@@ -576,6 +586,11 @@ public class GameEngine : MonoBehaviour
         int roomOwner = 0;
         int a = currentTurnOwner; // 1 is p1
 
+        if (selectedRoom == null) // check for room selection
+        {
+            print("error, no room selected");
+            return;
+        }
         if (a == 1)
         {
             attacker = 0; 
@@ -594,6 +609,12 @@ public class GameEngine : MonoBehaviour
         else
         {
             roomOwner = defender;
+        }
+
+        if(selectedRoom.GetComponent<Room>().units[attacker] == 0)
+        {
+            print("error, no units in selected room");
+            return;
         }
 
         // check if current room is base
@@ -640,56 +661,87 @@ public class GameEngine : MonoBehaviour
             defeat = 2;
             winner = 2;
         }
-        removedUnit = Math.Abs(ap - dp);
 
-        // remove
-        if(removedUnit == 0)
+        //remove unit
+        if (selectedRoom.GetComponent<Room>().units[defender] >= ap)
+        {
+            selectedRoom.GetComponent<Room>().units[defender] = selectedRoom.GetComponent<Room>().units[defender] - ap;
+        }
+        else
+        {
+            int remainp = ap - selectedRoom.GetComponent<Room>().units[defender];
+            if (roomOwner == defender)
+            {
+                for (int i = 0; i < remainp; i++)
+                {
+                    if (selectedRoom.GetComponent<Room>().buildingNumber == 0)
+                    {
+                        // no more buildings
+                        break;
+                    }
+                    selectedRoom.GetComponent<Room>().buildingNumber--;
+
+                    for (int j = 0; j < selectedRoom.GetComponent<Room>().builtBuildings.size(); j++)
+                    {
+                        if (selectedRoom.GetComponent<Room>().builtBuildings[j] != 0)
+                        {
+                            selectedRoom.GetComponent<Room>().builtBuildings[j] = 0;
+                            Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[j]);
+
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        //
+        if (selectedRoom.GetComponent<Room>().units[attacker] >= dp)
+        {
+            selectedRoom.GetComponent<Room>().units[attacker] = selectedRoom.GetComponent<Room>().units[attacker] - dp;
+        }
+        else
+        {
+            int remainp = dp - selectedRoom.GetComponent<Room>().units[attacker];
+            if (roomOwner == attacker)
+            {
+                for (int i = 0; i < remainp; i++)
+                {
+                    if (selectedRoom.GetComponent<Room>().buildingNumber == 0)
+                    {
+                        // no more buildings
+                        break;
+                    }
+                    selectedRoom.GetComponent<Room>().buildingNumber--;
+
+                    for (int j = 0; j < selectedRoom.GetComponent<Room>().builtBuildings.size(); j++)
+                    {
+                        if (selectedRoom.GetComponent<Room>().builtBuildings[j] != 0)
+                        {
+                            selectedRoom.GetComponent<Room>().builtBuildings[j] = 0;
+                            Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[j]);
+
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        
+        // retreat
+        if(selectedRoom.GetComponent<Room>().units[defeat] == 0)
         {
 
         }
         else
         {
-            if (selectedRoom.GetComponent<Room>().units[defeat] <= removedUnit)
-            {
-                //remove units only
-                selectedRoom.GetComponent<Room>().units[defeat] = selectedRoom.GetComponent<Room>().units[defeat] - removedUnit;
-            }
-            else
-            {
-                selectedRoom.GetComponent<Room>().units[defeat] = 0;
-                // remove buildings
-                if(roomOwner == defeat)
-                {
-                    removedBuilding = removedUnit - selectedRoom.GetComponent<Room>().units[defeat];
-                    // TODO, RANDOM REMOVE BUILDINGS?
-                    for (int i = 0; i < removedBuilding; i++)
-                    {
-                        if (selectedRoom.GetComponent<Room>().buildingNumber == 0)
-                        {
-                            // no more buildings
-                            break;
-                        }
-                        selectedRoom.GetComponent<Room>().buildingNumber--;
-                        // find a 
-                        for (int j = 0; j < selectedRoom.GetComponent<Room>().builtBuildings.size(); j++) {
-                            if(selectedRoom.GetComponent<Room>().builtBuildings[j] != 0)
-                            {
-                                selectedRoom.GetComponent<Room>().builtBuildings[j] = 0;
-                                break;
-                            }
-                        }                    
-                    }
-                }
-            }
-
-            if (winner == 0) //p1
-            {
-                selectedRoom.GetComponent<Room>().roomOwner = 1;
-            }
-            else
-            {
-                selectedRoom.GetComponent<Room>().roomOwner = -1;
-            }
+            
+        }
+        
+        numActions--;
+        if (numActions == 0)
+        {
+            this.ChangeTurn();
         }
     }
 

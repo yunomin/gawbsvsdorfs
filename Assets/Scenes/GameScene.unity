@@ -9256,11 +9256,11 @@ MonoBehaviour:
   previouslySelectedRoom: {fileID: 0}
   previouslySelectedUnit: {fileID: 0}
   towerPrefab: {fileID: 0}
-  camp1Prefab: {fileID: 919132149155446097, guid: 6874e928ad038e5409003e2282b0b7d0,
+  camp1Prefab: {fileID: 919132149155446097, guid: f873630d9d07a6346ae5192897f16537,
     type: 3}
-  goldMine_mesh: {fileID: 919132149155446097, guid: 3db02cea08e3a8f488cb3c849ef09fb3,
+  goldMine_mesh: {fileID: 919132149155446097, guid: 8f0f3ea35c71172438514801ed2bfb7c,
     type: 3}
-  farm1Prefab: {fileID: 919132149155446097, guid: 310a6aa783fb4224ca21d4ceacfa9362,
+  farm1Prefab: {fileID: 919132149155446097, guid: 0f6a4f45364db614d881deba3ffbcb0e,
     type: 3}
   numActions: 0
   currGoldp1: 
@@ -10776,6 +10776,7 @@ GameObject:
   - component: {fileID: 1015401144}
   - component: {fileID: 1015401143}
   - component: {fileID: 1015401146}
+  - component: {fileID: 1015401147}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -10864,6 +10865,18 @@ MonoBehaviour:
   selectionLight: {fileID: 300897839}
   lightHeight: 5
   isEnable: 0
+--- !u!114 &1015401147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1015401142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a696dd6196dbe8847acc58d3f765120a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1017288623
 GameObject:
   m_ObjectHideFlags: 0

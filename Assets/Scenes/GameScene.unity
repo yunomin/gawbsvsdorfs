@@ -6010,6 +6010,7 @@ GameObject:
   - component: {fileID: 1015401144}
   - component: {fileID: 1015401143}
   - component: {fileID: 1015401146}
+  - component: {fileID: 1015401147}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -6098,6 +6099,18 @@ MonoBehaviour:
   selectionLight: {fileID: 300897839}
   lightHeight: 5
   isEnable: 0
+--- !u!114 &1015401147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1015401142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a696dd6196dbe8847acc58d3f765120a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1017288623
 GameObject:
   m_ObjectHideFlags: 0
@@ -13165,8 +13178,8 @@ Transform:
   m_Children:
   - {fileID: 103722010}
   - {fileID: 811665529}
-  - {fileID: 1751163715}
   - {fileID: 1300605976}
+  - {fileID: 1751163715}
   m_Father: {fileID: 1091591209}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

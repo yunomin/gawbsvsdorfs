@@ -6,7 +6,22 @@ ModelImporter:
   - first:
       74: 1827226128182048838
     second: Take 001
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: dorfOBJ2_DefaultMaterial_AO
+    second: {fileID: 2800000, guid: c4702478d99cbec4a96f4ffcf4bbd3e9, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: goblinFinished_DefaultMaterial_BaseColor
+    second: {fileID: 2800000, guid: 4b71cb4d76219984286971b61e252a30, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: goblinFinished_DefaultMaterial_Normal
+    second: {fileID: 2800000, guid: fe28f77422ef18a4aa769d046f0f4fe8, type: 3}
   materials:
     materialImportMode: 1
     materialName: 0

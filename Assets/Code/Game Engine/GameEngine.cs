@@ -281,13 +281,14 @@ public class GameEngine : MonoBehaviour
         else
         {
             //visual
-            selectedUnit.transform.position = new Vector3(selectedUnit.transform.position.x, selectedUnit.transform.position.y + 1, selectedUnit.transform.position.z);
-            liftedUnit = selectedUnit;
-            unitLifted = true;
+            if (selectedUnit.active == true)
+            {
+                selectedUnit.transform.position = new Vector3(selectedUnit.transform.position.x, selectedUnit.transform.position.y + 1, selectedUnit.transform.position.z);
+                liftedUnit = selectedUnit;
+                unitLifted = true;
+            }
 
             //mechanical
-
-
             if (currentTurnOwner == 1)
             {
                 numToMove = 1; //selectedRoom.GetComponent<Room>().units[0];
@@ -302,7 +303,11 @@ public class GameEngine : MonoBehaviour
 
     public int overwork ()
     {
-
+        int multiplier = 1;
+        if (selectedRoom.GetComponent<Room>().roomName == "Mushroom Lake")
+        {
+            multiplier = 2;
+        }
         if (selectedRoom.GetComponent<Room>().roomOwner == currentTurnOwner)
         {
             int[] roomBuildings = selectedRoom.GetComponent<Room>().builtBuildings;
@@ -320,46 +325,46 @@ public class GameEngine : MonoBehaviour
                         //add 5 gold
                         if (currentTurnOwner == 1)
                         {
-                            player1.goldReserve += 5;
+                            player1.goldReserve += 5 * multiplier;
                         }
                         else
                         {
-                            player2.goldReserve += 5;
+                            player2.goldReserve += 5 * multiplier;
                         }
-                        goldPool -= 5;
+                        goldPool -= 5 * multiplier;
                         break;
                     case 5:
                         //add 10 gold
                         if (currentTurnOwner == 1)
                         {
-                            player1.goldReserve += 10;
+                            player1.goldReserve += 10 * multiplier;
                         }
                         else
                         {
-                            player2.goldReserve += 10;
+                            player2.goldReserve += 10 * multiplier;
                         }
-                        goldPool -= 10;
+                        goldPool -= 10 * multiplier;
                         break;
                     case 6:
                         //add 1 mushroom
                         if (currentTurnOwner == 1)
                         {
-                            player1.mushroomReserve += 1;
+                            player1.mushroomReserve += 1 * multiplier;
                         }
                         else
                         {
-                            player2.mushroomReserve += 1;
+                            player2.mushroomReserve += 1 * multiplier;
                         }
                         break;
                     case 7:
                         //add 3 mushrooms
                         if (currentTurnOwner == 1)
                         {
-                            player1.mushroomReserve += 3;
+                            player1.mushroomReserve += 3 * multiplier;
                         }
                         else
                         {
-                            player2.mushroomReserve += 3;
+                            player2.mushroomReserve += 3 * multiplier;
                         }
                         break;
                 }

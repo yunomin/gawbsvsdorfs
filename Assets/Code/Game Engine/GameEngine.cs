@@ -15,8 +15,8 @@ public class GameEngine : MonoBehaviour
     public List<GameObject> roomList;
     public int currentTurnOwner; //Should be set to 1 for player 1 and -1 for player 2
     public int goldPool;
-    private GameObject selectedRoom; // this are not assigned to actual rooms 
-    private GameObject selectedUnit;
+    public GameObject selectedRoom; // this are not assigned to actual rooms 
+    public GameObject selectedUnit;
     private GameObject selectedBuilding;
     public string lastSelection; // save the tag name of the last selection
     public GameObject buildingPlaceholder;
@@ -281,7 +281,7 @@ public class GameEngine : MonoBehaviour
             numActions--;
             if (numActions == 0)
             {
-                this.ChangeTurn();
+                ChangeTurn();
             }
         }
         else
@@ -379,7 +379,7 @@ public class GameEngine : MonoBehaviour
             numActions--;
             if (numActions == 0)
             {
-                this.ChangeTurn();
+                ChangeTurn();
             }
             return 0;
         }
@@ -709,6 +709,11 @@ public class GameEngine : MonoBehaviour
         if (selectedRoom.GetComponent<Room>().units[defender] >= ap)
         {
             selectedRoom.GetComponent<Room>().units[defender] = selectedRoom.GetComponent<Room>().units[defender] - ap;
+            if (selectedRoom.GetComponent<Room>().units[defender] <= 0)
+            {
+                selectedRoom.GetComponent<Room>().units[defender] = 0;
+                selectedRoom.GetComponent<Room>().unitSpawns[defender].active = false;
+            }
         }
         else
         {
@@ -744,6 +749,11 @@ public class GameEngine : MonoBehaviour
         if (selectedRoom.GetComponent<Room>().units[attacker] >= dp)
         {
             selectedRoom.GetComponent<Room>().units[attacker] = selectedRoom.GetComponent<Room>().units[attacker] - dp;
+            if (selectedRoom.GetComponent<Room>().units[attacker] <= 0)
+            {
+                selectedRoom.GetComponent<Room>().units[attacker] = 0;
+                selectedRoom.GetComponent<Room>().unitSpawns[attacker].active = false;
+            }
         }
         else
         {
@@ -776,6 +786,7 @@ public class GameEngine : MonoBehaviour
         }
         
         // retreat
+        /*
         if(selectedRoom.GetComponent<Room>().units[defeat] == 0)
         {
 
@@ -784,7 +795,7 @@ public class GameEngine : MonoBehaviour
         {
             
         }
-        
+        */
         numActions--;
         if (numActions == 0)
         {

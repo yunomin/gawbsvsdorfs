@@ -78,6 +78,7 @@ public class Player : MonoBehaviour
         foreach (var thisRoom in ownedRooms)
         {
             Room roomscript = thisRoom.GetComponent<Room>();
+            print(roomscript.roomName);
             roomscript.RoomIncomeCalc();
             newMushroomIncome += roomscript.GetMushroomIncome();
             newGoldIncome += roomscript.GetGoldIncome();

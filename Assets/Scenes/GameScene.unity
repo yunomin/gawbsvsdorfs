@@ -870,7 +870,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &212471755
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9233,18 +9233,9 @@ MonoBehaviour:
   player2: {fileID: 773393502}
   playerList:
   - {fileID: 0}
-  roomList:
-  - {fileID: 915360132}
-  - {fileID: 1995059973}
-  - {fileID: 1475712728}
-  - {fileID: 1224090189}
-  - {fileID: 1683012650}
-  - {fileID: 1579352566}
-  - {fileID: 1576669950}
-  - {fileID: 1861244787}
-  - {fileID: 1246719268}
-  - {fileID: 1821895976}
-  - {fileID: 2109538778}
+  roomList: [{fileID: 915360132}, {fileID: 1995059973}, {fileID: 1475712728}, {fileID: 1224090189},
+    {fileID: 1683012650}, {fileID: 1579352566}, {fileID: 1576669950}, {fileID: 1861244787},
+    {fileID: 1246719268}, {fileID: 1821895976}, {fileID: 2109538778}]
   currentTurnOwner: 0
   goldPool: 0
   lastSelection: 
@@ -12194,7 +12185,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1165367550
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13332,17 +13323,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 300945966}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1243660717}
+        m_TargetAssemblyTypeName: ButtonManager, Assembly-CSharp
+        m_MethodName: BuildClicked
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1314329874
 MonoBehaviour:
@@ -14744,9 +14735,7 @@ MonoBehaviour:
   roomGoldIncome: 0
   defensePresent: 0
   units: 0000000001000000
-  unitSpawns:
-  - {fileID: 689511410}
-  - {fileID: 95174803}
+  unitSpawns: [{fileID: 689511410}, {fileID: 95174803}]
   player1Material: {fileID: 2100000, guid: ecab736aa39e0e947a75cc49979eb26c, type: 2}
   player2Material: {fileID: 2100000, guid: f494432013cf79646b878a6340f893c3, type: 2}
 --- !u!1001 &1483439435
@@ -16375,9 +16364,7 @@ MonoBehaviour:
   roomGoldIncome: 0
   defensePresent: 0
   units: 0000000000000000
-  unitSpawns:
-  - {fileID: 1800652818}
-  - {fileID: 1955583057}
+  unitSpawns: [{fileID: 1800652818}, {fileID: 1955583057}]
   player1Material: {fileID: 2100000, guid: ecab736aa39e0e947a75cc49979eb26c, type: 2}
   player2Material: {fileID: 2100000, guid: f494432013cf79646b878a6340f893c3, type: 2}
 --- !u!1 &1693965116

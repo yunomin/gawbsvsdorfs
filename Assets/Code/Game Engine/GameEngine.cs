@@ -7,8 +7,10 @@ using UnityEngine.UI;
 
 public class GameEngine : MonoBehaviour
 {
-    public Player player1;
-    public Player player2;
+    public Player player1; // Dorf
+    public Player player2; // Gob
+    private string p1Identity;
+    private string p2Identity;
     public List<Player> playerList;
     public List<GameObject> roomList;
     public int currentTurnOwner; //Should be set to 1 for player 1 and -1 for player 2
@@ -17,6 +19,7 @@ public class GameEngine : MonoBehaviour
     private GameObject selectedUnit;
     private GameObject selectedBuilding;
     public string lastSelection; // save the tag name of the last selection
+    public GameObject buildingPlaceholder;
 
     //player bases
     public GameObject P1Base;
@@ -50,7 +53,6 @@ public class GameEngine : MonoBehaviour
     public bool enableSelection;
 
     public bool isTurn;
-    public bool isAction;
     public bool isEnd;
 
     // selection variables
@@ -60,6 +62,9 @@ public class GameEngine : MonoBehaviour
 
     void Update()
     {
+        camp1Prefab.gameObject.tag = "building";
+        goldMine_mesh.gameObject.tag = "building";
+        farm1Prefab.gameObject.tag = "building";
         // Selection
         if (isEnable)
         {
@@ -139,6 +144,7 @@ public class GameEngine : MonoBehaviour
     {
         selectedRoom = null;
         selectedUnit = null;
+        lastSelection = null;
     }
 
     void ChangeTurn()
@@ -197,6 +203,8 @@ public class GameEngine : MonoBehaviour
     void PopulateRoomStart()
     {
        //Populates the full list of rooms. 
+       // when completing this funciton, make sure to initialize the two bases in the two rooms respectlly 
+
     }
 
     private void SelectRoom(GameObject newRoomSelection)
@@ -223,8 +231,6 @@ public class GameEngine : MonoBehaviour
         currMushroomp1 = player1.mushroomReserve.ToString();
         currGoldp2 = player2.goldReserve.ToString();
         currMushroomp2 = player2.mushroomReserve.ToString();
-
-        isAction = true;
         return currentTurnOwner;
     }
 
@@ -528,6 +534,7 @@ public class GameEngine : MonoBehaviour
             {
                 //add room choice to built room list
                 selectedRoom.GetComponent<Room>().builtBuildings[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots] = choice;
+                selectedRoom.GetComponent<Room>().buildingNumber++;
                 buildPos = selectedRoom.GetComponent<Room>().buildingPlacementSlots[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots].transform.position;
                 switch (choice)
                 {
@@ -591,40 +598,198 @@ public class GameEngine : MonoBehaviour
 
     public void Attack()
     {
-        if(selectedRoom == null) // check for room selection
+        // errors:
+        // no room selected
+        // no unit of the turn owner 
+        
+        //TODO, ONLY RETREAT TO BASE RN
+        //TODO, SPEND MUSHROOM
+
+        ////////// situations:
+        /// attacker to be the room owner,
+        ///     tie
+        ///         both remove unit and building
+        ///         nobody retreat
+        ///     attacker win 
+        ///         defender remove unit
+        ///         remining unit retreat
+        ///     defender win
+        ///         attacker remove unit
+        ///         attacker remove building
+        ///         attacker retreat
+
+        
+        int attacker;
+        int defender; 
+        int defeat = -1;
+        int winner = -1;
+
+        int removedBuilding = 0;
+        int removedUnit = 0;
+        int roomOwner = 0;
+        int a = currentTurnOwner; // 1 is p1
+
+        if (selectedRoom == null) // check for room selection
         {
             print("error, no room selected");
             return;
         }
-        int attacker;
-        int defender;
-
-        int aUnit;
-        int dUnit;
-
-        int aDies = 0;
-        int dDies = 0;
-
-        int removedUnit = 0;
-
-
-        attacker = currentTurnOwner;
-        defender = 0 - attacker;
-
-        if(attacker == 1)
+        if (a == 1)
         {
-            // attacker is player 1
-            //aUnit = selectedRoom.units[0];
-            //dUnit = selectedRoom.units[1];
+            attacker = 0; 
+            defender = 1;
         }
         else
         {
-            // attacker is player 2
-            //aUnit = selectedRoom.units[1];
-            //dUnit = selectedRoom.units[0];
+            attacker = 1;
+            defender = 0;
         }
 
-        // check for adjecent clearing
+        if (selectedRoom.GetComponent<Room>().roomOwner == a)
+        {
+            roomOwner = attacker;
+        }
+        else
+        {
+            roomOwner = defender;
+        }
+
+        if(selectedRoom.GetComponent<Room>().units[attacker] == 0)
+        {
+            print("error, no units in selected room");
+            return;
+        }
+
+        // check if current room is base
+        // DiceVariable = Random.Range(1, 6)
+        if (selectedRoom.GetComponent<Room>().builtBuildings[0] == 1) //dorf base p1
+        {
+            
+        }
+        else if(selectedRoom.GetComponent<Room>().builtBuildings[0] == 8) //gob base p2
+        {
+
+        }
+        else // not base
+        {
+            
+        }
+
+        // roling dices
+        int ap = 0;
+        int dp = 0;
+        for(int i = 0; i < selectedRoom.GetComponent<Room>().units[attacker]; i++)
+        {
+            if(Random.Range(1, 6) > 4)
+                ap++;
+        }
+        for (int i = 0; i < selectedRoom.GetComponent<Room>().units[defender]; i++)
+        {
+            if (Random.Range(1, 6) > 5)
+                dp++;
+        }
+        if(ap > dp)
+        {
+            defeat = defender;
+            winner = attacker;
+        }
+        else if (dp > ap)
+        {
+            defeat = attacker;
+            winner = defender;
+        }
+        else
+        {
+            //no body win
+            defeat = 2;
+            winner = 2;
+        }
+
+        //remove unit
+        if (selectedRoom.GetComponent<Room>().units[defender] >= ap)
+        {
+            selectedRoom.GetComponent<Room>().units[defender] = selectedRoom.GetComponent<Room>().units[defender] - ap;
+        }
+        else
+        {
+            int remainp = ap - selectedRoom.GetComponent<Room>().units[defender];
+            if (roomOwner == defender)
+            {
+                for (int i = 0; i < remainp; i++)
+                {
+                    if (selectedRoom.GetComponent<Room>().buildingNumber == 0)
+                    {
+                        // no more buildings
+                        break;
+                    }
+                    selectedRoom.GetComponent<Room>().buildingNumber--;
+
+                    for (int j = 0; j < selectedRoom.GetComponent<Room>().builtBuildings.Length; j++)
+                    {
+                        if (selectedRoom.GetComponent<Room>().builtBuildings[j] != 0)
+                        {
+                            selectedRoom.GetComponent<Room>().builtBuildings[j] = 0;
+                            Vector3 holderPos = selectedRoom.GetComponent<Room>().buildingPlacementSlots[j].transform.position;
+                            Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[j]);
+                            selectedRoom.GetComponent<Room>().buildingPlacementSlots[j] = Instantiate(buildingPlaceholder, holderPos, Quaternion.identity);
+
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        //
+        if (selectedRoom.GetComponent<Room>().units[attacker] >= dp)
+        {
+            selectedRoom.GetComponent<Room>().units[attacker] = selectedRoom.GetComponent<Room>().units[attacker] - dp;
+        }
+        else
+        {
+            int remainp = dp - selectedRoom.GetComponent<Room>().units[attacker];
+            if (roomOwner == attacker)
+            {
+                for (int i = 0; i < remainp; i++)
+                {
+                    if (selectedRoom.GetComponent<Room>().buildingNumber == 0)
+                    {
+                        // no more buildings
+                        break;
+                    }
+                    selectedRoom.GetComponent<Room>().buildingNumber--;
+
+                    for (int j = 0; j < selectedRoom.GetComponent<Room>().builtBuildings.Length; j++)
+                    {
+                        if (selectedRoom.GetComponent<Room>().builtBuildings[j] != 0)
+                        {
+                            selectedRoom.GetComponent<Room>().builtBuildings[j] = 0;
+                            Vector3 holderPos = selectedRoom.GetComponent<Room>().buildingPlacementSlots[j].transform.position;
+                            Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[j]);
+                            selectedRoom.GetComponent<Room>().buildingPlacementSlots[j] = Instantiate(buildingPlaceholder, holderPos, Quaternion.identity);
+
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        
+        // retreat
+        if(selectedRoom.GetComponent<Room>().units[defeat] == 0)
+        {
+
+        }
+        else
+        {
+            
+        }
+        
+        numActions--;
+        if (numActions == 0)
+        {
+            this.ChangeTurn();
+        }
     }
 
     

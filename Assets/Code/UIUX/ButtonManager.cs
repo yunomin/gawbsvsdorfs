@@ -62,7 +62,6 @@ public class ButtonManager : MonoBehaviour
     private int playerID; // 1 for player 1 on the left, -1 for player 2 on the right
 
     // all buttons listed
-    public Button harvestButton;
     public Button buildButton;
     public Button moveButton;
     public Button controlButton;
@@ -95,8 +94,6 @@ public class ButtonManager : MonoBehaviour
     void Start()
     {
         buildSelection = 0;
-
-        harvestButton.GetComponent<Button>().interactable = false;
         actionOff();
         endTurnButton.GetComponent<Button>().interactable = false;
     }
@@ -107,29 +104,24 @@ public class ButtonManager : MonoBehaviour
         // Button enable and disable (ok I ve been changing ways of doing this but I am sure this code below is final!)
         if (gameEngine.GetComponent<GameEngine>().isTurn)
         {
-            if (gameEngine.GetComponent<GameEngine>().isAction)
-            {
-                //action
-                gameEngine.GetComponent<GameEngine>().enableSelect();
-                harvestButton.GetComponent<Button>().interactable = false;
-                actionOn();
-            }
-            else if (gameEngine.GetComponent<GameEngine>().isEnd)
+            
+            if (gameEngine.GetComponent<GameEngine>().isEnd)
             {
                 //end turn
                 actionOff();
+                buildSelection = 0;
                 gameEngine.GetComponent<GameEngine>().disableSelect();
             }
             else
             {
-                //harvest
-                buildSelection = 0;
-                harvestButton.GetComponent<Button>().interactable = true;
+                //action
+                Harvest();
+                gameEngine.GetComponent<GameEngine>().enableSelect();
+                actionOn();
             }
         }
         else
         {
-            harvestButton.GetComponent<Button>().interactable = false;
             actionOff();
             endTurnButton.GetComponent<Button>().interactable = false;
         }
@@ -201,6 +193,7 @@ public class ButtonManager : MonoBehaviour
     }
     public void BuildClicked()
     {
+        print("button Clicked build" + gameEngine.GetComponent<GameEngine>().lastSelection.Equals("room"));
         if (gameEngine.GetComponent<GameEngine>().lastSelection.Equals("room"))
         {
             buildOptionPanel.SetActive(true);

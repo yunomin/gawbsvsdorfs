@@ -58,6 +58,18 @@ public class Room : MonoBehaviour
         Adjacent.Add(room);
     }
 
+    public bool isAdjacent(GameObject room)
+    {
+        foreach (GameObject adjacentRoom in Adjacent)
+        {
+            if (room == adjacentRoom)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void ChangeOwner(int newOwner)
     {
         roomOwner = newOwner;

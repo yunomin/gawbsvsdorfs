@@ -148,6 +148,7 @@ public class GameEngine : MonoBehaviour
 
     void ChangeTurn()
     {
+        isEnd = true;
         print("changing turn");
         isGameOver();
         if(currentTurnOwner > 0)

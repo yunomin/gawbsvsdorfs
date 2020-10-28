@@ -48,7 +48,6 @@ public class GameEngine : MonoBehaviour
     public bool enableSelection;
 
     public bool isTurn;
-    public bool isAction;
     public bool isEnd;
 
     // selection variables
@@ -139,6 +138,7 @@ public class GameEngine : MonoBehaviour
     {
         selectedRoom = null;
         selectedUnit = null;
+        lastSelection = null;
     }
 
     void ChangeTurn()
@@ -598,11 +598,11 @@ public class GameEngine : MonoBehaviour
 
         // check if current room is base
         // DiceVariable = Random.Range(1, 6)
-        if (selectedRoom.GetComponent<Room>().builtBuildings[0] == 1 //dorf base p1)
+        if (selectedRoom.GetComponent<Room>().builtBuildings[0] == 1) //dorf base p1
         {
             
         }
-        else if(selectedRoom.GetComponent<Room>().builtBuildings[0] == 8 //gob base p2)
+        else if(selectedRoom.GetComponent<Room>().builtBuildings[0] == 8) //gob base p2
         {
 
         }
@@ -649,7 +649,7 @@ public class GameEngine : MonoBehaviour
         }
         else
         {
-            if (selectedRoom.GetComponent<Room>().units[defeat] <= removeUnit)
+            if (selectedRoom.GetComponent<Room>().units[defeat] <= removedUnit)
             {
                 //remove units only
                 selectedRoom.GetComponent<Room>().units[defeat] = selectedRoom.GetComponent<Room>().units[defeat] - removedUnit;

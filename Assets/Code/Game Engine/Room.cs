@@ -13,14 +13,14 @@ public class Room : MonoBehaviour
     public int roomSlots;
     public int emptySlots;
     public List<GameObject> buildingPlacementSlots;
-    public int[] builtBuildings; //0 = no building | 1 = Home Base | 2 = Camp | 3 = Upg. Camp |
-                                 //4 = Gold Mine   | 5 = Upg. Mine | 6 = Farm | 7 = Upg. Farm|
-   
+    public int[] builtBuildings; //0 = no building | 1 = dorf Base | 2 = Camp | 3 = Upg. Camp |
+                                 //4 = Gold Mine   | 5 = Upg. Mine | 6 = Farm | 7 = Upg. Farm| 8 = gob base
+    public int buildingNumber;
     public int roomMushroomIncome;
     public int roomGoldIncome;
     public bool defensePresent; //For if this room has a mercenary camp or if it is a base.
     public int[] units; //0 = player1 , 1 = player2?
-
+    
     //materials
     public Material player1Material;
     public Material player2Material;

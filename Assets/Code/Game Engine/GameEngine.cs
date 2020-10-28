@@ -681,7 +681,7 @@ public class GameEngine : MonoBehaviour
                     }
                     selectedRoom.GetComponent<Room>().buildingNumber--;
 
-                    for (int j = 0; j < selectedRoom.GetComponent<Room>().builtBuildings.size(); j++)
+                    for (int j = 0; j < selectedRoom.GetComponent<Room>().roomSlots; j++)
                     {
                         if (selectedRoom.GetComponent<Room>().builtBuildings[j] != 0)
                         {
@@ -714,7 +714,7 @@ public class GameEngine : MonoBehaviour
                     }
                     selectedRoom.GetComponent<Room>().buildingNumber--;
 
-                    for (int j = 0; j < selectedRoom.GetComponent<Room>().builtBuildings.size(); j++)
+                    for (int j = 0; j < selectedRoom.GetComponent<Room>().roomSlots; j++)
                     {
                         if (selectedRoom.GetComponent<Room>().builtBuildings[j] != 0)
                         {

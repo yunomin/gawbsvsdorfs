@@ -55,5 +55,9 @@ public class ChangeScene : MonoBehaviour
     {
         Application.Quit();
     }
- 
+    
+    public void EndGame(int Winner)
+    {
+        SceneManager.LoadScene("EndScene");
+    }
 }

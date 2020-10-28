@@ -20,12 +20,16 @@ public class GameEngine : MonoBehaviour
     private GameObject selectedBuilding;
     public string lastSelection; // save the tag name of the last selection
 
+    //player bases
+    public GameObject P1Base;
+    public GameObject P2Base;
+
     //movement variables
     public GameObject liftedUnit;
     public bool unitLifted;
     public int numToMove;
     public GameObject previouslySelectedRoom;
-
+    public GameObject previouslySelectedUnit;
 
     public GameObject towerPrefab;
     //Assign these prefabs in the editor. Reminder: x is num means that choice value relates to that building type.
@@ -76,6 +80,7 @@ public class GameEngine : MonoBehaviour
                         //TODO: Add code to move light over selected room, slowly (animated)
                         //float step = speed * Time.deltaTime; //To be used in steps, not implemented.
                         previouslySelectedRoom = selectedRoom;
+                        previouslySelectedUnit = selectedUnit;
                         selectionLight.transform.position = new Vector3(hit.collider.transform.position.x, hit.collider.transform.position.y + lightHeight, hit.collider.transform.position.z);
 
                         SelectRoom(hit.collider.gameObject); //"Selects" the room
@@ -162,12 +167,36 @@ public class GameEngine : MonoBehaviour
         Harvest();
     }
 
-    void isGameOver()
+    int isGameOver()
     {
-        if (goldPool <= 0 /*|| a player's base is controlled by their enemy*/)
+        if (goldPool <= 0)
         {
             //end game
+            if (player1.goldReserve > player2.goldReserve)
+            {
+                return 1;
+            }
+            else if (player2.goldReserve > player1.goldReserve)
+            {
+                return -1;
+            }
+            else
+            {
+                //tie
+                return 0;
+            }
         }
+        else if (P1Base.GetComponent<Room>().roomOwner == -1)
+        {
+            //end game
+            return -1;
+        }
+        else if (P2Base.GetComponent<Room>().roomOwner == 1)
+        {
+            //end game
+            return 1;
+        }
+        return 2;
     }
 
     void PopulateRoomStart()
@@ -205,13 +234,20 @@ public class GameEngine : MonoBehaviour
     }
 
     //Player actions
-    public void MoveUnit()
+    public int MoveUnit()
     {
         if (unitLifted)
         {
             //visual
             liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 1, liftedUnit.transform.position.z);
             unitLifted = false;
+            
+            //check if move can be made
+            if (!(previouslySelectedRoom.GetComponent<Room>().isAdjacent(selectedRoom)))
+            {
+                //cannot make move
+                return 0;
+            }
 
             //mechanical
             if (currentTurnOwner == 1)
@@ -250,13 +286,14 @@ public class GameEngine : MonoBehaviour
         else
         {
             //visual
-            selectedUnit.transform.position = new Vector3(selectedUnit.transform.position.x, selectedUnit.transform.position.y + 1, selectedUnit.transform.position.z);
-            liftedUnit = selectedUnit;
-            unitLifted = true;
+            if (selectedUnit.active == true)
+            {
+                selectedUnit.transform.position = new Vector3(selectedUnit.transform.position.x, selectedUnit.transform.position.y + 1, selectedUnit.transform.position.z);
+                liftedUnit = selectedUnit;
+                unitLifted = true;
+            }
 
             //mechanical
-
-
             if (currentTurnOwner == 1)
             {
                 numToMove = 1; //selectedRoom.GetComponent<Room>().units[0];
@@ -266,11 +303,16 @@ public class GameEngine : MonoBehaviour
                 numToMove = 1; //selectedRoom.GetComponent<Room>().units[1];
             }
         }
+        return 0;
     }
 
     public int overwork ()
     {
-
+        int multiplier = 1;
+        if (selectedRoom.GetComponent<Room>().roomName == "Mushroom Lake")
+        {
+            multiplier = 2;
+        }
         if (selectedRoom.GetComponent<Room>().roomOwner == currentTurnOwner)
         {
             int[] roomBuildings = selectedRoom.GetComponent<Room>().builtBuildings;
@@ -288,46 +330,46 @@ public class GameEngine : MonoBehaviour
                         //add 5 gold
                         if (currentTurnOwner == 1)
                         {
-                            player1.goldReserve += 5;
+                            player1.goldReserve += 5 * multiplier;
                         }
                         else
                         {
-                            player2.goldReserve += 5;
+                            player2.goldReserve += 5 * multiplier;
                         }
-                        goldPool -= 5;
+                        goldPool -= 5 * multiplier;
                         break;
                     case 5:
                         //add 10 gold
                         if (currentTurnOwner == 1)
                         {
-                            player1.goldReserve += 10;
+                            player1.goldReserve += 10 * multiplier;
                         }
                         else
                         {
-                            player2.goldReserve += 10;
+                            player2.goldReserve += 10 * multiplier;
                         }
-                        goldPool -= 10;
+                        goldPool -= 10 * multiplier;
                         break;
                     case 6:
                         //add 1 mushroom
                         if (currentTurnOwner == 1)
                         {
-                            player1.mushroomReserve += 1;
+                            player1.mushroomReserve += 1 * multiplier;
                         }
                         else
                         {
-                            player2.mushroomReserve += 1;
+                            player2.mushroomReserve += 1 * multiplier;
                         }
                         break;
                     case 7:
                         //add 3 mushrooms
                         if (currentTurnOwner == 1)
                         {
-                            player1.mushroomReserve += 3;
+                            player1.mushroomReserve += 3 * multiplier;
                         }
                         else
                         {
-                            player2.mushroomReserve += 3;
+                            player2.mushroomReserve += 3 * multiplier;
                         }
                         break;
                 }

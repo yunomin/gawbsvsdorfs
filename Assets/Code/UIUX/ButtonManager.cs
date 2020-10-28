@@ -108,9 +108,9 @@ public class ButtonManager : MonoBehaviour
             if (gameEngine.GetComponent<GameEngine>().isEnd)
             {
                 //end turn
-                actionOff();
+                //actionOff();
                 buildSelection = 0;
-                gameEngine.GetComponent<GameEngine>().disableSelect();
+                //gameEngine.GetComponent<GameEngine>().disableSelect();
             }
             else
             {

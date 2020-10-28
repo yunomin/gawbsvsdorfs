@@ -28,8 +28,8 @@ public class Player : MonoBehaviour
         goldReserve = 10;
         goldIncome = 0;
         mushroomReserve = 0;
-        mushroomIncome = 6;
-        mushroomUpkeep = 6;
+        mushroomIncome = 0;
+        mushroomUpkeep = 0;
         actions = 0;
     }
 
@@ -78,6 +78,7 @@ public class Player : MonoBehaviour
         foreach (var thisRoom in ownedRooms)
         {
             Room roomscript = thisRoom.GetComponent<Room>();
+            roomscript.RoomIncomeCalc();
             newMushroomIncome += roomscript.GetMushroomIncome();
             newGoldIncome += roomscript.GetGoldIncome();
         }

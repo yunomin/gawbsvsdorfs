@@ -12,13 +12,15 @@ public class Room : MonoBehaviour
     public int[] roomID;
     public int roomSlots;
     public int emptySlots;
-    public int[] builtBuildings; //0 = no building | 1 = Home Base | 2 = Camp | 3 = Upg. Camp |
-                                 //4 = Gold Mine   | 5 = Upg. Mine | 6 = Farm | 7 = Upg. Farm|
-   
+    public List<GameObject> buildingPlacementSlots;
+    public int[] builtBuildings; //0 = no building | 1 = dorf Base | 2 = Camp | 3 = Upg. Camp |
+                                 //4 = Gold Mine   | 5 = Upg. Mine | 6 = Farm | 7 = Upg. Farm| 8 = gob base
+    public int buildingNumber;
     public int roomMushroomIncome;
     public int roomGoldIncome;
     public bool defensePresent; //For if this room has a mercenary camp or if it is a base.
-    public int[] units; //0 = player1 , 1 = player2?
+    public int[] units; //0 = player1 , 1 = player2
+    public List<GameObject> unitSpawns; //0 = player1 (dorf) , 1 = player2 (gowb)
 
     //materials
     public Material player1Material;
@@ -54,6 +56,18 @@ public class Room : MonoBehaviour
     public void SetAdjacent(GameObject room)
     {
         Adjacent.Add(room);
+    }
+
+    public bool isAdjacent(GameObject room)
+    {
+        foreach (GameObject adjacentRoom in Adjacent)
+        {
+            if (room == adjacentRoom)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void ChangeOwner(int newOwner)
@@ -98,15 +112,31 @@ public class Room : MonoBehaviour
                     break; // None of these modify income.
                 case 4: //Gold mine
                     roomGoldIncome += 5;
+                    if (roomName == "Mushroom Lake")
+                    {
+                        roomGoldIncome += 5;
+                    }
                     break;
                 case 5: //Upgraded Gold Mine;
-                    roomGoldIncome += 20;
+                    roomGoldIncome += 10;
+                    if (roomName == "Mushroom Lake")
+                    {
+                        roomGoldIncome += 10;
+                    }
                     break;
                 case 6: //Mushroom Farm
                     roomMushroomIncome += 1;
+                    if (roomName == "Mushroom Lake")
+                    {
+                        roomMushroomIncome += 1;
+                    }
                     break;
                 case 7:
                     roomMushroomIncome += 3;
+                    if (roomName == "Mushroom Lake")
+                    {
+                        roomMushroomIncome += 3;
+                    }
                     break;
 
             }

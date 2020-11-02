@@ -15,8 +15,8 @@ public class GameEngine : MonoBehaviour
     public List<GameObject> roomList;
     public int currentTurnOwner; //Should be set to 1 for player 1 and -1 for player 2
     public int goldPool;
-    private GameObject selectedRoom; // this are not assigned to actual rooms 
-    private GameObject selectedUnit;
+    public GameObject selectedRoom; // this are not assigned to actual rooms 
+    public GameObject selectedUnit;
     private GameObject selectedBuilding;
     public string lastSelection; // save the tag name of the last selection
 

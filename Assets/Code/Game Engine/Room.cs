@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Room : MonoBehaviour
 {
 
     public string roomName;
     public GameObject roomGameObject;
+    public GameObject roomTile;
     public int roomOwner; //Usage: should be 0 for neutral, 1 for player 1, -1 for player 2. 
     public List<GameObject> Adjacent; //A list of rooms that count as "Adjacent".
     public int[] roomID;
@@ -25,6 +27,10 @@ public class Room : MonoBehaviour
     //materials
     public Material player1Material;
     public Material player2Material;
+
+    //UI
+    public Text UnitNumGawb;
+    public Text UnitNumDorf;
 
     // Start is called before the first frame update
 
@@ -45,8 +51,11 @@ public class Room : MonoBehaviour
     }
 
     // Update is called once per frame
-
-    
+    void Update()
+    {
+        UnitNumGawb.text = units[0].ToString();
+        UnitNumDorf.text = units[1].ToString();
+    }
 
     public void Upgrade(int choice)
     {
@@ -76,13 +85,13 @@ public class Room : MonoBehaviour
         if (roomOwner == 1)
         {
             //roomMaterial = Resources.Load<Material>("P1_Own_Hi");
-            MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
+            MeshRenderer meshRenderer = roomTile.GetComponent<MeshRenderer>();
             meshRenderer.material = player1Material;
         }
         else
         {
             //roomMaterial = Resources.Load<Material>("Player 2 Owned");
-            MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
+            MeshRenderer meshRenderer = roomTile.GetComponent<MeshRenderer>();
             meshRenderer.material = player2Material;
         }
     }

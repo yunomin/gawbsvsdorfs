@@ -114,9 +114,14 @@ public class Room : MonoBehaviour
         {
             switch (builtBuildings[x])
             {
-                case 0: //No building built.          
-                case 1: //Base                    
+                case 0: //No building built.     
+                    break;
+                case 1: //Base       
+                    roomGoldIncome += 5;
+                    roomMushroomIncome += 1;
+                    break;
                 case 2: //Mercenary camp.
+                    break;
                 case 3: //Upgraded mercenary camp;
                     break; // None of these modify income.
                 case 4: //Gold mine
@@ -147,7 +152,10 @@ public class Room : MonoBehaviour
                         roomMushroomIncome += 3;
                     }
                     break;
-
+                case 8:
+                    roomGoldIncome += 5;
+                    roomMushroomIncome += 1;
+                    break;
             }
 
         }

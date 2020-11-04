@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Room : MonoBehaviour
 {
@@ -27,6 +28,10 @@ public class Room : MonoBehaviour
     public Material player1Material;
     public Material player2Material;
 
+    //UI
+    public Text UnitNumGawb;
+    public Text UnitNumDorf;
+
     // Start is called before the first frame update
 
     public Room()
@@ -46,8 +51,11 @@ public class Room : MonoBehaviour
     }
 
     // Update is called once per frame
-
-    
+    void Update()
+    {
+        UnitNumGawb.text = units[0].ToString();
+        UnitNumDorf.text = units[1].ToString();
+    }
 
     public void Upgrade(int choice)
     {

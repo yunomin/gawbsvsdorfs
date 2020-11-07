@@ -89,6 +89,11 @@ public class ButtonManager : MonoBehaviour
     // UI variable
     private int buildSelection;
 
+    //Action Indicator Images
+    public Sprite GawbPic;
+    public Sprite DorfPic;
+    public GameObject ActionOneIndicator;
+    public GameObject ActionTwoIndicator;
 
     // Start is called before the first frame update
     void Start()
@@ -128,6 +133,51 @@ public class ButtonManager : MonoBehaviour
 
         // change 
         turnText.text = gameEngine.GetComponent<GameEngine>().turnNumber.ToString();
+        if (gameEngine.GetComponent<GameEngine>().ActionUsed)
+        {
+            if (gameEngine.GetComponent<GameEngine>().currentTurnOwner == 1)
+            {
+                if (gameEngine.GetComponent<GameEngine>().numActions == 2)
+                {
+                    ActionOneIndicator.GetComponent<Image>().sprite = DorfPic;
+                    ActionTwoIndicator.GetComponent<Image>().sprite = DorfPic;
+                    gameEngine.GetComponent<GameEngine>().ActionUsed = false;
+                }
+                else if (gameEngine.GetComponent<GameEngine>().numActions == 1)
+                {
+                    ActionOneIndicator.GetComponent<Image>().sprite = null;
+                    ActionTwoIndicator.GetComponent<Image>().sprite = DorfPic;
+                    gameEngine.GetComponent<GameEngine>().ActionUsed = false;
+                }
+                else if (gameEngine.GetComponent<GameEngine>().numActions == 0)
+                {
+                    ActionOneIndicator.GetComponent<Image>().sprite = null;
+                    ActionTwoIndicator.GetComponent<Image>().sprite = null;
+                    gameEngine.GetComponent<GameEngine>().ActionUsed = false;
+                }
+            }
+            else
+            {
+                if (gameEngine.GetComponent<GameEngine>().numActions == 2)
+                {
+                    ActionOneIndicator.GetComponent<Image>().sprite = GawbPic;
+                    ActionTwoIndicator.GetComponent<Image>().sprite = GawbPic;
+                    gameEngine.GetComponent<GameEngine>().ActionUsed = false;
+                }
+                else if (gameEngine.GetComponent<GameEngine>().numActions == 1)
+                {
+                    ActionOneIndicator.GetComponent<Image>().sprite = null;
+                    ActionTwoIndicator.GetComponent<Image>().sprite = GawbPic;
+                    gameEngine.GetComponent<GameEngine>().ActionUsed = false;
+                }
+                else if (gameEngine.GetComponent<GameEngine>().numActions == 0)
+                {
+                    ActionOneIndicator.GetComponent<Image>().sprite = null;
+                    ActionTwoIndicator.GetComponent<Image>().sprite = null;
+                    gameEngine.GetComponent<GameEngine>().ActionUsed = false;
+                }
+            }
+        }
     }
     private void actionOff()
     {
@@ -173,7 +223,7 @@ public class ButtonManager : MonoBehaviour
     public void Upgrade()
     {
         // need to call upgrade method in GE
-        gameEngine.GetComponent<GameEngine>().Upgrade(7);
+        gameEngine.GetComponent<GameEngine>().Upgrade(5);
         upgradePanel.SetActive(false);
     }
     public void BuildCamp()

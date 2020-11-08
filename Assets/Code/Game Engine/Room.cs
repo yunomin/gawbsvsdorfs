@@ -126,28 +126,28 @@ public class Room : MonoBehaviour
                     break; // None of these modify income.
                 case 4: //Gold mine
                     roomGoldIncome += 5;
-                    if (roomName == "Mushroom Lake")
+                    if (roomName == "3-2")
                     {
                         roomGoldIncome += 5;
                     }
                     break;
                 case 5: //Upgraded Gold Mine;
                     roomGoldIncome += 10;
-                    if (roomName == "Mushroom Lake")
+                    if (roomName == "3-2")
                     {
                         roomGoldIncome += 10;
                     }
                     break;
                 case 6: //Mushroom Farm
                     roomMushroomIncome += 1;
-                    if (roomName == "Mushroom Lake")
+                    if (roomName == "3-2")
                     {
                         roomMushroomIncome += 1;
                     }
                     break;
                 case 7:
                     roomMushroomIncome += 3;
-                    if (roomName == "Mushroom Lake")
+                    if (roomName == "3-2")
                     {
                         roomMushroomIncome += 3;
                     }

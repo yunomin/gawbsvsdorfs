@@ -43,6 +43,7 @@ public class GameEngine : MonoBehaviour
     public string currGoldp1;
     public string currMushroomp1;
     public bool ActionUsed;
+    public bool AIMove;
     public string currGoldp2;
     public string currMushroomp2;
     public int buildType;
@@ -130,7 +131,7 @@ public class GameEngine : MonoBehaviour
         goldPool = 200;
         currentTurnOwner = 1; //Player 1, (remember -1 is player 2)
         numActions = 2;
-        player1.StartTurn();
+        player1.StartTurn(roomList);
         PopulateRoomStart();
         unitLifted = false;
 
@@ -152,16 +153,21 @@ public class GameEngine : MonoBehaviour
         isEnd = true;
         print("changing turn");
         isGameOver();
-        if(currentTurnOwner > 0)
+        List<string> AIActions = new List<string> { };
+        if (currentTurnOwner > 0)
         {
             currentTurnOwner *= -1;
-            player2.StartTurn();
+            AIActions = player2.StartTurn(roomList);
             clearSelection();
+            if (player2.isAI)
+            {
+                ProcessActions(AIActions);
+            }
         }
         else
         {
             currentTurnOwner *= -1;
-            player1.StartTurn();
+            player1.StartTurn(roomList);
             clearSelection();
         }
         this.turnNumber++;
@@ -170,6 +176,54 @@ public class GameEngine : MonoBehaviour
         Harvest(); 
     }
 
+    //make AI moves
+    void ProcessActions(List<string> AIActions)
+    {
+        switch (AIActions[0])
+        {
+            case "move":
+                foreach (GameObject room1 in roomList) {
+                    if (room1.GetComponent<Room>().roomName == AIActions[1])
+                    {
+                        SelectRoom(room1);
+                        SelectUnit(room1.GetComponent<Room>().unitSpawns[1]);
+                        MoveUnit();
+                        break;
+                    }
+                }
+                
+                StartCoroutine(new WaitForSecondsRealtime(2));
+                foreach (GameObject room2 in roomList)
+                {
+                    if (room2.GetComponent<Room>().roomName == AIActions[2])
+                    {
+                        previouslySelectedRoom = selectedRoom;
+                        previouslySelectedUnit = selectedUnit;
+                        SelectRoom(room2);
+                        SelectUnit(room2.GetComponent<Room>().unitSpawns[1]);
+                        MoveUnit();
+                        break;
+                    }
+                }
+                break;
+        }
+        switch (AIActions[4])
+        {
+            case "build":
+                foreach (GameObject room1 in roomList)
+                {
+                    if (room1.GetComponent<Room>().roomName == AIActions[5])
+                    {
+                        SelectRoom(room1);
+                        Build(int.Parse(AIActions[6]));
+                        break;
+                    }
+                }
+                break;
+        }
+        AIMove = true;
+        ChangeTurn();
+    }
     int isGameOver()
     {
         if (goldPool <= 0)
@@ -242,7 +296,7 @@ public class GameEngine : MonoBehaviour
         if (unitLifted)
         {
             //visual
-            liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 1, liftedUnit.transform.position.z);
+            //liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 1, liftedUnit.transform.position.z);
             unitLifted = false;
             
             //check if move can be made
@@ -313,7 +367,7 @@ public class GameEngine : MonoBehaviour
     public int overwork ()
     {
         int multiplier = 1;
-        if (selectedRoom.GetComponent<Room>().roomName == "Mushroom Lake")
+        if (selectedRoom.GetComponent<Room>().roomName == "3-2")
         {
             multiplier = 2;
         }

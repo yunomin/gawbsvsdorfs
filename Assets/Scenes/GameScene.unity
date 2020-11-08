@@ -589,7 +589,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: def8729b61d84a64da08993759c57231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomName: Dwarf Base
+  roomName: 5-1
   roomGameObject: {fileID: 70793456}
   roomTile: {fileID: 2109538778}
   roomOwner: 1
@@ -922,7 +922,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 136788493}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 28.358, y: -0.097, z: 24.88296}
   m_LocalScale: {x: 0.08208482, y: 0.08208482, z: 0.08208482}
   m_Children:
@@ -932,8 +932,8 @@ Transform:
   - {fileID: 1672716906}
   - {fileID: 1345794374}
   - {fileID: 599978736}
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_Father: {fileID: 1179182203}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &151046983
 GameObject:
@@ -2074,7 +2074,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: def8729b61d84a64da08993759c57231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomName: 
+  roomName: 3-1
   roomGameObject: {fileID: 291821562}
   roomTile: {fileID: 1683012650}
   roomOwner: 0
@@ -2731,7 +2731,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: def8729b61d84a64da08993759c57231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomName: 
+  roomName: 2-3
   roomGameObject: {fileID: 367184105}
   roomTile: {fileID: 1224090189}
   roomOwner: -1
@@ -11111,6 +11111,7 @@ MonoBehaviour:
   currGoldp1: 
   currMushroomp1: 
   ActionUsed: 0
+  AIMove: 0
   currGoldp2: 
   currMushroomp2: 
   buildType: 0
@@ -11155,7 +11156,7 @@ MonoBehaviour:
   mushroomReserve: 0
   mushroomIncome: 0
   mushroomUpkeep: 0
-  actions: 0
+  numActions: 0
   ownedRooms:
   - {fileID: 1850108217}
   - {fileID: 921326933}
@@ -11163,6 +11164,7 @@ MonoBehaviour:
   - {fileID: 367184105}
   unitCount: 6
   units: []
+  isAI: 1
 --- !u!114 &773393503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11182,7 +11184,7 @@ MonoBehaviour:
   mushroomReserve: 0
   mushroomIncome: 0
   mushroomUpkeep: 0
-  actions: 0
+  numActions: 0
   ownedRooms:
   - {fileID: 70793456}
   - {fileID: 449099640}
@@ -11190,6 +11192,7 @@ MonoBehaviour:
   - {fileID: 1810746548}
   unitCount: 6
   units: []
+  isAI: 0
 --- !u!1001 &776129060
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12539,7 +12542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: def8729b61d84a64da08993759c57231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomName: 
+  roomName: 2-1
   roomGameObject: {fileID: 921326933}
   roomTile: {fileID: 1995059973}
   roomOwner: 0
@@ -13072,7 +13075,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: def8729b61d84a64da08993759c57231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomName: 
+  roomName: 2-2
   roomGameObject: {fileID: 1475712728}
   roomTile: {fileID: 0}
   roomOwner: -1
@@ -15369,6 +15372,7 @@ Transform:
   - {fileID: 773393501}
   - {fileID: 597158962}
   - {fileID: 1243660716}
+  - {fileID: 136788494}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -19545,7 +19549,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 23.126, y: -99, z: -45.657}
 --- !u!1 &1646468112 stripped
 GameObject:
@@ -20405,7 +20409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: def8729b61d84a64da08993759c57231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomName: Mushroom Lake
+  roomName: 3-2
   roomGameObject: {fileID: 1733983600}
   roomTile: {fileID: 1579352566}
   roomOwner: 0
@@ -21813,7 +21817,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: def8729b61d84a64da08993759c57231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomName: 
+  roomName: 1-1
   roomGameObject: {fileID: 1850108217}
   roomTile: {fileID: 915360132}
   roomOwner: 0
@@ -22849,7 +22853,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: def8729b61d84a64da08993759c57231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomName: 
+  roomName: 3-3
   roomGameObject: {fileID: 1979023577}
   roomTile: {fileID: 1576669950}
   roomOwner: 0

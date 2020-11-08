@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class AI : MonoBehaviour
 {
     public string playerName;
     public bool myTurn;
@@ -11,50 +11,88 @@ public class Player : MonoBehaviour
     public int mushroomReserve;
     public int mushroomIncome;
     public int mushroomUpkeep;
-    public int numActions;
+    public int actions;
     public List<GameObject> ownedRooms;
     public int unitCount;
     public List<GameObject> units;
-    public bool isAI;
+    public int stateScoreMod;
     // Start is called before the first frame update
 
     void Start()
     {
-        
+
     }
 
-    public Player()
+    public AI()
     {
         myTurn = false;
         goldReserve = 10;
         goldIncome = 0;
         mushroomReserve = 0;
-        mushroomIncome = 0;
-        mushroomUpkeep = 0;
-        numActions = 0;
+        mushroomIncome = 6;
+        mushroomUpkeep = 6;
+        actions = 0;
     }
 
-    public List<string> StartTurn(List<GameObject> roomList)
+    public void StartTurn(List<Room> roomList)
     {
-        numActions = 2;
+        int secondActionIndex = 0;
+        this.actions = 2;
         myTurn = true;
         CalcIncome();
         MushroomEconomy();
         goldReserve += goldIncome;
-        if (isAI)
-        {
-            roomList = roomList;
-            List<string> AIAction = GetMove(roomList);
-            for (int i = 0; i < AIAction.Count; i++)
+        stateScoreMod = 0;
+        List<string> actions = new List<string>();
+        List<Room> tempRoomList = roomList;
+        /*
+        while (numActions > 0) { 
+            List<string> currAction = GetAction(tempRoomList, numActions);
+            for (int i = 0; i < currAction.Count; i++)
             {
-                print(AIAction[i]);
+                actions.Add(currAction[i]);
             }
-            return AIAction;
         }
-        else
+        */
+        
+        actions = GetMove(tempRoomList);
+        switch (actions[0])
         {
-            return new List<string> { };
+            case "move":
+                //move all units in actions[1] to actions[2]
+                secondActionIndex = 4;
+                break;
         }
+        switch (actions[secondActionIndex])
+        {
+            case "build":
+                //build building type actions[secondActionIndex + 2] in room actions[secondActionIndex + 1]
+                break;
+            case "overtime":
+                //harvest building type actions[secondActionIndex + 2] in room actions[secondActionIndex + 1]
+                break;
+        }
+        
+        //random move selection
+        System.Random rnd = new System.Random();
+        //for each room
+        List<Room> ownedRoomList = new List<Room>();
+        for (int r = 0; r < roomList.Count; r++)
+        {
+            //if the AI owns it
+            if (roomList[r].roomOwner == -1)
+            {
+                ownedRoomList.Add(roomList[r]);
+            }
+        }
+        int moveFrom = rnd.Next(0, ownedRoomList.Count - 1);
+        int moveTo = rnd.Next(0, ownedRoomList[moveFrom].Adjacent.Count - 1);
+        //for each room the AI can move to from the current room
+        //need to add moving to owned rooms
+    }
+
+    void EndTurn()
+    {
 
     }
 
@@ -73,13 +111,13 @@ public class Player : MonoBehaviour
 
     void UsedAction()
     {
-        numActions--;
-        if (numActions == 0)
+        actions--;
+        if (actions == 0)
         {
             //endTurn();
         }
     }
-    
+
     void ControlRoom(GameObject newOwned)
     {
         ownedRooms.Add(newOwned);
@@ -98,19 +136,10 @@ public class Player : MonoBehaviour
             newGoldIncome += roomscript.GetGoldIncome();
         }
         mushroomIncome = newMushroomIncome;
-        goldIncome = newGoldIncome; 
+        goldIncome = newGoldIncome;
     }
-     
 
-
-
-
-
-
-    //AI stuff
-    
-    
-    List<string> GetAction(List<GameObject> roomList, int numActions)
+    List<string> GetAction(List<Room> roomList, int numActions)
     {
         if (numActions == 2)
         {
@@ -132,7 +161,7 @@ public class Player : MonoBehaviour
         return actions;
     }
 
-    List<string> GetMove(List<GameObject> roomList)
+    List<string> GetMove(List<Room> roomList)
     {
         List<string> actions = new List<string>();
         actions.Add("move"); //action name
@@ -143,50 +172,40 @@ public class Player : MonoBehaviour
         for (int r = 0; r < roomList.Count; r++)
         {
             //for each room that the AI owns
-            if (roomList[r].GetComponent<Room>().roomOwner == -1)
+            if (roomList[r].roomOwner == -1)
             {
                 //for each room the AI can move to from the current room
                 //need to add moving to owned rooms
-                for (int a = 0; a < roomList[r].GetComponent<Room>().Adjacent.Count; a++)
+                for (int a = 0; a < roomList[r].Adjacent.Count; a++)
                 {
-
-                    List<GameObject> tempRoomList = roomList;
+                    
+                    List<Room> tempRoomList = roomList;
                     //adjust tempRoomList to move from roomList[r] to roomList[r].Adjacent[a]
-                    tempRoomList[r].GetComponent<Room>().units[1] -= 1;
-                    int adjIndex = -1;
-                    for (int q = 0; q < tempRoomList.Count; q++)
-                    {
-                        if (tempRoomList[1].GetComponent<Room>().roomName == roomList[r].GetComponent<Room>().Adjacent[a].GetComponent<Room>().roomName)
-                        {
-                            adjIndex = 1;
-                        }
-                    }
-                    tempRoomList[adjIndex].GetComponent<Room>().units[1] += 1;
                     List<string> nonMoveAction = GetBuild(roomList);
                     List<string> battleAction = GetBattle(roomList);
-                    if (int.Parse(battleAction[0]) > int.Parse(nonMoveAction[0]))
+                    if (false /*int.Parse(battleAction[0]) > int.Parse(nonMoveAction[0])*/)
                     {
                         nonMoveAction = battleAction;
                     }
                     List<string> overtimeAction = GetOvertime(roomList);
-                    if (int.Parse(overtimeAction[0]) > int.Parse(nonMoveAction[0]))
+                    if (false /*int.Parse(overtimeAction[0]) > int.Parse(nonMoveAction[0])*/)
                     {
                         nonMoveAction = overtimeAction;
                     }
                     List<string> controlAction = GetControl(roomList);
-                    if (int.Parse(controlAction[0]) > int.Parse(nonMoveAction[0]))
+                    if (false /*int.Parse(controlAction[0]) > int.Parse(nonMoveAction[0])*/)
                     {
                         nonMoveAction = controlAction;
                     }
                     if (int.Parse(nonMoveAction[0]) > maxStateScore)
                     {
                         maxStateScore = int.Parse(nonMoveAction[0]);
-                        actions[1] = roomList[r].GetComponent<Room>().roomName;
-                        actions[2] = roomList[r].GetComponent<Room>().Adjacent[a].GetComponent<Room>().roomName;
+                        actions[1] = roomList[r].roomName;
+                        //actions[2] = roomList[r].Adjacent[a].roomName;
                         actions[3] = "num to move";
                         for (int n = 4; n < 4 + nonMoveAction.Count - 1; n++)
                         {
-                            actions.Add(nonMoveAction[n - 3]);
+                            actions[n] = nonMoveAction[n - 3];
                         }
                     }
                 }
@@ -195,8 +214,8 @@ public class Player : MonoBehaviour
         return actions;
     }
 
-    List<string> GetBuild(List<GameObject> roomList)
-    {
+    List<string> GetBuild(List<Room> roomList)
+    {   
         List<string> moveScore = new List<string>();
         moveScore.Add("");
         moveScore.Add("build");
@@ -206,19 +225,19 @@ public class Player : MonoBehaviour
         for (int r = 0; r < roomList.Count; r++)
         {
             //for each room that the AI owns
-            if (roomList[r].GetComponent<Room>().roomOwner == -1)
+            if (roomList[r].roomOwner == -1)
             {
-                List<GameObject> tempRoomList = roomList;
+                List<Room> tempRoomList = roomList;
                 //if can upgrade (priority: Gold, Mushrooms, Barraks)
                 //else if can build
-                if (roomList[r].GetComponent<Room>().emptySlots > 0)
+                if (roomList[r].emptySlots > 0)
                 {
-                    tempRoomList[r].GetComponent<Room>().builtBuildings[tempRoomList[r].GetComponent<Room>().roomSlots - tempRoomList[r].GetComponent<Room>().emptySlots] = 4;
+                    tempRoomList[r].builtBuildings[tempRoomList[r].roomSlots - tempRoomList[r].emptySlots] = 4;
                     int currStateScore = stateScore(tempRoomList);
                     if (currStateScore > maxStateScore)
                     {
                         moveScore[0] = currStateScore.ToString();
-                        moveScore[2] = roomList[r].GetComponent<Room>().roomName;
+                        moveScore[2] = roomList[r].roomName;
                         moveScore[3] = "4";
                     }
                 }
@@ -228,7 +247,7 @@ public class Player : MonoBehaviour
         return moveScore;
     }
 
-    List<string> GetBattle(List<GameObject> roomList)
+    List<string> GetBattle(List<Room> roomList)
     {
         List<string> tempRoomList = new List<string>();
         tempRoomList.Add("0");
@@ -236,13 +255,13 @@ public class Player : MonoBehaviour
         //how do battles work
     }
 
-    List<string> GetOvertime(List<GameObject> roomList)
+    List<string> GetOvertime(List<Room> roomList)
     {
         List<string> tempRoomList = new List<string>();
         for (int r = 0; r < roomList.Count; r++)
         {
             //for each room that the AI owns
-            if (roomList[r].GetComponent<Room>().roomOwner == -1)
+            if (roomList[r].roomOwner == -1)
             {
                 //List<string> tempRoomList;
                 //for each building owned by AI in room
@@ -252,13 +271,13 @@ public class Player : MonoBehaviour
         return tempRoomList;
     }
 
-    List<string> GetControl(List<GameObject> roomList)
+    List<string> GetControl(List<Room> roomList)
     {
         int roomToControl = -1;
         for (int r = 0; r < roomList.Count; r++)
         {
             //for each room that the AI doesn't own
-            if (roomList[r].GetComponent<Room>().roomOwner != -1)
+            if (roomList[r].roomOwner != -1)
             {
                 if (true /*AI can take control*/)
                 {
@@ -266,7 +285,7 @@ public class Player : MonoBehaviour
                 }
             }
         }
-        List<GameObject> tempRoomList = roomList;
+        List<Room> tempRoomList = roomList;
         //edit tempRoomList to have room r controlled
         List<string> moveScore = new List<string>();
         moveScore.Add(stateScore(tempRoomList).ToString());
@@ -276,16 +295,16 @@ public class Player : MonoBehaviour
 
     }
 
-    int stateScore(List<GameObject> roomList)
+    int stateScore(List<Room> roomList)
     {
         int newMushroomIncome = 0;
         int newGoldIncome = 0;
         foreach (var thisRoom in roomList)
         {
-            if (thisRoom.GetComponent<Room>().roomOwner == -1)
+            if (thisRoom.roomOwner == -1)
             {
-                newMushroomIncome += thisRoom.GetComponent<Room>().GetMushroomIncome();
-                newGoldIncome += thisRoom.GetComponent<Room>().GetGoldIncome();
+                newMushroomIncome += thisRoom.GetMushroomIncome();
+                newGoldIncome += thisRoom.GetGoldIncome();
             }
         }
         int stateScore = 10 * ownedRooms.Count + newMushroomIncome + goldReserve / 4 + mushroomReserve / 4 + unitCount; //+ buildings score
@@ -295,4 +314,6 @@ public class Player : MonoBehaviour
         }
         return stateScore;
     }
+
+
 }

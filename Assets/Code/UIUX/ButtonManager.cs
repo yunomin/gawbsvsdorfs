@@ -131,6 +131,12 @@ public class ButtonManager : MonoBehaviour
             endTurnButton.GetComponent<Button>().interactable = false;
         }
 
+        //AI update
+        if (gameEngine.GetComponent<GameEngine>().AIMove)
+        {
+            Harvest();
+        }
+
         // change 
         turnText.text = gameEngine.GetComponent<GameEngine>().turnNumber.ToString();
         if (gameEngine.GetComponent<GameEngine>().ActionUsed)

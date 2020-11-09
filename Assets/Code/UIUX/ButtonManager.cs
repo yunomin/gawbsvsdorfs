@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -45,6 +46,8 @@ public class ButtonManager : MonoBehaviour
     public Sprite DorfPic;
     public GameObject ActionOneIndicator;
     public GameObject ActionTwoIndicator;
+    private Color tc;
+    private Color sc;
 
     // Start is called before the first frame update
     void Start()
@@ -52,6 +55,9 @@ public class ButtonManager : MonoBehaviour
         buildSelection = 0;
         actionOff();
         endTurnButton.GetComponent<Button>().interactable = false;
+        tc = ActionOneIndicator.GetComponent<Image>().color;
+        tc.a = 0.0f;
+        sc = ActionOneIndicator.GetComponent<Image>().color;
     }
 
     // Update is called once per frame
@@ -90,20 +96,25 @@ public class ButtonManager : MonoBehaviour
             {
                 if (gameEngine.GetComponent<GameEngine>().numActions == 2)
                 {
+                    ActionOneIndicator.GetComponent<Image>().color = sc;
                     ActionOneIndicator.GetComponent<Image>().sprite = DorfPic;
+                    ActionTwoIndicator.GetComponent<Image>().color = sc;
                     ActionTwoIndicator.GetComponent<Image>().sprite = DorfPic;
                     gameEngine.GetComponent<GameEngine>().ActionUsed = false;
                 }
                 else if (gameEngine.GetComponent<GameEngine>().numActions == 1)
                 {
                     ActionOneIndicator.GetComponent<Image>().sprite = null;
+                    ActionOneIndicator.GetComponent<Image>().color = tc;
                     ActionTwoIndicator.GetComponent<Image>().sprite = DorfPic;
                     gameEngine.GetComponent<GameEngine>().ActionUsed = false;
                 }
                 else if (gameEngine.GetComponent<GameEngine>().numActions == 0)
                 {
                     ActionOneIndicator.GetComponent<Image>().sprite = null;
+                    ActionOneIndicator.GetComponent<Image>().color = tc;
                     ActionTwoIndicator.GetComponent<Image>().sprite = null;
+                    ActionTwoIndicator.GetComponent<Image>().color = tc;
                     gameEngine.GetComponent<GameEngine>().ActionUsed = false;
                 }
             }
@@ -111,20 +122,25 @@ public class ButtonManager : MonoBehaviour
             {
                 if (gameEngine.GetComponent<GameEngine>().numActions == 2)
                 {
+                    ActionOneIndicator.GetComponent<Image>().color = sc;
                     ActionOneIndicator.GetComponent<Image>().sprite = GawbPic;
+                    ActionTwoIndicator.GetComponent<Image>().color = sc;
                     ActionTwoIndicator.GetComponent<Image>().sprite = GawbPic;
                     gameEngine.GetComponent<GameEngine>().ActionUsed = false;
                 }
                 else if (gameEngine.GetComponent<GameEngine>().numActions == 1)
                 {
                     ActionOneIndicator.GetComponent<Image>().sprite = null;
+                    ActionOneIndicator.GetComponent<Image>().color = tc;
                     ActionTwoIndicator.GetComponent<Image>().sprite = GawbPic;
                     gameEngine.GetComponent<GameEngine>().ActionUsed = false;
                 }
                 else if (gameEngine.GetComponent<GameEngine>().numActions == 0)
                 {
                     ActionOneIndicator.GetComponent<Image>().sprite = null;
+                    ActionOneIndicator.GetComponent<Image>().color = tc;
                     ActionTwoIndicator.GetComponent<Image>().sprite = null;
+                    ActionTwoIndicator.GetComponent<Image>().color = tc;
                     gameEngine.GetComponent<GameEngine>().ActionUsed = false;
                 }
             }

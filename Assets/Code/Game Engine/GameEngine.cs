@@ -59,6 +59,9 @@ public class GameEngine : MonoBehaviour
     public float lightHeight;
     public bool isEnable;
 
+    // Error display
+    public GameObject err;
+
     void Update()
     {
         camp1Prefab.gameObject.tag = "building";
@@ -139,6 +142,8 @@ public class GameEngine : MonoBehaviour
         ActionUsed = true;
         // testing code
         isTurn = true;
+
+
     }
     private void clearSelection()
     {
@@ -249,6 +254,7 @@ public class GameEngine : MonoBehaviour
             if (!(previouslySelectedRoom.GetComponent<Room>().isAdjacent(selectedRoom)))
             {
                 //cannot make move
+                sendError("Can not move there..");
                 return 0;
             }
 
@@ -390,6 +396,7 @@ public class GameEngine : MonoBehaviour
         else
         {
             //quit out
+            sendError("The selected room is not owned..");
             return 0;
         }
     }
@@ -416,12 +423,14 @@ public class GameEngine : MonoBehaviour
                 {
                     //quit out
                     //can't gain control of this room
+                    sendError("You need more units in the room..");
                 }
             }
             else
             {
                 //quit out
                 //can't gain control of this room
+                sendError("You already controled the room..");
             }
         }
         else
@@ -444,12 +453,14 @@ public class GameEngine : MonoBehaviour
                 {
                     //quit out
                     //can't gain control of this room
+                    sendError("You need more units in the room..");
                 }
             }
             else
             {
                 //quit out
                 //can't gain control of this room
+                sendError("You already controled the room..");
             }
         }
     }
@@ -474,6 +485,7 @@ public class GameEngine : MonoBehaviour
             {
                 //quit out
                 //not building of that type to upgrade
+                sendError("No existing building to update..");
                 return 0;
             }
         }
@@ -521,6 +533,7 @@ public class GameEngine : MonoBehaviour
             { //no slots left or does not own room
                 //quit out
                 //cannot build here
+                sendError("You are not the owner of the room.. / No empty slot.."); // TODO: MAYBE SEPARATE THE TWO CONDITIONS (NO SLOTS LEFT/ NOT OWN ROOM) TO GIVE PLAYER MORE INFO
                 return 0;
             }
             else if (currentTurnOwner == 1 && (selectedRoom.GetComponent<Room>().units[0] < 1 || 
@@ -528,6 +541,7 @@ public class GameEngine : MonoBehaviour
             {
                 //quit out
                 //cannot build here
+                sendError("You do not have enough gold..");
                 return 0;
             }
             else if (currentTurnOwner == -1 && (selectedRoom.GetComponent<Room>().units[1] < 1 ||
@@ -535,6 +549,7 @@ public class GameEngine : MonoBehaviour
             {
                 //quit out
                 //cannot build here
+                sendError("You do not have enough gold..");
                 return 0;
             }
             else //build conditions are met
@@ -600,6 +615,7 @@ public class GameEngine : MonoBehaviour
         else
         {
             //invalid building choice
+            sendError(""); // TODO: DO NOT KNOW WHAT IS THIS..
             return 0;
         }
     }
@@ -639,7 +655,7 @@ public class GameEngine : MonoBehaviour
 
         if (selectedRoom == null) // check for room selection
         {
-            print("error, no room selected");
+            sendError("No room is selected..");
             return;
         }
         if (a == 1)
@@ -664,7 +680,7 @@ public class GameEngine : MonoBehaviour
 
         if(selectedRoom.GetComponent<Room>().units[attacker] == 0)
         {
-            print("error, no units in selected room");
+            sendError("No units in the selected room..");
             return;
         }
 
@@ -797,5 +813,8 @@ public class GameEngine : MonoBehaviour
         }
     }
 
-    
+    private void sendError(string m)
+    {
+        err.GetComponent<ReminderManager>().updateMsg(m);
+    }
 }

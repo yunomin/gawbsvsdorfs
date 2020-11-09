@@ -42,7 +42,7 @@ public class GameEngine : MonoBehaviour
     // UI variables
     public string currGoldp1;
     public string currMushroomp1;
-
+    public bool ActionUsed;
     public string currGoldp2;
     public string currMushroomp2;
     public int buildType;
@@ -127,7 +127,7 @@ public class GameEngine : MonoBehaviour
         playerList.Add(player2);
         //Set up first turn parameters.
         //This should update to 2 after the turn switches.
-        goldPool = 300;
+        goldPool = 200;
         currentTurnOwner = 1; //Player 1, (remember -1 is player 2)
         numActions = 2;
         player1.StartTurn();
@@ -136,6 +136,7 @@ public class GameEngine : MonoBehaviour
 
         GameIsPause = false;
 
+        ActionUsed = true;
         // testing code
         isTurn = true;
     }
@@ -165,7 +166,8 @@ public class GameEngine : MonoBehaviour
         }
         this.turnNumber++;
         numActions = 2;
-        Harvest();
+        ActionUsed = true;
+        Harvest(); 
     }
 
     int isGameOver()
@@ -279,6 +281,7 @@ public class GameEngine : MonoBehaviour
             }
 
             numActions--;
+            ActionUsed = true;
             if (numActions == 0)
             {
                 this.ChangeTurn();
@@ -377,6 +380,7 @@ public class GameEngine : MonoBehaviour
             }
             
             numActions--;
+            ActionUsed = true;
             if (numActions == 0)
             {
                 this.ChangeTurn();
@@ -402,6 +406,7 @@ public class GameEngine : MonoBehaviour
                     player2.ownedRooms.Remove(selectedRoom);
                     player1.ownedRooms.Add(selectedRoom);
                     numActions--;
+                    ActionUsed = true;
                     if (numActions == 0)
                     {
                         this.ChangeTurn();
@@ -429,6 +434,7 @@ public class GameEngine : MonoBehaviour
                     player1.ownedRooms.Remove(selectedRoom);
                     player2.ownedRooms.Add(selectedRoom);
                     numActions--;
+                    ActionUsed = true;
                     if (numActions == 0)
                     {
                         this.ChangeTurn();
@@ -455,7 +461,7 @@ public class GameEngine : MonoBehaviour
         int upgradeIndex = -1;
         if (choice % 2 == 1)
         {
-            for (int i = 0; i < roomList.Count; i++)
+            for (int i = 0; i < selectedRoom.GetComponent<Room>().roomSlots; i++)
             {
                 if (selectedRoom.GetComponent<Room>().builtBuildings[i] == choice - 1)
                 {
@@ -497,6 +503,7 @@ public class GameEngine : MonoBehaviour
                 break;
         }
         numActions--;
+        ActionUsed = true;
         if (numActions == 0)
         {
             this.ChangeTurn();
@@ -582,6 +589,7 @@ public class GameEngine : MonoBehaviour
                 selectedRoom.GetComponent<Room>().emptySlots--;
                 Harvest();
                 numActions--;
+                ActionUsed = true;
                 if (numActions == 0)
                 {
                     this.ChangeTurn();
@@ -782,6 +790,7 @@ public class GameEngine : MonoBehaviour
         }
         
         numActions--;
+        ActionUsed = true;
         if (numActions == 0)
         {
             this.ChangeTurn();

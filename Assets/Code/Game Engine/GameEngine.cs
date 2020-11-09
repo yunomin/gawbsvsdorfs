@@ -488,6 +488,22 @@ public class GameEngine : MonoBehaviour
                 sendError("No existing building to update..");
                 return 0;
             }
+            else if (currentTurnOwner == 1 && (selectedRoom.GetComponent<Room>().units[0] < 1 ||
+                ((player1.goldReserve < 20 && (choice == 3 || choice == 5)) || (player1.goldReserve < 10 && choice == 7)))) //player has no units in room or doesn't have enough gold
+            {
+                //quit out
+                //cannot build here
+                sendError("You do not have enough gold..");
+                return 0;
+            }
+            else if (currentTurnOwner == -1 && (selectedRoom.GetComponent<Room>().units[1] < 1 ||
+                ((player2.goldReserve < 20 && (choice == 3 || choice == 5)) || (player2.goldReserve < 10 && choice == 7)))) //player has no units in room or doesn't have enough gold
+            {
+                //quit out
+                //cannot build here
+                sendError("You do not have enough gold..");
+                return 0;
+            }
         }
 
         selectedRoom.GetComponent<Room>().builtBuildings[upgradeIndex] = choice;
@@ -498,12 +514,28 @@ public class GameEngine : MonoBehaviour
                 buildPos = selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex].transform.position;
                 Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex]);
                 selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex] = Instantiate(camp1Prefab, buildPos, Quaternion.identity);
+                if (currentTurnOwner == 1)
+                {
+                    player1.goldReserve -= 20;
+                }
+                else
+                {
+                    player2.goldReserve -= 20;
+                }
                 break;
             case 5:
                 //delete old prefab and instantiate new one
                 buildPos = selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex].transform.position;
                 Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex]);
                 selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex] = Instantiate(goldMine_mesh, buildPos, Quaternion.identity);
+                if (currentTurnOwner == 1)
+                {
+                    player1.goldReserve -= 20;
+                }
+                else
+                {
+                    player2.goldReserve -= 20;
+                }
                 break;
             case 7:
                 buildPos = selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex].transform.position;
@@ -511,6 +543,14 @@ public class GameEngine : MonoBehaviour
                 Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex]);
                 System.Threading.Thread.Sleep(50);
                 selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex] = Instantiate(farm1Prefab, buildPos, Quaternion.identity);
+                if (currentTurnOwner == 1)
+                {
+                    player1.goldReserve -= 10;
+                }
+                else
+                {
+                    player2.goldReserve -= 10;
+                }
                 //delete old prefab and instantiate new one
                 break;
         }

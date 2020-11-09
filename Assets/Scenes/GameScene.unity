@@ -3069,7 +3069,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: FINISH
+  m_Text: 
 --- !u!222 &425659695
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4327,7 +4327,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: MOVE
+  m_Text: 
 --- !u!222 &513547748
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4979,6 +4979,7 @@ MonoBehaviour:
   ge: {fileID: 773393499}
   ExitMenuPanel: {fileID: 1561797860}
   quitEscMenu: {fileID: 1301576569}
+  fontb: {fileID: 12800000, guid: 59234a90b4badad43b72b7229a54add2, type: 3}
 --- !u!1 &599978733
 GameObject:
   m_ObjectHideFlags: 0
@@ -10196,7 +10197,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ATTACK
+  m_Text: 
 --- !u!222 &677732603
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17458,7 +17459,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: BUILD
+  m_Text: 
 --- !u!222 &1454082586
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20566,7 +20567,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: CONTROL
+  m_Text: 
 --- !u!222 &1780397395
 CanvasRenderer:
   m_ObjectHideFlags: 0

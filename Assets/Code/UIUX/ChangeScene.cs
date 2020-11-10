@@ -4,16 +4,22 @@ using System.Threading;
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Security.Cryptography.X509Certificates;
 
 public class ChangeScene : MonoBehaviour
 {
     public GameObject ge;
     public GameObject ExitMenuPanel;
     public Button quitEscMenu;
+    public Font fontb;
+    private Text[] GetText;
 
     void Start()
     {
+        GetText = Text.FindObjectsOfType<Text>();
 
+        foreach (Text go in GetText)
+            go.font = fontb;
     }
 
     void Update()

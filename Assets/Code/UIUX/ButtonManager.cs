@@ -1,59 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ButtonManager : MonoBehaviour
 {
-
-    /// <summary>
-    /// TODO:
-    /// UI flow:
-    /// game begin
-    ///     enter player 1's turn
-    ///         enter turn initiation, enable harvest (press to change income), disable harvest
-    ///         enter action state 1, enable action bar, apply selected funtion, action -1, change image on turn indicator
-    ///         enter action state 2, enable action bar 
-    ///         enter turn ending, enable endturn button
-    ///         tell game engine turn is end
-    ///     enter player 2's turn
-    ///     ...
-    ///     print out result
-    ///
-    /// Action flow
-    /// Actions start
-    ///     clear selection
-    ///     enable selection
-    /// Move 
-    ///     select unit
-    ///     select room
-    ///     test for error
-    ///     in update function: (only allow moving unit, does not hold the thread)
-    ///         if isMove, room selection != null
-    ///             move to selected
-    ///             moved set to true
-    ///             enable end action
-    ///     press move
-    ///     disable action buttons
-    ///     isMove set to true
-    ///     moved set to false
-    ///     enable unit selection
-    ///     enable room selection
-    ///     
-    /// inbetween selection
-    ///     clear selection(all)
-    ///     
-    /// Build
-    ///     select room, select building
-    ///     if last selection is building
-    ///         upgrade menu shows up and build 
-    ///     if last selection is room 
-    ///         build menu shows up
-    ///     in the end of upgrade and build , close two menus
-    ///     
-    /// press end action 
-    ///     
-    /// </summary>
 
     public GameObject gameEngine;
     public GameObject selectionEngine;
@@ -94,6 +46,8 @@ public class ButtonManager : MonoBehaviour
     public Sprite DorfPic;
     public GameObject ActionOneIndicator;
     public GameObject ActionTwoIndicator;
+    private Color tc;
+    private Color sc;
 
     // Start is called before the first frame update
     void Start()
@@ -101,6 +55,9 @@ public class ButtonManager : MonoBehaviour
         buildSelection = 0;
         actionOff();
         endTurnButton.GetComponent<Button>().interactable = false;
+        tc = ActionOneIndicator.GetComponent<Image>().color;
+        tc.a = 0.0f;
+        sc = ActionOneIndicator.GetComponent<Image>().color;
     }
 
     // Update is called once per frame
@@ -145,20 +102,25 @@ public class ButtonManager : MonoBehaviour
             {
                 if (gameEngine.GetComponent<GameEngine>().numActions == 2)
                 {
+                    ActionOneIndicator.GetComponent<Image>().color = sc;
                     ActionOneIndicator.GetComponent<Image>().sprite = DorfPic;
+                    ActionTwoIndicator.GetComponent<Image>().color = sc;
                     ActionTwoIndicator.GetComponent<Image>().sprite = DorfPic;
                     gameEngine.GetComponent<GameEngine>().ActionUsed = false;
                 }
                 else if (gameEngine.GetComponent<GameEngine>().numActions == 1)
                 {
                     ActionOneIndicator.GetComponent<Image>().sprite = null;
+                    ActionOneIndicator.GetComponent<Image>().color = tc;
                     ActionTwoIndicator.GetComponent<Image>().sprite = DorfPic;
                     gameEngine.GetComponent<GameEngine>().ActionUsed = false;
                 }
                 else if (gameEngine.GetComponent<GameEngine>().numActions == 0)
                 {
                     ActionOneIndicator.GetComponent<Image>().sprite = null;
+                    ActionOneIndicator.GetComponent<Image>().color = tc;
                     ActionTwoIndicator.GetComponent<Image>().sprite = null;
+                    ActionTwoIndicator.GetComponent<Image>().color = tc;
                     gameEngine.GetComponent<GameEngine>().ActionUsed = false;
                 }
             }
@@ -166,20 +128,25 @@ public class ButtonManager : MonoBehaviour
             {
                 if (gameEngine.GetComponent<GameEngine>().numActions == 2)
                 {
+                    ActionOneIndicator.GetComponent<Image>().color = sc;
                     ActionOneIndicator.GetComponent<Image>().sprite = GawbPic;
+                    ActionTwoIndicator.GetComponent<Image>().color = sc;
                     ActionTwoIndicator.GetComponent<Image>().sprite = GawbPic;
                     gameEngine.GetComponent<GameEngine>().ActionUsed = false;
                 }
                 else if (gameEngine.GetComponent<GameEngine>().numActions == 1)
                 {
                     ActionOneIndicator.GetComponent<Image>().sprite = null;
+                    ActionOneIndicator.GetComponent<Image>().color = tc;
                     ActionTwoIndicator.GetComponent<Image>().sprite = GawbPic;
                     gameEngine.GetComponent<GameEngine>().ActionUsed = false;
                 }
                 else if (gameEngine.GetComponent<GameEngine>().numActions == 0)
                 {
                     ActionOneIndicator.GetComponent<Image>().sprite = null;
+                    ActionOneIndicator.GetComponent<Image>().color = tc;
                     ActionTwoIndicator.GetComponent<Image>().sprite = null;
+                    ActionTwoIndicator.GetComponent<Image>().color = tc;
                     gameEngine.GetComponent<GameEngine>().ActionUsed = false;
                 }
             }

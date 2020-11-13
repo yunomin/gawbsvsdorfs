@@ -232,6 +232,7 @@ public class GameEngine : MonoBehaviour
                     {
                         player1.mushroomReserve--;
                         selectedRoom.GetComponent<Room>().units[0]++;
+                        player1.unitCount++;
                         needToHarvest = true;
                     }
                 }
@@ -266,6 +267,22 @@ public class GameEngine : MonoBehaviour
                 }
                 yield return null;
             }
+            while (player2.mushroomReserve > 0)
+            {
+                sendError("you have extra mushrooms. please click on your base to add another dorn there or click done");
+                //make done button active
+                if (Input.GetMouseButtonDown(0))
+                {
+                    if (selectedRoom.GetComponent<Room>().roomName == "1-1")
+                    {
+                        player2.mushroomReserve--;
+                        selectedRoom.GetComponent<Room>().units[1]++;
+                        player2.unitCount++;
+                        needToHarvest = true;
+                    }
+                }
+                yield return null;
+            }
             removingUnits = false;
             sendError("");
         }
@@ -276,14 +293,16 @@ public class GameEngine : MonoBehaviour
         if (currentTurnOwner == 1)
         {
             if (selectedRoom.GetComponent<Room>().units[0] == 1)
-            {
+            {player2.unitCount--;
                 selectedRoom.GetComponent<Room>().units[0]--;
+                player1.unitCount--;
                 selectedRoom.GetComponent<Room>().unitSpawns[0].active = false;
                 return true;
             }
             if (selectedRoom.GetComponent<Room>().units[0] > 1)
             {
                 selectedRoom.GetComponent<Room>().units[0]--;
+                player1.unitCount--;
                 return true;
             }
             else
@@ -297,12 +316,14 @@ public class GameEngine : MonoBehaviour
             if (selectedRoom.GetComponent<Room>().units[1] == 1)
             {
                 selectedRoom.GetComponent<Room>().units[1]--;
+                player2.unitCount--;
                 selectedRoom.GetComponent<Room>().unitSpawns[1].active = false;
                 return true;
             }
             if (selectedRoom.GetComponent<Room>().units[1] > 1)
             {
                 selectedRoom.GetComponent<Room>().units[1]--;
+                player2.unitCount--;
                 return true;
             }
             else

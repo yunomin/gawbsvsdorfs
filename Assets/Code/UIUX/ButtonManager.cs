@@ -40,6 +40,7 @@ public class ButtonManager : MonoBehaviour
 
     // UI variable
     private int buildSelection;
+    private int upgradeSelection;
 
     //Action Indicator Images
     public Sprite GawbPic;
@@ -187,11 +188,25 @@ public class ButtonManager : MonoBehaviour
         Harvest();
         print("test");
     }
+
+    public void UpdateCamp()
+    {
+        upgradeSelection = 3;
+        upgradeOpt();
+    }
+    public void UpdateMine()
+    {
+        upgradeSelection = 5;
+        upgradeOpt();
+    }
+    public void UpdateFarm()
+    {
+        upgradeSelection = 7;
+        upgradeOpt();
+    }
     public void Upgrade()
     {
-        // need to call upgrade method in GE
-        gameEngine.GetComponent<GameEngine>().Upgrade(5);
-        upgradePanel.SetActive(false);
+        upgradePanel.SetActive(true);
     }
     public void BuildCamp()
     {
@@ -215,18 +230,19 @@ public class ButtonManager : MonoBehaviour
         {
             buildOptionPanel.SetActive(true);
         }
-        else if (gameEngine.GetComponent<GameEngine>().lastSelection.Equals("building"))
-        {
-            upgradePanel.SetActive(true);
-        }
         else
         {
             // print error saying no selection room or building
         }
     }
+    public void upgradeOpt()
+    {
+        gameEngine.GetComponent<GameEngine>().Upgrade(upgradeSelection);
+        upgradePanel.SetActive(false);
+        Harvest();
+    }
     public void Build()
     {
-        // TODO: Upgrade buildings
         gameEngine.GetComponent<GameEngine>().Build(buildSelection);
         buildOptionPanel.SetActive(false);
         Harvest();

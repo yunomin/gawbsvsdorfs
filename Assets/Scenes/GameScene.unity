@@ -933,7 +933,7 @@ Transform:
   - {fileID: 1345794374}
   - {fileID: 599978736}
   m_Father: {fileID: 1179182203}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &151046983
 GameObject:
@@ -11187,6 +11187,9 @@ MonoBehaviour:
     type: 3}
   farm1Prefab: {fileID: 919132149155446097, guid: 0f6a4f45364db614d881deba3ffbcb0e,
     type: 3}
+  upgradedCampPrefab: {fileID: 0}
+  upgradedMinePrefab: {fileID: 0}
+  upgradedFarmPrefab: {fileID: 0}
   numActions: 0
   currGoldp1: 
   currMushroomp1: 
@@ -11196,6 +11199,7 @@ MonoBehaviour:
   currMushroomp2: 
   buildType: 0
   turnNumber: 1
+  removingUnits: 0
   GameIsPause: 0
   enableSelection: 0
   isTurn: 0
@@ -11245,7 +11249,7 @@ MonoBehaviour:
   - {fileID: 367184105}
   unitCount: 6
   units: []
-  isAI: 1
+  isAI: 0
 --- !u!114 &773393503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15581,6 +15585,7 @@ Transform:
   - {fileID: 773393501}
   - {fileID: 597158962}
   - {fileID: 1243660716}
+  - {fileID: 1109599038}
   - {fileID: 136788494}
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -15854,6 +15859,7 @@ MonoBehaviour:
   controlButton: {fileID: 1530688834}
   attackButton: {fileID: 2145910688}
   overworkButton: {fileID: 943511434}
+  upgradeButton: {fileID: 1443681114}
   endTurnButton: {fileID: 1456501825}
   undoButton: {fileID: 212471756}
   Mine: {fileID: 444203348}

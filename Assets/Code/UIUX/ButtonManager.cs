@@ -19,6 +19,7 @@ public class ButtonManager : MonoBehaviour
     public Button controlButton;
     public Button attackButton;
     public Button overworkButton;
+    public Button upgradeButton;
 
     public Button endTurnButton;
     public Button undoButton;
@@ -151,6 +152,19 @@ public class ButtonManager : MonoBehaviour
                 }
             }
         }
+        if (gameEngine.GetComponent<GameEngine>().removingUnits == true)
+        {
+            actionOff();
+        }
+        else
+        {
+            actionOn();
+        }
+        if (gameEngine.GetComponent<GameEngine>().needToHarvest)
+        {
+            Harvest();
+            gameEngine.GetComponent<GameEngine>().needToHarvest = false;
+        }
     }
     private void actionOff()
     {
@@ -159,6 +173,7 @@ public class ButtonManager : MonoBehaviour
         buildButton.GetComponent<Button>().interactable = false;
         moveButton.GetComponent<Button>().interactable = false;
         overworkButton.GetComponent<Button>().interactable = false;
+        upgradeButton.GetComponent<Button>().interactable = false;
     }
     private void actionOn()
     {
@@ -167,6 +182,7 @@ public class ButtonManager : MonoBehaviour
         controlButton.GetComponent<Button>().interactable = true;
         attackButton.GetComponent<Button>().interactable = true;
         overworkButton.GetComponent<Button>().interactable = true;
+        upgradeButton.GetComponent<Button>().interactable = true;
     }
     public void Harvest()
     {

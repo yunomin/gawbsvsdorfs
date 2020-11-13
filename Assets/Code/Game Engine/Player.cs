@@ -60,15 +60,15 @@ public class Player : MonoBehaviour
 
     void MushroomEconomy()
     {
-        int rem = mushroomIncome - mushroomUpkeep;
-        if (rem > 0)
-        {
+        int rem = mushroomIncome - unitCount;
+        //if (rem > 0)
+       // {
             mushroomReserve += rem;
-        }
+        /*}
         else if (rem < 0)
         {
             print("Error: Remainder in playerMushroomEconomy less than 0, should not happen.");
-        }
+        }*/
     }
 
     void UsedAction()
@@ -192,6 +192,8 @@ public class Player : MonoBehaviour
                 }
             }
         }
+
+        print("got actions");
         return actions;
     }
 

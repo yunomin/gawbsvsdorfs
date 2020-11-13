@@ -118,7 +118,7 @@ public class Room : MonoBehaviour
                     break;
                 case 1: //Base       
                     roomGoldIncome += 5;
-                    roomMushroomIncome += 1;
+                    roomMushroomIncome += 7;
                     break;
                 case 2: //Mercenary camp.
                     break;
@@ -154,7 +154,7 @@ public class Room : MonoBehaviour
                     break;
                 case 8:
                     roomGoldIncome += 5;
-                    roomMushroomIncome += 1;
+                    roomMushroomIncome += 6;
                     break;
             }
 

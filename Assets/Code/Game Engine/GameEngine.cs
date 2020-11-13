@@ -52,6 +52,8 @@ public class GameEngine : MonoBehaviour
     public string currMushroomp2;
     public int buildType;
     public int turnNumber;
+    public bool removingUnits;
+    public bool needToHarvest;
 
     public bool GameIsPause;
     public bool enableSelection;
@@ -168,9 +170,14 @@ public class GameEngine : MonoBehaviour
             currentTurnOwner *= -1;
             AIActions = player2.StartTurn(roomList);
             clearSelection();
+            goldPool -= player2.goldIncome;
             if (player2.isAI)
             {
                 ProcessActions(AIActions);
+            }
+            else
+            {
+                StartCoroutine(unitUpkeep());
             }
         }
         else
@@ -178,13 +185,133 @@ public class GameEngine : MonoBehaviour
             currentTurnOwner *= -1;
             player1.StartTurn(roomList);
             clearSelection();
+            goldPool -= player1.goldIncome;
+            StartCoroutine(unitUpkeep());
         }
         this.turnNumber++;
         numActions = 2;
         ActionUsed = true;
-        Harvest(); 
+        Harvest();
     }
 
+    IEnumerator unitUpkeep()
+    {
+        removingUnits = true;
+        if (currentTurnOwner == 1)
+        {
+            while (player1.mushroomReserve < 0)
+            {
+                //wait for player to select room
+                sendError("you are low on mushrooms. please select a room to remove a dorf from. you must remove " + (player1.mushroomReserve * -1).ToString());
+                while (true)
+                {
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        if (selectedRoom != null)
+                        {
+                            break;
+                        }
+                    }
+                    yield return null;
+                }
+                if (removeUnit())
+                {
+                    player1.mushroomReserve++;
+                    selectedRoom = null;
+                    needToHarvest = true;
+                }
+                yield return null;
+            }
+            while (player1.mushroomReserve > 0)
+            {
+                sendError("you have extra mushrooms. please click on your base to add another dorn there or click done");
+                //make done button active
+                if (Input.GetMouseButtonDown(0))
+                {
+                    if (selectedRoom.GetComponent<Room>().roomName == "5-1")
+                    {
+                        player1.mushroomReserve--;
+                        selectedRoom.GetComponent<Room>().units[0]++;
+                        needToHarvest = true;
+                    }
+                }
+                yield return null;
+            }
+        removingUnits = false;
+        sendError("");
+        }
+
+        else
+        {
+            while (player2.mushroomReserve < 0)
+            {
+                //wait for player to select room
+                sendError("please select a room to remove a unit from. you must remove " + (player2.mushroomReserve * -1).ToString());
+                while (true)
+                {
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        if (selectedRoom != null)
+                        {
+                            break;
+                        }
+                    }
+                    yield return null;
+                }
+                if (removeUnit())
+                {
+                    player2.mushroomReserve++;
+                    selectedRoom = null;
+                    needToHarvest = true;
+                }
+                yield return null;
+            }
+            removingUnits = false;
+            sendError("");
+        }
+    }
+
+    bool removeUnit()
+    {
+        if (currentTurnOwner == 1)
+        {
+            if (selectedRoom.GetComponent<Room>().units[0] == 1)
+            {
+                selectedRoom.GetComponent<Room>().units[0]--;
+                selectedRoom.GetComponent<Room>().unitSpawns[0].active = false;
+                return true;
+            }
+            if (selectedRoom.GetComponent<Room>().units[0] > 1)
+            {
+                selectedRoom.GetComponent<Room>().units[0]--;
+                return true;
+            }
+            else
+            {
+                sendError("you don't own any units in this room");
+                return false;
+            }
+        }
+        else
+        {
+            if (selectedRoom.GetComponent<Room>().units[1] == 1)
+            {
+                selectedRoom.GetComponent<Room>().units[1]--;
+                selectedRoom.GetComponent<Room>().unitSpawns[1].active = false;
+                return true;
+            }
+            if (selectedRoom.GetComponent<Room>().units[1] > 1)
+            {
+                selectedRoom.GetComponent<Room>().units[1]--;
+                return true;
+            }
+            else
+            {
+                sendError("you don't own any units in this room");
+                return false;
+            }
+        }
+    }
     //make AI moves
     void ProcessActions(List<string> AIActions)
     {
@@ -376,7 +503,12 @@ public class GameEngine : MonoBehaviour
 
     public int overwork ()
     {
-        int multiplier = 1;
+        if (selectedRoom.GetComponent<Room>().emptySlots == selectedRoom.GetComponent<Room>().roomSlots)
+        {
+            sendError("There are no buildings built in the selected room..");
+            return 0; 
+        }
+            int multiplier = 1;
         if (selectedRoom.GetComponent<Room>().roomName == "3-2")
         {
             multiplier = 2;

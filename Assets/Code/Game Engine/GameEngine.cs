@@ -36,6 +36,10 @@ public class GameEngine : MonoBehaviour
     public GameObject camp1Prefab; // Camp is 2
     public GameObject goldMine_mesh; // Mine is 4
     public GameObject farm1Prefab; // Farm is 6
+    public GameObject upgradedCampPrefab; //3
+    public GameObject upgradedMinePrefab; //5
+    public GameObject upgradedFarmPrefab; //7
+
     public int numActions;
 
 
@@ -567,7 +571,7 @@ public class GameEngine : MonoBehaviour
                 //delete old prefab and instantiate new one
                 buildPos = selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex].transform.position;
                 Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex]);
-                selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex] = Instantiate(camp1Prefab, buildPos, Quaternion.identity);
+                selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex] = Instantiate(upgradedCampPrefab, buildPos, Quaternion.identity);
                 if (currentTurnOwner == 1)
                 {
                     player1.goldReserve -= 20;
@@ -581,7 +585,7 @@ public class GameEngine : MonoBehaviour
                 //delete old prefab and instantiate new one
                 buildPos = selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex].transform.position;
                 Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex]);
-                selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex] = Instantiate(goldMine_mesh, buildPos, Quaternion.identity);
+                selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex] = Instantiate(upgradedMinePrefab, buildPos, Quaternion.identity);
                 if (currentTurnOwner == 1)
                 {
                     player1.goldReserve -= 20;
@@ -596,7 +600,7 @@ public class GameEngine : MonoBehaviour
                 System.Threading.Thread.Sleep(50);
                 Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex]);
                 System.Threading.Thread.Sleep(50);
-                selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex] = Instantiate(farm1Prefab, buildPos, Quaternion.identity);
+                selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex] = Instantiate(upgradedFarmPrefab, buildPos, Quaternion.identity);
                 if (currentTurnOwner == 1)
                 {
                     player1.goldReserve -= 10;

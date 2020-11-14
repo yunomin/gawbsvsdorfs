@@ -66,6 +66,10 @@ public class GameEngine : MonoBehaviour
     public float lightHeight;
     public bool isEnable;
 
+    // animation scripts and stuff
+    public Animator DorfAnimator;
+    public Vector3 target;
+
     // Error display
     public GameObject err;
 
@@ -446,6 +450,17 @@ public class GameEngine : MonoBehaviour
         selectedBuilding = newBuildingSelection;
     }
 
+    IEnumerator moveAnimation()
+    {
+        while ((previouslySelectedUnit.transform.position - selectedUnit.transform.position).magnitude >= 0.001)
+        {
+            float step = 0.7f * Time.deltaTime;
+            previouslySelectedUnit.transform.position = Vector3.MoveTowards(previouslySelectedUnit.transform.position, target, step);
+            yield return null;
+        }
+        previouslySelectedUnit.GetComponent<DorfAnimation>().startIdle();
+    }
+
     public int Harvest()
     {
         // This function is going to be called when player presses harvest button on the UI,
@@ -464,16 +479,36 @@ public class GameEngine : MonoBehaviour
         if (unitLifted)
         {
             //visual
-            //liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 1, liftedUnit.transform.position.z);
             unitLifted = false;
             
             //check if move can be made
-            if (!(previouslySelectedRoom.GetComponent<Room>().isAdjacent(selectedRoom)))
+            if (previouslySelectedRoom != null)
+            {
+                if (!(previouslySelectedRoom.GetComponent<Room>().isAdjacent(selectedRoom)))
+                {
+                    //cannot make move
+                    liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 0.5f, liftedUnit.transform.position.z);
+                    liftedUnit.GetComponent<DorfAnimation>().startIdle();
+                    sendError("Can not move there..");
+                    return 0;
+                }
+                else
+                {
+                    //do walking animation
+                    target = selectedUnit.transform.position;
+                    StartCoroutine(moveAnimation());
+                    liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 0.5f, liftedUnit.transform.position.z);
+                }
+            }
+            else
             {
                 //cannot make move
+                liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 0.5f, liftedUnit.transform.position.z);
+                liftedUnit.GetComponent<DorfAnimation>().startIdle();
                 sendError("Can not move there..");
                 return 0;
             }
+            
 
             //mechanical
             if (currentTurnOwner == 1)
@@ -515,7 +550,8 @@ public class GameEngine : MonoBehaviour
             //visual
             if (selectedUnit.active == true)
             {
-                selectedUnit.transform.position = new Vector3(selectedUnit.transform.position.x, selectedUnit.transform.position.y + 1, selectedUnit.transform.position.z);
+                selectedUnit.transform.position = new Vector3(selectedUnit.transform.position.x, selectedUnit.transform.position.y + 0.5f, selectedUnit.transform.position.z);
+                selectedUnit.GetComponent<DorfAnimation>().startWalk();
                 liftedUnit = selectedUnit;
                 unitLifted = true;
             }

@@ -11396,6 +11396,7 @@ MonoBehaviour:
   selectionLight: {fileID: 300897839}
   lightHeight: 0
   isEnable: 0
+  DorfAnimator: {fileID: 0}
   err: {fileID: 1109599037}
 --- !u!4 &773393501
 Transform:
@@ -13023,6 +13024,19 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1320016402}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &939298306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 939298303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1ad82957bd1e50408268381de558115, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
 --- !u!1 &942830497
 GameObject:
   m_ObjectHideFlags: 0

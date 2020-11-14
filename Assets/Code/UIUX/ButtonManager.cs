@@ -19,6 +19,7 @@ public class ButtonManager : MonoBehaviour
     public Button controlButton;
     public Button attackButton;
     public Button overworkButton;
+    public Button upgradeButton;
 
     public Button endTurnButton;
     public Button undoButton;
@@ -89,6 +90,12 @@ public class ButtonManager : MonoBehaviour
             endTurnButton.GetComponent<Button>().interactable = false;
         }
 
+        //AI update
+        if (gameEngine.GetComponent<GameEngine>().AIMove)
+        {
+            Harvest();
+        }
+
         // change 
         turnText.text = gameEngine.GetComponent<GameEngine>().turnNumber.ToString();
         if (gameEngine.GetComponent<GameEngine>().ActionUsed)
@@ -146,6 +153,21 @@ public class ButtonManager : MonoBehaviour
                 }
             }
         }
+        if (gameEngine.GetComponent<GameEngine>().removingUnits == true)
+        {
+            actionOff();
+            endTurnButton.GetComponent<Button>().interactable = true;
+        }
+        else
+        {
+            actionOn();
+            endTurnButton.GetComponent<Button>().interactable = false;
+        }
+        if (gameEngine.GetComponent<GameEngine>().needToHarvest)
+        {
+            Harvest();
+            gameEngine.GetComponent<GameEngine>().needToHarvest = false;
+        }
     }
     private void actionOff()
     {
@@ -154,6 +176,7 @@ public class ButtonManager : MonoBehaviour
         buildButton.GetComponent<Button>().interactable = false;
         moveButton.GetComponent<Button>().interactable = false;
         overworkButton.GetComponent<Button>().interactable = false;
+        upgradeButton.GetComponent<Button>().interactable = false;
     }
     private void actionOn()
     {
@@ -162,6 +185,7 @@ public class ButtonManager : MonoBehaviour
         controlButton.GetComponent<Button>().interactable = true;
         attackButton.GetComponent<Button>().interactable = true;
         overworkButton.GetComponent<Button>().interactable = true;
+        upgradeButton.GetComponent<Button>().interactable = true;
     }
     public void Harvest()
     {
@@ -206,6 +230,8 @@ public class ButtonManager : MonoBehaviour
     }
     public void Upgrade()
     {
+        // need to call upgrade method in GE
+        gameEngine.GetComponent<GameEngine>().Upgrade(7);
         upgradePanel.SetActive(true);
     }
     public void BuildCamp()
@@ -252,5 +278,9 @@ public class ButtonManager : MonoBehaviour
         Debug.Log("move");
         gameEngine.GetComponent<GameEngine>().MoveUnit();
     }
-  
+    
+    public void Finish()
+    {
+        gameEngine.GetComponent<GameEngine>().finishClicked = true;
+    }
 }

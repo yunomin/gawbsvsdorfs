@@ -20,6 +20,8 @@ public class ChangeScene : MonoBehaviour
 
         foreach (Text go in GetText)
             go.font = fontb;
+
+        Resume();
     }
 
     void Update()

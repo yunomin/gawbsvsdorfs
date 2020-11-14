@@ -54,7 +54,7 @@ public class GameEngine : MonoBehaviour
     public int turnNumber;
     public bool removingUnits;
     public bool needToHarvest;
-
+    public bool finishClicked;
     public bool GameIsPause;
     public bool enableSelection;
 
@@ -222,24 +222,30 @@ public class GameEngine : MonoBehaviour
                 }
                 yield return null;
             }
-            while (player1.mushroomReserve > 0)
+            while (player1.mushroomReserve > 0 && !finishClicked)
             {
-                sendError("you have extra mushrooms. please click on your base to add another dorn there or click done");
+                sendError("you have extra mushrooms. please click on your base to add another dorf there or click finish");
                 //make done button active
                 if (Input.GetMouseButtonDown(0))
                 {
-                    if (selectedRoom.GetComponent<Room>().roomName == "5-1")
+                    if (selectedRoom != null)
                     {
-                        player1.mushroomReserve--;
-                        selectedRoom.GetComponent<Room>().units[0]++;
-                        player1.unitCount++;
-                        needToHarvest = true;
+                        if (selectedRoom.GetComponent<Room>().roomName == "5-1")
+                        {
+                            player1.mushroomReserve--;
+                            selectedRoom.GetComponent<Room>().units[0]++;
+                            player1.unitCount++;
+                            needToHarvest = true;
+                            clearSelection();
+                        }
                     }
+                    
                 }
                 yield return null;
             }
-        removingUnits = false;
-        sendError("");
+            finishClicked = false;
+            removingUnits = false;
+            sendError("");
         }
 
         else
@@ -247,7 +253,7 @@ public class GameEngine : MonoBehaviour
             while (player2.mushroomReserve < 0)
             {
                 //wait for player to select room
-                sendError("please select a room to remove a unit from. you must remove " + (player2.mushroomReserve * -1).ToString());
+                sendError("please select a room to remove a gawb from. you must remove " + (player2.mushroomReserve * -1).ToString());
                 while (true)
                 {
                     if (Input.GetMouseButtonDown(0))
@@ -269,20 +275,25 @@ public class GameEngine : MonoBehaviour
             }
             while (player2.mushroomReserve > 0)
             {
-                sendError("you have extra mushrooms. please click on your base to add another dorn there or click done");
+                sendError("you have extra mushrooms. please click on your base to add another gawb there or click finish");
                 //make done button active
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0) && !finishClicked)
                 {
-                    if (selectedRoom.GetComponent<Room>().roomName == "1-1")
+                    if (selectedRoom != null)
                     {
-                        player2.mushroomReserve--;
-                        selectedRoom.GetComponent<Room>().units[1]++;
-                        player2.unitCount++;
-                        needToHarvest = true;
+                        if (selectedRoom.GetComponent<Room>().roomName == "1-1")
+                        {
+                            player2.mushroomReserve--;
+                            selectedRoom.GetComponent<Room>().units[1]++;
+                            player2.unitCount++;
+                            needToHarvest = true;
+                            clearSelection();
+                        }
                     }
                 }
                 yield return null;
             }
+            finishClicked = false;
             removingUnits = false;
             sendError("");
         }

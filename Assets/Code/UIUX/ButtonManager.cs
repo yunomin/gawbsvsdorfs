@@ -155,10 +155,12 @@ public class ButtonManager : MonoBehaviour
         if (gameEngine.GetComponent<GameEngine>().removingUnits == true)
         {
             actionOff();
+            endTurnButton.GetComponent<Button>().interactable = true;
         }
         else
         {
             actionOn();
+            endTurnButton.GetComponent<Button>().interactable = false;
         }
         if (gameEngine.GetComponent<GameEngine>().needToHarvest)
         {
@@ -212,7 +214,7 @@ public class ButtonManager : MonoBehaviour
     public void Upgrade()
     {
         // need to call upgrade method in GE
-        gameEngine.GetComponent<GameEngine>().Upgrade(5);
+        gameEngine.GetComponent<GameEngine>().Upgrade(7);
         upgradePanel.SetActive(false);
     }
     public void BuildCamp()
@@ -258,5 +260,9 @@ public class ButtonManager : MonoBehaviour
         Debug.Log("move");
         gameEngine.GetComponent<GameEngine>().MoveUnit();
     }
-  
+    
+    public void Finish()
+    {
+        gameEngine.GetComponent<GameEngine>().finishClicked = true;
+    }
 }

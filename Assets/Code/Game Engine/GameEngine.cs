@@ -36,6 +36,10 @@ public class GameEngine : MonoBehaviour
     public GameObject camp1Prefab; // Camp is 2
     public GameObject goldMine_mesh; // Mine is 4
     public GameObject farm1Prefab; // Farm is 6
+    public GameObject upgradedCampPrefab; //3
+    public GameObject upgradedMinePrefab; //5
+    public GameObject upgradedFarmPrefab; //7
+
     public int numActions;
 
 
@@ -43,11 +47,14 @@ public class GameEngine : MonoBehaviour
     public string currGoldp1;
     public string currMushroomp1;
     public bool ActionUsed;
+    public bool AIMove;
     public string currGoldp2;
     public string currMushroomp2;
     public int buildType;
     public int turnNumber;
-
+    public bool removingUnits;
+    public bool needToHarvest;
+    public bool finishClicked;
     public bool GameIsPause;
     public bool enableSelection;
 
@@ -133,7 +140,7 @@ public class GameEngine : MonoBehaviour
         goldPool = 200;
         currentTurnOwner = 1; //Player 1, (remember -1 is player 2)
         numActions = 2;
-        player1.StartTurn();
+        player1.StartTurn(roomList);
         PopulateRoomStart();
         unitLifted = false;
 
@@ -157,24 +164,234 @@ public class GameEngine : MonoBehaviour
         isEnd = true;
         print("changing turn");
         isGameOver();
-        if(currentTurnOwner > 0)
+        List<string> AIActions = new List<string> { };
+        if (currentTurnOwner > 0)
         {
             currentTurnOwner *= -1;
-            player2.StartTurn();
+            AIActions = player2.StartTurn(roomList);
             clearSelection();
+            goldPool -= player2.goldIncome;
+            if (player2.isAI)
+            {
+                ProcessActions(AIActions);
+            }
+            else
+            {
+                StartCoroutine(unitUpkeep());
+            }
         }
         else
         {
             currentTurnOwner *= -1;
-            player1.StartTurn();
+            player1.StartTurn(roomList);
             clearSelection();
+            goldPool -= player1.goldIncome;
+            StartCoroutine(unitUpkeep());
         }
         this.turnNumber++;
         numActions = 2;
         ActionUsed = true;
-        Harvest(); 
+        Harvest();
     }
 
+    IEnumerator unitUpkeep()
+    {
+        removingUnits = true;
+        if (currentTurnOwner == 1)
+        {
+            while (player1.mushroomReserve < 0)
+            {
+                //wait for player to select room
+                sendError("you are low on mushrooms. please select a room to remove a dorf from. you must remove " + (player1.mushroomReserve * -1).ToString());
+                while (true)
+                {
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        if (selectedRoom != null)
+                        {
+                            break;
+                        }
+                    }
+                    yield return null;
+                }
+                if (removeUnit())
+                {
+                    player1.mushroomReserve++;
+                    selectedRoom = null;
+                    needToHarvest = true;
+                }
+                yield return null;
+            }
+            while (player1.mushroomReserve > 0 && !finishClicked)
+            {
+                sendError("you have extra mushrooms. please click on your base to add another dorf there or click finish");
+                //make done button active
+                if (Input.GetMouseButtonDown(0))
+                {
+                    if (selectedRoom != null)
+                    {
+                        if (selectedRoom.GetComponent<Room>().roomName == "5-1")
+                        {
+                            player1.mushroomReserve--;
+                            selectedRoom.GetComponent<Room>().units[0]++;
+                            player1.unitCount++;
+                            needToHarvest = true;
+                            clearSelection();
+                        }
+                    }
+                    
+                }
+                yield return null;
+            }
+            finishClicked = false;
+            removingUnits = false;
+            sendError("");
+        }
+
+        else
+        {
+            while (player2.mushroomReserve < 0)
+            {
+                //wait for player to select room
+                sendError("please select a room to remove a gawb from. you must remove " + (player2.mushroomReserve * -1).ToString());
+                while (true)
+                {
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        if (selectedRoom != null)
+                        {
+                            break;
+                        }
+                    }
+                    yield return null;
+                }
+                if (removeUnit())
+                {
+                    player2.mushroomReserve++;
+                    selectedRoom = null;
+                    needToHarvest = true;
+                }
+                yield return null;
+            }
+            while (player2.mushroomReserve > 0)
+            {
+                sendError("you have extra mushrooms. please click on your base to add another gawb there or click finish");
+                //make done button active
+                if (Input.GetMouseButtonDown(0) && !finishClicked)
+                {
+                    if (selectedRoom != null)
+                    {
+                        if (selectedRoom.GetComponent<Room>().roomName == "1-1")
+                        {
+                            player2.mushroomReserve--;
+                            selectedRoom.GetComponent<Room>().units[1]++;
+                            player2.unitCount++;
+                            needToHarvest = true;
+                            clearSelection();
+                        }
+                    }
+                }
+                yield return null;
+            }
+            finishClicked = false;
+            removingUnits = false;
+            sendError("");
+        }
+    }
+
+    bool removeUnit()
+    {
+        if (currentTurnOwner == 1)
+        {
+            if (selectedRoom.GetComponent<Room>().units[0] == 1)
+            {player2.unitCount--;
+                selectedRoom.GetComponent<Room>().units[0]--;
+                player1.unitCount--;
+                selectedRoom.GetComponent<Room>().unitSpawns[0].active = false;
+                return true;
+            }
+            if (selectedRoom.GetComponent<Room>().units[0] > 1)
+            {
+                selectedRoom.GetComponent<Room>().units[0]--;
+                player1.unitCount--;
+                return true;
+            }
+            else
+            {
+                sendError("you don't own any units in this room");
+                return false;
+            }
+        }
+        else
+        {
+            if (selectedRoom.GetComponent<Room>().units[1] == 1)
+            {
+                selectedRoom.GetComponent<Room>().units[1]--;
+                player2.unitCount--;
+                selectedRoom.GetComponent<Room>().unitSpawns[1].active = false;
+                return true;
+            }
+            if (selectedRoom.GetComponent<Room>().units[1] > 1)
+            {
+                selectedRoom.GetComponent<Room>().units[1]--;
+                player2.unitCount--;
+                return true;
+            }
+            else
+            {
+                sendError("you don't own any units in this room");
+                return false;
+            }
+        }
+    }
+    //make AI moves
+    void ProcessActions(List<string> AIActions)
+    {
+        switch (AIActions[0])
+        {
+            case "move":
+                foreach (GameObject room1 in roomList) {
+                    if (room1.GetComponent<Room>().roomName == AIActions[1])
+                    {
+                        SelectRoom(room1);
+                        SelectUnit(room1.GetComponent<Room>().unitSpawns[1]);
+                        MoveUnit();
+                        break;
+                    }
+                }
+                
+                StartCoroutine(new WaitForSecondsRealtime(2));
+                foreach (GameObject room2 in roomList)
+                {
+                    if (room2.GetComponent<Room>().roomName == AIActions[2])
+                    {
+                        previouslySelectedRoom = selectedRoom;
+                        previouslySelectedUnit = selectedUnit;
+                        SelectRoom(room2);
+                        SelectUnit(room2.GetComponent<Room>().unitSpawns[1]);
+                        MoveUnit();
+                        break;
+                    }
+                }
+                break;
+        }
+        switch (AIActions[4])
+        {
+            case "build":
+                foreach (GameObject room1 in roomList)
+                {
+                    if (room1.GetComponent<Room>().roomName == AIActions[5])
+                    {
+                        SelectRoom(room1);
+                        Build(int.Parse(AIActions[6]));
+                        break;
+                    }
+                }
+                break;
+        }
+        AIMove = true;
+        ChangeTurn();
+    }
     int isGameOver()
     {
         if (goldPool <= 0)
@@ -247,7 +464,7 @@ public class GameEngine : MonoBehaviour
         if (unitLifted)
         {
             //visual
-            liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 1, liftedUnit.transform.position.z);
+            //liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 1, liftedUnit.transform.position.z);
             unitLifted = false;
             
             //check if move can be made
@@ -318,8 +535,13 @@ public class GameEngine : MonoBehaviour
 
     public int overwork ()
     {
-        int multiplier = 1;
-        if (selectedRoom.GetComponent<Room>().roomName == "Mushroom Lake")
+        if (selectedRoom.GetComponent<Room>().emptySlots == selectedRoom.GetComponent<Room>().roomSlots)
+        {
+            sendError("There are no buildings built in the selected room..");
+            return 0; 
+        }
+            int multiplier = 1;
+        if (selectedRoom.GetComponent<Room>().roomName == "3-2")
         {
             multiplier = 2;
         }
@@ -488,6 +710,22 @@ public class GameEngine : MonoBehaviour
                 sendError("No existing building to update..");
                 return 0;
             }
+            else if (currentTurnOwner == 1 && (selectedRoom.GetComponent<Room>().units[0] < 1 ||
+                ((player1.goldReserve < 20 && (choice == 3 || choice == 5)) || (player1.goldReserve < 10 && choice == 7)))) //player has no units in room or doesn't have enough gold
+            {
+                //quit out
+                //cannot build here
+                sendError("You do not have enough gold..");
+                return 0;
+            }
+            else if (currentTurnOwner == -1 && (selectedRoom.GetComponent<Room>().units[1] < 1 ||
+                ((player2.goldReserve < 20 && (choice == 3 || choice == 5)) || (player2.goldReserve < 10 && choice == 7)))) //player has no units in room or doesn't have enough gold
+            {
+                //quit out
+                //cannot build here
+                sendError("You do not have enough gold..");
+                return 0;
+            }
         }
 
         selectedRoom.GetComponent<Room>().builtBuildings[upgradeIndex] = choice;
@@ -497,20 +735,44 @@ public class GameEngine : MonoBehaviour
                 //delete old prefab and instantiate new one
                 buildPos = selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex].transform.position;
                 Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex]);
-                selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex] = Instantiate(camp1Prefab, buildPos, Quaternion.identity);
+                selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex] = Instantiate(upgradedCampPrefab, buildPos, Quaternion.identity);
+                if (currentTurnOwner == 1)
+                {
+                    player1.goldReserve -= 20;
+                }
+                else
+                {
+                    player2.goldReserve -= 20;
+                }
                 break;
             case 5:
                 //delete old prefab and instantiate new one
                 buildPos = selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex].transform.position;
                 Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex]);
-                selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex] = Instantiate(goldMine_mesh, buildPos, Quaternion.identity);
+                selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex] = Instantiate(upgradedMinePrefab, buildPos, Quaternion.identity);
+                if (currentTurnOwner == 1)
+                {
+                    player1.goldReserve -= 20;
+                }
+                else
+                {
+                    player2.goldReserve -= 20;
+                }
                 break;
             case 7:
                 buildPos = selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex].transform.position;
                 System.Threading.Thread.Sleep(50);
                 Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex]);
                 System.Threading.Thread.Sleep(50);
-                selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex] = Instantiate(farm1Prefab, buildPos, Quaternion.identity);
+                selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex] = Instantiate(upgradedFarmPrefab, buildPos, Quaternion.identity);
+                if (currentTurnOwner == 1)
+                {
+                    player1.goldReserve -= 10;
+                }
+                else
+                {
+                    player2.goldReserve -= 10;
+                }
                 //delete old prefab and instantiate new one
                 break;
         }

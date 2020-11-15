@@ -729,6 +729,8 @@ public class GameEngine : MonoBehaviour
             winner = 2;
         }
 
+        print(defender.ToString());
+
         //remove unit
         if (selectedRoom.GetComponent<Room>().units[defender] >= ap)
         {
@@ -796,7 +798,11 @@ public class GameEngine : MonoBehaviour
         }
         
         // retreat
-        if(selectedRoom.GetComponent<Room>().units[defeat] == 0)
+        if(defeat == 2)
+        {
+            // no winner
+        }
+        else if(selectedRoom.GetComponent<Room>().units[defeat] == 0)
         {
 
         }

@@ -102,7 +102,7 @@ public class GameEngine : MonoBehaviour
                         //print("clicked on room:" + hit.transform.name);
                         //TODO: Add code to move light over selected room, slowly (animated)
                         //float step = speed * Time.deltaTime; //To be used in steps, not implemented.
-                        
+
                         selectionLight.transform.position = new Vector3(hit.collider.transform.position.x, hit.collider.transform.position.y + lightHeight, hit.collider.transform.position.z);
 
                         SelectRoom(hit.collider.gameObject); //"Selects" the room
@@ -115,14 +115,13 @@ public class GameEngine : MonoBehaviour
                             SelectUnit(selectedRoom.GetComponent<Room>().unitSpawns[1]);
                         }
                         lastSelection = hit.collider.gameObject.tag;
-                        }
-
                     }
                 }
-                
+
             }
         }
     }
+    
 
     public void enableSelect()
     {

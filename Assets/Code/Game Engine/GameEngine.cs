@@ -191,6 +191,7 @@ public class GameEngine : MonoBehaviour
         this.turnNumber++;
         numActions = 2;
         ActionUsed = true;
+        err.GetComponent<ReminderManager>().clearMsg();
         Harvest();
     }
 
@@ -395,6 +396,7 @@ public class GameEngine : MonoBehaviour
     int isGameOver()
     {
         string winner = "";
+        print("game over");
         if (goldPool <= 0)
         {
             //end game

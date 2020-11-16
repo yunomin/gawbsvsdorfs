@@ -125,6 +125,7 @@ public class GameEngine : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        lightHeight = 5;
         playerList.Add(player1);
         playerList.Add(player2);
         //Set up first turn parameters.
@@ -137,7 +138,6 @@ public class GameEngine : MonoBehaviour
         unitLifted = false;
 
         GameIsPause = false;
-
         ActionUsed = true;
         // testing code
         isTurn = true;

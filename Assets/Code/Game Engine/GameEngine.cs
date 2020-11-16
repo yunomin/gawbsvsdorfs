@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class GameEngine : MonoBehaviour
@@ -44,6 +45,8 @@ public class GameEngine : MonoBehaviour
 
 
     // UI variables
+    public GameObject ResultPanel;
+    public Text WinnerText;
     public string currGoldp1;
     public string currMushroomp1;
     public bool ActionUsed;
@@ -104,19 +107,8 @@ public class GameEngine : MonoBehaviour
                         }
                         lastSelection = hit.collider.gameObject.tag;
                     }
-                    /*
-                    else if (hit.collider.gameObject.CompareTag("unit")) //Need to add "if current player";
-                    {
-                        SelectUnit(hit.collider.gameObject);
-                        lastSelection = hit.collider.gameObject.tag;
-                    }
-                    else if (hit.collider.gameObject.CompareTag("building"))
-                    {
-                        SelectBuilding(hit.collider.gameObject);
-                        lastSelection = hit.collider.gameObject.tag;
-                    }*/
-                }
 
+                }
             }
         }
     }
@@ -149,7 +141,7 @@ public class GameEngine : MonoBehaviour
         ActionUsed = true;
         // testing code
         isTurn = true;
-
+        isEnable = true;
 
     }
     private void clearSelection()
@@ -394,33 +386,36 @@ public class GameEngine : MonoBehaviour
     }
     int isGameOver()
     {
+        string winner = "";
         if (goldPool <= 0)
         {
             //end game
             if (player1.goldReserve > player2.goldReserve)
             {
-                return 1;
+                winner = "The winner is: Dorf";
             }
             else if (player2.goldReserve > player1.goldReserve)
             {
-                return -1;
+                winner = "The winner is: Gawb";
             }
             else
             {
                 //tie
-                return 0;
+                winner = "Dorfs and gawbs have found their peace..";
             }
         }
         else if (P1Base.GetComponent<Room>().roomOwner == -1)
         {
             //end game
-            return -1;
+            winner = "The winner is: Gawb";
         }
         else if (P2Base.GetComponent<Room>().roomOwner == 1)
         {
             //end game
-            return 1;
+            winner = "The winner is: Dorf";
         }
+        WinnerText.text = winner;
+        ResultPanel.SetActive(true);
         return 2;
     }
 
@@ -991,6 +986,8 @@ public class GameEngine : MonoBehaviour
             winner = 2;
         }
 
+        print(defender.ToString());
+
         //remove unit
         if (selectedRoom.GetComponent<Room>().units[defender] >= ap)
         {
@@ -1058,7 +1055,11 @@ public class GameEngine : MonoBehaviour
         }
         
         // retreat
-        if(selectedRoom.GetComponent<Room>().units[defeat] == 0)
+        if(defeat == 2)
+        {
+            // no winner
+        }
+        else if(selectedRoom.GetComponent<Room>().units[defeat] == 0)
         {
 
         }

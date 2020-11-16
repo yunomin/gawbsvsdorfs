@@ -461,8 +461,6 @@ public class GameEngine : MonoBehaviour
             unitToMove.transform.position = Vector3.MoveTowards(unitToMove.transform.position, target, step);
             yield return null;
         }
-        //previouslySelectedUnit.GetComponent<DorfAnimation>().startIdle();
-        //previouslySelectedUnit.transform.position = origPos;
         Destroy(unitToMove);
     }
 

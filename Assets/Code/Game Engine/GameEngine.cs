@@ -67,8 +67,11 @@ public class GameEngine : MonoBehaviour
     public bool isEnable;
 
     // animation scripts and stuff
-    public Animator DorfAnimator;
+    //public Script DorfAnimator;
     public Vector3 target;
+    public Vector3 origPos;
+    public GameObject unitToMove;
+    public GameObject dorfModel;
 
     // Error display
     public GameObject err;
@@ -173,7 +176,7 @@ public class GameEngine : MonoBehaviour
         {
             currentTurnOwner *= -1;
             AIActions = player2.StartTurn(roomList);
-            clearSelection();
+            //clearSelection();
             goldPool -= player2.goldIncome;
             if (player2.isAI)
             {
@@ -188,7 +191,7 @@ public class GameEngine : MonoBehaviour
         {
             currentTurnOwner *= -1;
             player1.StartTurn(roomList);
-            clearSelection();
+            //clearSelection();
             goldPool -= player1.goldIncome;
             StartCoroutine(unitUpkeep());
         }
@@ -452,13 +455,15 @@ public class GameEngine : MonoBehaviour
 
     IEnumerator moveAnimation()
     {
-        while ((previouslySelectedUnit.transform.position - selectedUnit.transform.position).magnitude >= 0.001)
+        while ((unitToMove.transform.position - target).magnitude >= 0.005)
         {
-            float step = 0.7f * Time.deltaTime;
-            previouslySelectedUnit.transform.position = Vector3.MoveTowards(previouslySelectedUnit.transform.position, target, step);
+            float step = 1.2f * Time.deltaTime;
+            unitToMove.transform.position = Vector3.MoveTowards(unitToMove.transform.position, target, step);
             yield return null;
         }
-        previouslySelectedUnit.GetComponent<DorfAnimation>().startIdle();
+        //previouslySelectedUnit.GetComponent<DorfAnimation>().startIdle();
+        //previouslySelectedUnit.transform.position = origPos;
+        Destroy(unitToMove);
     }
 
     public int Harvest()
@@ -495,7 +500,12 @@ public class GameEngine : MonoBehaviour
                 else
                 {
                     //do walking animation
+                    origPos = previouslySelectedUnit.transform.position;
+                    origPos.y -= 0.5f;
                     target = selectedUnit.transform.position;
+                    unitToMove.transform.forward = (selectedUnit.transform.position - unitToMove.transform.position);
+                    unitToMove.active = true;
+                    
                     StartCoroutine(moveAnimation());
                     liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 0.5f, liftedUnit.transform.position.z);
                 }
@@ -550,6 +560,9 @@ public class GameEngine : MonoBehaviour
             //visual
             if (selectedUnit.active == true)
             {
+                unitToMove = Instantiate(selectedUnit, selectedUnit.transform.position, Quaternion.identity);
+                unitToMove.active = false;
+                unitToMove.GetComponent<DorfAnimation>().startWalk();
                 selectedUnit.transform.position = new Vector3(selectedUnit.transform.position.x, selectedUnit.transform.position.y + 0.5f, selectedUnit.transform.position.z);
                 selectedUnit.GetComponent<DorfAnimation>().startWalk();
                 liftedUnit = selectedUnit;

@@ -11396,7 +11396,11 @@ MonoBehaviour:
   selectionLight: {fileID: 300897839}
   lightHeight: 0
   isEnable: 0
-  DorfAnimator: {fileID: 0}
+  target: {x: 0, y: 0, z: 0}
+  origPos: {x: 0, y: 0, z: 0}
+  unitToMove: {fileID: 0}
+  dorfModel: {fileID: 919132149155446097, guid: c653be07d953fe7499d79167c65d52b3,
+    type: 3}
   err: {fileID: 1109599037}
 --- !u!4 &773393501
 Transform:

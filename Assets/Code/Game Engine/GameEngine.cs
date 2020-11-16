@@ -96,8 +96,7 @@ public class GameEngine : MonoBehaviour
                         //print("clicked on room:" + hit.transform.name);
                         //TODO: Add code to move light over selected room, slowly (animated)
                         //float step = speed * Time.deltaTime; //To be used in steps, not implemented.
-                        previouslySelectedRoom = selectedRoom;
-                        previouslySelectedUnit = selectedUnit;
+                        
                         selectionLight.transform.position = new Vector3(hit.collider.transform.position.x, hit.collider.transform.position.y + lightHeight, hit.collider.transform.position.z);
 
                         SelectRoom(hit.collider.gameObject); //"Selects" the room
@@ -455,13 +454,38 @@ public class GameEngine : MonoBehaviour
 
     IEnumerator moveAnimation()
     {
+        
         while ((unitToMove.transform.position - target).magnitude >= 0.005)
         {
-            float step = 1.2f * Time.deltaTime;
+            unitToMove.GetComponent<DorfAnimation>().startWalk();
+            float step = 1.0f * Time.deltaTime;
             unitToMove.transform.position = Vector3.MoveTowards(unitToMove.transform.position, target, step);
             yield return null;
         }
         Destroy(unitToMove);
+        if (currentTurnOwner == 1)
+        {
+            if (selectedRoom.GetComponent<Room>().units[0] == 0)
+            {
+                selectedRoom.GetComponent<Room>().unitSpawns[0].active = true;
+            }
+            selectedRoom.GetComponent<Room>().units[0] += 1;
+        }
+        else
+        {
+            if (selectedRoom.GetComponent<Room>().units[1] == 0)
+            {
+                selectedRoom.GetComponent<Room>().unitSpawns[1].active = true;
+            }
+            selectedRoom.GetComponent<Room>().units[1] += 1;
+        }
+
+        numActions--;
+        ActionUsed = true;
+        if (numActions == 0)
+        {
+            this.ChangeTurn();
+        }
     }
 
     public int Harvest()
@@ -503,7 +527,6 @@ public class GameEngine : MonoBehaviour
                     target = selectedUnit.transform.position;
                     unitToMove.transform.forward = (selectedUnit.transform.position - unitToMove.transform.position);
                     unitToMove.active = true;
-                    
                     StartCoroutine(moveAnimation());
                     liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 0.5f, liftedUnit.transform.position.z);
                     liftedUnit.GetComponent<DorfAnimation>().startIdle();
@@ -517,7 +540,7 @@ public class GameEngine : MonoBehaviour
                 sendError("Can not move there..");
                 return 0;
             }
-            
+
 
             //mechanical
             if (currentTurnOwner == 1)
@@ -527,11 +550,6 @@ public class GameEngine : MonoBehaviour
                 {
                     previouslySelectedRoom.GetComponent<Room>().unitSpawns[0].active = false;
                 }
-                if (selectedRoom.GetComponent<Room>().units[0] == 0)
-                {
-                    selectedRoom.GetComponent<Room>().unitSpawns[0].active = true;
-                }
-                selectedRoom.GetComponent<Room>().units[0] += 1;
             }
             else
             {
@@ -540,18 +558,6 @@ public class GameEngine : MonoBehaviour
                 {
                     previouslySelectedRoom.GetComponent<Room>().unitSpawns[1].active = false;
                 }
-                if (selectedRoom.GetComponent<Room>().units[1] == 0)
-                {
-                    selectedRoom.GetComponent<Room>().unitSpawns[1].active = true;
-                }
-                selectedRoom.GetComponent<Room>().units[1] += 1;
-            }
-
-            numActions--;
-            ActionUsed = true;
-            if (numActions == 0)
-            {
-                this.ChangeTurn();
             }
         }
         else
@@ -560,12 +566,18 @@ public class GameEngine : MonoBehaviour
             if (selectedUnit.active == true)
             {
                 unitToMove = Instantiate(selectedUnit, selectedUnit.transform.position, Quaternion.identity);
+                Vector3 scaleToChange = unitToMove.transform.localScale;
+                scaleToChange.x = scaleToChange.x * selectedRoom.transform.localScale.x;
+                scaleToChange.y = scaleToChange.y * selectedRoom.transform.localScale.y;
+                scaleToChange.z = scaleToChange.z * selectedRoom.transform.localScale.z;
+                unitToMove.transform.localScale = scaleToChange;
                 unitToMove.active = false;
-                unitToMove.GetComponent<DorfAnimation>().startWalk();
                 selectedUnit.transform.position = new Vector3(selectedUnit.transform.position.x, selectedUnit.transform.position.y + 0.5f, selectedUnit.transform.position.z);
                 selectedUnit.GetComponent<DorfAnimation>().startWalk();
                 liftedUnit = selectedUnit;
                 unitLifted = true;
+                previouslySelectedRoom = selectedRoom;
+                previouslySelectedUnit = selectedUnit;
             }
 
             //mechanical

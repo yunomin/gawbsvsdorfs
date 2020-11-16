@@ -30,6 +30,10 @@ public class ReminderManager : MonoBehaviour
             preMsg = currMsg;
         }
     }
+    public void clearMsg()
+    {
+        currMsg = "";
+    }
 
     public void updateMsg(string m)
     {

@@ -1214,13 +1214,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 894280187}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b33a69116f56b6141b7f13b379790571, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c9b868c4dbe9144683df7c69f6e1acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ge: {fileID: 0}
-  ExitMenuPanel: {fileID: 0}
-  quitEscMenu: {fileID: 0}
-  fontb: {fileID: 0}
 --- !u!4 &894280189
 Transform:
   m_ObjectHideFlags: 0
@@ -1526,7 +1522,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 894280188}
-        m_TargetAssemblyTypeName: ChangeScene, Assembly-CSharp
+        m_TargetAssemblyTypeName: Exit, Assembly-CSharp
         m_MethodName: ExitGame
         m_Mode: 1
         m_Arguments:
@@ -1557,8 +1553,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 94883dd2a475fad4bba756b134edc312, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4

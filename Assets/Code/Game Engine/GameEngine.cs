@@ -82,33 +82,41 @@ public class GameEngine : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                RaycastHit hit;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //Determines what is clicked
-                if (Physics.Raycast(ray, out hit, 100.0f))
+                if (EventSystem.current.IsPointerOverGameObject())
                 {
-                    print("Hit!:" + hit.collider.name);
-                    if (hit.collider.gameObject.CompareTag("room")) //Will detect if hit is on a "room" (via tag)
-                    {
-                        //print("clicked on room:" + hit.transform.name);
-                        //TODO: Add code to move light over selected room, slowly (animated)
-                        //float step = speed * Time.deltaTime; //To be used in steps, not implemented.
-                        previouslySelectedRoom = selectedRoom;
-                        previouslySelectedUnit = selectedUnit;
-                        selectionLight.transform.position = new Vector3(hit.collider.transform.position.x, hit.collider.transform.position.y + lightHeight, hit.collider.transform.position.z);
-
-                        SelectRoom(hit.collider.gameObject); //"Selects" the room
-                        if (currentTurnOwner == 1)
-                        {
-                            SelectUnit(selectedRoom.GetComponent<Room>().unitSpawns[0]);
-                        }
-                        else
-                        {
-                            SelectUnit(selectedRoom.GetComponent<Room>().unitSpawns[1]);
-                        }
-                        lastSelection = hit.collider.gameObject.tag;
-                    }
-
+                    print("Clicked on the UI");
                 }
+                else
+                {
+                    RaycastHit hit;
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //Determines what is clicked
+                    if (Physics.Raycast(ray, out hit, 100.0f))
+                    {
+                        print("Hit!:" + hit.collider.name);
+                        if (hit.collider.gameObject.CompareTag("room")) //Will detect if hit is on a "room" (via tag)
+                        {
+                            //print("clicked on room:" + hit.transform.name);
+                            //TODO: Add code to move light over selected room, slowly (animated)
+                            //float step = speed * Time.deltaTime; //To be used in steps, not implemented.
+                            previouslySelectedRoom = selectedRoom;
+                            previouslySelectedUnit = selectedUnit;
+                            selectionLight.transform.position = new Vector3(hit.collider.transform.position.x, hit.collider.transform.position.y + lightHeight, hit.collider.transform.position.z);
+
+                            SelectRoom(hit.collider.gameObject); //"Selects" the room
+                            if (currentTurnOwner == 1)
+                            {
+                                SelectUnit(selectedRoom.GetComponent<Room>().unitSpawns[0]);
+                            }
+                            else
+                            {
+                                SelectUnit(selectedRoom.GetComponent<Room>().unitSpawns[1]);
+                            }
+                            lastSelection = hit.collider.gameObject.tag;
+                        }
+
+                    }
+                }
+                
             }
         }
     }
@@ -125,6 +133,7 @@ public class GameEngine : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        lightHeight = 5;
         playerList.Add(player1);
         playerList.Add(player2);
         //Set up first turn parameters.
@@ -137,7 +146,6 @@ public class GameEngine : MonoBehaviour
         unitLifted = false;
 
         GameIsPause = false;
-
         ActionUsed = true;
         // testing code
         isTurn = true;
@@ -183,6 +191,7 @@ public class GameEngine : MonoBehaviour
         this.turnNumber++;
         numActions = 2;
         ActionUsed = true;
+        err.GetComponent<ReminderManager>().clearMsg();
         Harvest();
     }
 
@@ -387,35 +396,45 @@ public class GameEngine : MonoBehaviour
     int isGameOver()
     {
         string winner = "";
+        print("game over");
         if (goldPool <= 0)
         {
             //end game
             if (player1.goldReserve > player2.goldReserve)
             {
                 winner = "The winner is: Dorf";
+                WinnerText.text = winner;
+                ResultPanel.SetActive(true);
             }
             else if (player2.goldReserve > player1.goldReserve)
             {
                 winner = "The winner is: Gawb";
+                WinnerText.text = winner;
+                ResultPanel.SetActive(true);
             }
             else
             {
                 //tie
                 winner = "Dorfs and gawbs have found their peace..";
+                WinnerText.text = winner;
+                ResultPanel.SetActive(true);
             }
         }
         else if (P1Base.GetComponent<Room>().roomOwner == -1)
         {
             //end game
             winner = "The winner is: Gawb";
+            WinnerText.text = winner;
+            ResultPanel.SetActive(true);
         }
         else if (P2Base.GetComponent<Room>().roomOwner == 1)
         {
             //end game
             winner = "The winner is: Dorf";
+            WinnerText.text = winner;
+            ResultPanel.SetActive(true);
         }
-        WinnerText.text = winner;
-        ResultPanel.SetActive(true);
+        
         return 2;
     }
 
@@ -703,6 +722,7 @@ public class GameEngine : MonoBehaviour
                 //quit out
                 //not building of that type to upgrade
                 sendError("No existing building to update..");
+                print("yes quit");
                 return 0;
             }
             else if (currentTurnOwner == 1 && (selectedRoom.GetComponent<Room>().units[0] < 1 ||

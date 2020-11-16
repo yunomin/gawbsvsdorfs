@@ -403,29 +403,38 @@ public class GameEngine : MonoBehaviour
             if (player1.goldReserve > player2.goldReserve)
             {
                 winner = "The winner is: Dorf";
+                WinnerText.text = winner;
+                ResultPanel.SetActive(true);
             }
             else if (player2.goldReserve > player1.goldReserve)
             {
                 winner = "The winner is: Gawb";
+                WinnerText.text = winner;
+                ResultPanel.SetActive(true);
             }
             else
             {
                 //tie
                 winner = "Dorfs and gawbs have found their peace..";
+                WinnerText.text = winner;
+                ResultPanel.SetActive(true);
             }
         }
         else if (P1Base.GetComponent<Room>().roomOwner == -1)
         {
             //end game
             winner = "The winner is: Gawb";
+            WinnerText.text = winner;
+            ResultPanel.SetActive(true);
         }
         else if (P2Base.GetComponent<Room>().roomOwner == 1)
         {
             //end game
             winner = "The winner is: Dorf";
+            WinnerText.text = winner;
+            ResultPanel.SetActive(true);
         }
-        WinnerText.text = winner;
-        ResultPanel.SetActive(true);
+        
         return 2;
     }
 
@@ -713,6 +722,7 @@ public class GameEngine : MonoBehaviour
                 //quit out
                 //not building of that type to upgrade
                 sendError("No existing building to update..");
+                print("yes quit");
                 return 0;
             }
             else if (currentTurnOwner == 1 && (selectedRoom.GetComponent<Room>().units[0] < 1 ||

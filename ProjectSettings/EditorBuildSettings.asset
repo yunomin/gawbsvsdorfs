@@ -12,9 +12,12 @@ EditorBuildSettings:
     path: Assets/Scenes/UIMainMenu.unity
     guid: 080ab54b998e9bd43beed6d33c8b5109
   - enabled: 0
-    path: Assets/Scenes/UIGameScene.unity
+    path: 
     guid: 8e36109e6c4da94428fe0aedb96df556
   - enabled: 1
     path: Assets/Scenes/GameScene.unity
     guid: 733a0a348ab0d7e4fa969f4d9e0fb361
+  - enabled: 1
+    path: Assets/Scenes/Credit.unity
+    guid: 7bdca59f60762d448bc04d73fd0d6a7f
   m_configObjects: {}

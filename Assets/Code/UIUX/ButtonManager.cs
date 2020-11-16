@@ -231,7 +231,6 @@ public class ButtonManager : MonoBehaviour
     public void Upgrade()
     {
         // need to call upgrade method in GE
-        gameEngine.GetComponent<GameEngine>().Upgrade(7);
         upgradePanel.SetActive(true);
     }
     public void BuildCamp()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class GameEngine : MonoBehaviour
@@ -44,6 +45,8 @@ public class GameEngine : MonoBehaviour
 
 
     // UI variables
+    public GameObject ResultPanel;
+    public Text WinnerText;
     public string currGoldp1;
     public string currMushroomp1;
     public bool ActionUsed;
@@ -86,12 +89,15 @@ public class GameEngine : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                RaycastHit hit;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //Determines what is clicked
-                if (Physics.Raycast(ray, out hit, 100.0f))
+                if (EventSystem.current.IsPointerOverGameObject())
                 {
-                    print("Hit!:" + hit.collider.name);
-                    if (hit.collider.gameObject.CompareTag("room")) //Will detect if hit is on a "room" (via tag)
+                    print("Clicked on the UI");
+                }
+                else
+                {
+                    RaycastHit hit;
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //Determines what is clicked
+                    if (Physics.Raycast(ray, out hit, 100.0f))
                     {
                         //print("clicked on room:" + hit.transform.name);
                         //TODO: Add code to move light over selected room, slowly (animated)
@@ -109,20 +115,11 @@ public class GameEngine : MonoBehaviour
                             SelectUnit(selectedRoom.GetComponent<Room>().unitSpawns[1]);
                         }
                         lastSelection = hit.collider.gameObject.tag;
-                    }
-                    /*
-                    else if (hit.collider.gameObject.CompareTag("unit")) //Need to add "if current player";
-                    {
-                        SelectUnit(hit.collider.gameObject);
-                        lastSelection = hit.collider.gameObject.tag;
-                    }
-                    else if (hit.collider.gameObject.CompareTag("building"))
-                    {
-                        SelectBuilding(hit.collider.gameObject);
-                        lastSelection = hit.collider.gameObject.tag;
-                    }*/
-                }
+                        }
 
+                    }
+                }
+                
             }
         }
     }
@@ -139,6 +136,7 @@ public class GameEngine : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        lightHeight = 5;
         playerList.Add(player1);
         playerList.Add(player2);
         //Set up first turn parameters.
@@ -151,11 +149,10 @@ public class GameEngine : MonoBehaviour
         unitLifted = false;
 
         GameIsPause = false;
-
         ActionUsed = true;
         // testing code
         isTurn = true;
-
+        isEnable = true;
 
     }
     private void clearSelection()
@@ -197,6 +194,7 @@ public class GameEngine : MonoBehaviour
         this.turnNumber++;
         numActions = 2;
         ActionUsed = true;
+        err.GetComponent<ReminderManager>().clearMsg();
         Harvest();
     }
 
@@ -400,33 +398,46 @@ public class GameEngine : MonoBehaviour
     }
     int isGameOver()
     {
+        string winner = "";
+        print("game over");
         if (goldPool <= 0)
         {
             //end game
             if (player1.goldReserve > player2.goldReserve)
             {
-                return 1;
+                winner = "The winner is: Dorf";
+                WinnerText.text = winner;
+                ResultPanel.SetActive(true);
             }
             else if (player2.goldReserve > player1.goldReserve)
             {
-                return -1;
+                winner = "The winner is: Gawb";
+                WinnerText.text = winner;
+                ResultPanel.SetActive(true);
             }
             else
             {
                 //tie
-                return 0;
+                winner = "Dorfs and gawbs have found their peace..";
+                WinnerText.text = winner;
+                ResultPanel.SetActive(true);
             }
         }
         else if (P1Base.GetComponent<Room>().roomOwner == -1)
         {
             //end game
-            return -1;
+            winner = "The winner is: Gawb";
+            WinnerText.text = winner;
+            ResultPanel.SetActive(true);
         }
         else if (P2Base.GetComponent<Room>().roomOwner == 1)
         {
             //end game
-            return 1;
+            winner = "The winner is: Dorf";
+            WinnerText.text = winner;
+            ResultPanel.SetActive(true);
         }
+        
         return 2;
     }
 
@@ -768,6 +779,7 @@ public class GameEngine : MonoBehaviour
                 //quit out
                 //not building of that type to upgrade
                 sendError("No existing building to update..");
+                print("yes quit");
                 return 0;
             }
             else if (currentTurnOwner == 1 && (selectedRoom.GetComponent<Room>().units[0] < 1 ||
@@ -1051,6 +1063,8 @@ public class GameEngine : MonoBehaviour
             winner = 2;
         }
 
+        print(defender.ToString());
+
         //remove unit
         if (selectedRoom.GetComponent<Room>().units[defender] >= ap)
         {
@@ -1118,7 +1132,11 @@ public class GameEngine : MonoBehaviour
         }
         
         // retreat
-        if(selectedRoom.GetComponent<Room>().units[defeat] == 0)
+        if(defeat == 2)
+        {
+            // no winner
+        }
+        else if(selectedRoom.GetComponent<Room>().units[defeat] == 0)
         {
 
         }

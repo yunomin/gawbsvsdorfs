@@ -506,6 +506,7 @@ public class GameEngine : MonoBehaviour
                     
                     StartCoroutine(moveAnimation());
                     liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 0.5f, liftedUnit.transform.position.z);
+                    liftedUnit.GetComponent<DorfAnimation>().startIdle();
                 }
             }
             else

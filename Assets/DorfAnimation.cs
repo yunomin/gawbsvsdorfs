@@ -42,13 +42,13 @@ public class DorfAnimation : MonoBehaviour
     public void startWalk()
     {
         dorf = GetComponent<Animator>();
-        dorf.SetTrigger("toWalk");
+        dorf.SetTrigger("startWalk");
     }
 
     public void startIdle()
     {
         dorf = GetComponent<Animator>();
-        dorf.SetTrigger("toIdle");
+        dorf.SetTrigger("startIdle");
     }
     // OnStateExit is called before OnStateExit is called on any state inside this state machine
     //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

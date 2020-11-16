@@ -82,33 +82,41 @@ public class GameEngine : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                RaycastHit hit;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //Determines what is clicked
-                if (Physics.Raycast(ray, out hit, 100.0f))
+                if (EventSystem.current.IsPointerOverGameObject())
                 {
-                    print("Hit!:" + hit.collider.name);
-                    if (hit.collider.gameObject.CompareTag("room")) //Will detect if hit is on a "room" (via tag)
-                    {
-                        //print("clicked on room:" + hit.transform.name);
-                        //TODO: Add code to move light over selected room, slowly (animated)
-                        //float step = speed * Time.deltaTime; //To be used in steps, not implemented.
-                        previouslySelectedRoom = selectedRoom;
-                        previouslySelectedUnit = selectedUnit;
-                        selectionLight.transform.position = new Vector3(hit.collider.transform.position.x, hit.collider.transform.position.y + lightHeight, hit.collider.transform.position.z);
-
-                        SelectRoom(hit.collider.gameObject); //"Selects" the room
-                        if (currentTurnOwner == 1)
-                        {
-                            SelectUnit(selectedRoom.GetComponent<Room>().unitSpawns[0]);
-                        }
-                        else
-                        {
-                            SelectUnit(selectedRoom.GetComponent<Room>().unitSpawns[1]);
-                        }
-                        lastSelection = hit.collider.gameObject.tag;
-                    }
-
+                    print("Clicked on the UI");
                 }
+                else
+                {
+                    RaycastHit hit;
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //Determines what is clicked
+                    if (Physics.Raycast(ray, out hit, 100.0f))
+                    {
+                        print("Hit!:" + hit.collider.name);
+                        if (hit.collider.gameObject.CompareTag("room")) //Will detect if hit is on a "room" (via tag)
+                        {
+                            //print("clicked on room:" + hit.transform.name);
+                            //TODO: Add code to move light over selected room, slowly (animated)
+                            //float step = speed * Time.deltaTime; //To be used in steps, not implemented.
+                            previouslySelectedRoom = selectedRoom;
+                            previouslySelectedUnit = selectedUnit;
+                            selectionLight.transform.position = new Vector3(hit.collider.transform.position.x, hit.collider.transform.position.y + lightHeight, hit.collider.transform.position.z);
+
+                            SelectRoom(hit.collider.gameObject); //"Selects" the room
+                            if (currentTurnOwner == 1)
+                            {
+                                SelectUnit(selectedRoom.GetComponent<Room>().unitSpawns[0]);
+                            }
+                            else
+                            {
+                                SelectUnit(selectedRoom.GetComponent<Room>().unitSpawns[1]);
+                            }
+                            lastSelection = hit.collider.gameObject.tag;
+                        }
+
+                    }
+                }
+                
             }
         }
     }

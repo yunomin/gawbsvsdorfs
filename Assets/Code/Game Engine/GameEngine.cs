@@ -280,11 +280,11 @@ public class GameEngine : MonoBehaviour
                 }
                 yield return null;
             }
-            while (player2.mushroomReserve > 0)
+            while (player2.mushroomReserve > 0 && !finishClicked)
             {
                 sendError("you have extra mushrooms. please click on your base to add another gawb there or click finish");
                 //make done button active
-                if (Input.GetMouseButtonDown(0) && !finishClicked)
+                if (Input.GetMouseButtonDown(0))
                 {
                     if (selectedRoom != null)
                     {

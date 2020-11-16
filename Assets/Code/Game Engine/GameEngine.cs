@@ -69,6 +69,13 @@ public class GameEngine : MonoBehaviour
     public float lightHeight;
     public bool isEnable;
 
+    // animation scripts and stuff
+    //public Script DorfAnimator;
+    public Vector3 target;
+    public Vector3 origPos;
+    public GameObject unitToMove;
+    public GameObject dorfModel;
+
     // Error display
     public GameObject err;
 
@@ -92,26 +99,22 @@ public class GameEngine : MonoBehaviour
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //Determines what is clicked
                     if (Physics.Raycast(ray, out hit, 100.0f))
                     {
-                        print("Hit!:" + hit.collider.name);
-                        if (hit.collider.gameObject.CompareTag("room")) //Will detect if hit is on a "room" (via tag)
-                        {
-                            //print("clicked on room:" + hit.transform.name);
-                            //TODO: Add code to move light over selected room, slowly (animated)
-                            //float step = speed * Time.deltaTime; //To be used in steps, not implemented.
-                            previouslySelectedRoom = selectedRoom;
-                            previouslySelectedUnit = selectedUnit;
-                            selectionLight.transform.position = new Vector3(hit.collider.transform.position.x, hit.collider.transform.position.y + lightHeight, hit.collider.transform.position.z);
+                        //print("clicked on room:" + hit.transform.name);
+                        //TODO: Add code to move light over selected room, slowly (animated)
+                        //float step = speed * Time.deltaTime; //To be used in steps, not implemented.
+                        
+                        selectionLight.transform.position = new Vector3(hit.collider.transform.position.x, hit.collider.transform.position.y + lightHeight, hit.collider.transform.position.z);
 
-                            SelectRoom(hit.collider.gameObject); //"Selects" the room
-                            if (currentTurnOwner == 1)
-                            {
-                                SelectUnit(selectedRoom.GetComponent<Room>().unitSpawns[0]);
-                            }
-                            else
-                            {
-                                SelectUnit(selectedRoom.GetComponent<Room>().unitSpawns[1]);
-                            }
-                            lastSelection = hit.collider.gameObject.tag;
+                        SelectRoom(hit.collider.gameObject); //"Selects" the room
+                        if (currentTurnOwner == 1)
+                        {
+                            SelectUnit(selectedRoom.GetComponent<Room>().unitSpawns[0]);
+                        }
+                        else
+                        {
+                            SelectUnit(selectedRoom.GetComponent<Room>().unitSpawns[1]);
+                        }
+                        lastSelection = hit.collider.gameObject.tag;
                         }
 
                     }
@@ -169,7 +172,7 @@ public class GameEngine : MonoBehaviour
         {
             currentTurnOwner *= -1;
             AIActions = player2.StartTurn(roomList);
-            clearSelection();
+            //clearSelection();
             goldPool -= player2.goldIncome;
             if (player2.isAI)
             {
@@ -184,7 +187,7 @@ public class GameEngine : MonoBehaviour
         {
             currentTurnOwner *= -1;
             player1.StartTurn(roomList);
-            clearSelection();
+            //clearSelection();
             goldPool -= player1.goldIncome;
             StartCoroutine(unitUpkeep());
         }
@@ -274,11 +277,11 @@ public class GameEngine : MonoBehaviour
                 }
                 yield return null;
             }
-            while (player2.mushroomReserve > 0)
+            while (player2.mushroomReserve > 0 && !finishClicked)
             {
                 sendError("you have extra mushrooms. please click on your base to add another gawb there or click finish");
                 //make done button active
-                if (Input.GetMouseButtonDown(0) && !finishClicked)
+                if (Input.GetMouseButtonDown(0))
                 {
                     if (selectedRoom != null)
                     {
@@ -460,6 +463,42 @@ public class GameEngine : MonoBehaviour
         selectedBuilding = newBuildingSelection;
     }
 
+    IEnumerator moveAnimation()
+    {
+        
+        while ((unitToMove.transform.position - target).magnitude >= 0.005)
+        {
+            unitToMove.GetComponent<DorfAnimation>().startWalk();
+            float step = 1.0f * Time.deltaTime;
+            unitToMove.transform.position = Vector3.MoveTowards(unitToMove.transform.position, target, step);
+            yield return null;
+        }
+        Destroy(unitToMove);
+        if (currentTurnOwner == 1)
+        {
+            if (selectedRoom.GetComponent<Room>().units[0] == 0)
+            {
+                selectedRoom.GetComponent<Room>().unitSpawns[0].active = true;
+            }
+            selectedRoom.GetComponent<Room>().units[0] += 1;
+        }
+        else
+        {
+            if (selectedRoom.GetComponent<Room>().units[1] == 0)
+            {
+                selectedRoom.GetComponent<Room>().unitSpawns[1].active = true;
+            }
+            selectedRoom.GetComponent<Room>().units[1] += 1;
+        }
+
+        numActions--;
+        ActionUsed = true;
+        if (numActions == 0)
+        {
+            this.ChangeTurn();
+        }
+    }
+
     public int Harvest()
     {
         // This function is going to be called when player presses harvest button on the UI,
@@ -478,16 +517,41 @@ public class GameEngine : MonoBehaviour
         if (unitLifted)
         {
             //visual
-            //liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 1, liftedUnit.transform.position.z);
             unitLifted = false;
             
             //check if move can be made
-            if (!(previouslySelectedRoom.GetComponent<Room>().isAdjacent(selectedRoom)))
+            if (previouslySelectedRoom != null)
+            {
+                if (!(previouslySelectedRoom.GetComponent<Room>().isAdjacent(selectedRoom)))
+                {
+                    //cannot make move
+                    liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 0.5f, liftedUnit.transform.position.z);
+                    liftedUnit.GetComponent<DorfAnimation>().startIdle();
+                    sendError("Can not move there..");
+                    return 0;
+                }
+                else
+                {
+                    //do walking animation
+                    origPos = previouslySelectedUnit.transform.position;
+                    origPos.y -= 0.5f;
+                    target = selectedUnit.transform.position;
+                    unitToMove.transform.forward = (selectedUnit.transform.position - unitToMove.transform.position);
+                    unitToMove.active = true;
+                    StartCoroutine(moveAnimation());
+                    liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 0.5f, liftedUnit.transform.position.z);
+                    liftedUnit.GetComponent<DorfAnimation>().startIdle();
+                }
+            }
+            else
             {
                 //cannot make move
+                liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 0.5f, liftedUnit.transform.position.z);
+                liftedUnit.GetComponent<DorfAnimation>().startIdle();
                 sendError("Can not move there..");
                 return 0;
             }
+
 
             //mechanical
             if (currentTurnOwner == 1)
@@ -497,11 +561,6 @@ public class GameEngine : MonoBehaviour
                 {
                     previouslySelectedRoom.GetComponent<Room>().unitSpawns[0].active = false;
                 }
-                if (selectedRoom.GetComponent<Room>().units[0] == 0)
-                {
-                    selectedRoom.GetComponent<Room>().unitSpawns[0].active = true;
-                }
-                selectedRoom.GetComponent<Room>().units[0] += 1;
             }
             else
             {
@@ -510,18 +569,6 @@ public class GameEngine : MonoBehaviour
                 {
                     previouslySelectedRoom.GetComponent<Room>().unitSpawns[1].active = false;
                 }
-                if (selectedRoom.GetComponent<Room>().units[1] == 0)
-                {
-                    selectedRoom.GetComponent<Room>().unitSpawns[1].active = true;
-                }
-                selectedRoom.GetComponent<Room>().units[1] += 1;
-            }
-
-            numActions--;
-            ActionUsed = true;
-            if (numActions == 0)
-            {
-                this.ChangeTurn();
             }
         }
         else
@@ -529,9 +576,19 @@ public class GameEngine : MonoBehaviour
             //visual
             if (selectedUnit.active == true)
             {
-                selectedUnit.transform.position = new Vector3(selectedUnit.transform.position.x, selectedUnit.transform.position.y + 1, selectedUnit.transform.position.z);
+                unitToMove = Instantiate(selectedUnit, selectedUnit.transform.position, Quaternion.identity);
+                Vector3 scaleToChange = unitToMove.transform.localScale;
+                scaleToChange.x = scaleToChange.x * selectedRoom.transform.localScale.x;
+                scaleToChange.y = scaleToChange.y * selectedRoom.transform.localScale.y;
+                scaleToChange.z = scaleToChange.z * selectedRoom.transform.localScale.z;
+                unitToMove.transform.localScale = scaleToChange;
+                unitToMove.active = false;
+                selectedUnit.transform.position = new Vector3(selectedUnit.transform.position.x, selectedUnit.transform.position.y + 0.5f, selectedUnit.transform.position.z);
+                selectedUnit.GetComponent<DorfAnimation>().startWalk();
                 liftedUnit = selectedUnit;
                 unitLifted = true;
+                previouslySelectedRoom = selectedRoom;
+                previouslySelectedUnit = selectedUnit;
             }
 
             //mechanical

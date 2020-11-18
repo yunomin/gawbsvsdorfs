@@ -275,6 +275,7 @@ public class ButtonManager : MonoBehaviour
     public void Move()
     {
         Debug.Log("move");
+        gameEngine.GetComponent<GameEngine>().MoveUnit();
         if (gameEngine.GetComponent<GameEngine>().unitLifted)
         {
             actionOff();
@@ -284,7 +285,6 @@ public class ButtonManager : MonoBehaviour
         {
             actionOn();
         }
-        gameEngine.GetComponent<GameEngine>().MoveUnit();
     }
     
     public void Finish()

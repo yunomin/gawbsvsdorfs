@@ -11790,7 +11790,7 @@ MonoBehaviour:
     type: 3}
   upgradedCampPrefab: {fileID: 919132149155446097, guid: 6874e928ad038e5409003e2282b0b7d0,
     type: 3}
-  upgradedMinePrefab: {fileID: 919132149155446097, guid: 3db02cea08e3a8f488cb3c849ef09fb3,
+  upgradedMinePrefab: {fileID: 919132149155446097, guid: a489cd7a1456214459143b4567670540,
     type: 3}
   upgradedFarmPrefab: {fileID: 919132149155446097, guid: eb8c5cc825e1f524eb86d1db56ec4cbd,
     type: 3}

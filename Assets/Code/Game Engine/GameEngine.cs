@@ -55,7 +55,7 @@ public class GameEngine : MonoBehaviour
     public string currMushroomp2;
     public int buildType;
     public int turnNumber;
-    public bool removingUnits;
+    public int removingUnits;
     public bool needToHarvest;
     public bool finishClicked;
     public bool GameIsPause;
@@ -141,9 +141,9 @@ public class GameEngine : MonoBehaviour
         //Set up first turn parameters.
         //This should update to 2 after the turn switches.
         goldPool = 200;
-        currentTurnOwner = 1; //Player 1, (remember -1 is player 2)
+        currentTurnOwner = -1; //Player 1, (remember -1 is player 2)
         numActions = 2;
-        player1.StartTurn(roomList);
+        //player1.StartTurn(roomList);
         PopulateRoomStart();
         unitLifted = false;
 
@@ -152,6 +152,7 @@ public class GameEngine : MonoBehaviour
         // testing code
         isTurn = true;
         isEnable = true;
+        ChangeTurn();
 
     }
     private void clearSelection()
@@ -199,7 +200,7 @@ public class GameEngine : MonoBehaviour
 
     IEnumerator unitUpkeep()
     {
-        removingUnits = true;
+        removingUnits = 1;
         if (currentTurnOwner == 1)
         {
             while (player1.mushroomReserve < 0)
@@ -247,7 +248,7 @@ public class GameEngine : MonoBehaviour
                 yield return null;
             }
             finishClicked = false;
-            removingUnits = false;
+            removingUnits = 0;
             sendError("");
         }
 
@@ -297,7 +298,7 @@ public class GameEngine : MonoBehaviour
                 yield return null;
             }
             finishClicked = false;
-            removingUnits = false;
+            removingUnits = 0;
             sendError("");
         }
     }
@@ -464,7 +465,6 @@ public class GameEngine : MonoBehaviour
 
     IEnumerator moveAnimation()
     {
-        
         while ((unitToMove.transform.position - target).magnitude >= 0.005)
         {
             unitToMove.GetComponent<DorfAnimation>().startWalk();
@@ -489,7 +489,8 @@ public class GameEngine : MonoBehaviour
             }
             selectedRoom.GetComponent<Room>().units[1] += 1;
         }
-
+        removingUnits = 0;
+        enableSelect();
         numActions--;
         ActionUsed = true;
         if (numActions == 0)
@@ -537,6 +538,8 @@ public class GameEngine : MonoBehaviour
                     target = selectedUnit.transform.position;
                     unitToMove.transform.forward = (selectedUnit.transform.position - unitToMove.transform.position);
                     unitToMove.active = true;
+                    disableSelect();
+                    removingUnits = 1;
                     StartCoroutine(moveAnimation());
                     liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 0.5f, liftedUnit.transform.position.z);
                     liftedUnit.GetComponent<DorfAnimation>().startIdle();

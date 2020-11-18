@@ -275,6 +275,15 @@ public class ButtonManager : MonoBehaviour
     public void Move()
     {
         Debug.Log("move");
+        if (gameEngine.GetComponent<GameEngine>().unitLifted)
+        {
+            actionOff();
+            moveButton.GetComponent<Button>().interactable = true;
+        }
+        else
+        {
+            actionOn();
+        }
         gameEngine.GetComponent<GameEngine>().MoveUnit();
     }
     

@@ -1,27 +1,48 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 
+[ExecuteInEditMode()]
 public class Tooltip : MonoBehaviour
 {
-    private Text tooltipText;
-    private RectTransform backgroudTrans;
+    public TextMeshProUGUI contentField;
+    public LayoutElement layoutElement;
+    public int characterWrapLimit;
+    public RectTransform rectTransform;
 
     private void Awake()
     {
-        backgroudTrans = transform.Find("ttBackground").GetComponent<RectTransform>();
-        tooltipText = transform.Find("ttText").GetComponent<Text>();
+        rectTransform = GetComponent<RectTransform>();
+    }
+    public void SetText(string content = "")
+    {
+        if (string.IsNullOrEmpty(content))
+        {
+            contentField.gameObject.SetActive(false);
+        }
+        else
+        {
+            contentField.gameObject.SetActive(true);
+            contentField.text = content;
+        }
+        int contentLength = contentField.text.Length;
+        layoutElement.enabled = (contentLength > characterWrapLimit) ? true : false;
+    }
+    private void Update()
+    {
+        if (Application.isEditor)
+        {
+            int contentLength = contentField.text.Length;
+            layoutElement.enabled = (contentLength > characterWrapLimit) ? true : false;
+        }
+        Vector2 position = Input.mousePosition;
 
-        ShowTooltip("Random tt text");
-        
-    }
-    private void ShowTooltip(string t)
-    {
-        gameObject.SetActive(true);
-    }
-    private void HideTooltip()
-    {
-        gameObject.SetActive(false);
+        float pivotX = position.x / Screen.width;
+        float pivotY = position.y / Screen.height;
+
+        rectTransform.pivot = new Vector2(pivotX, pivotY);
+        transform.position = position;
     }
 }

@@ -207,6 +207,7 @@ public class ButtonManager : MonoBehaviour
     public void Attack()
     {
         gameEngine.GetComponent<GameEngine>().Attack();
+
     }
     public void Overwork()
     {

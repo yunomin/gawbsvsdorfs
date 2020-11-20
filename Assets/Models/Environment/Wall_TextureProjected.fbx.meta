@@ -3,7 +3,12 @@ guid: 8435d27daabe72d4482bf1da87cbbda9
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cliffSurface
+    second: {fileID: 2100000, guid: c18fabb4c8dc78349b18e38f02cdcd19, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

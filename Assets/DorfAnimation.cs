@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class DorfAnimation : MonoBehaviour
 {
-    Animator dorf;
+    Animator unit;
     public int state; //0: no change, 1: idle, 2: walk, 3:attack
     void Start ()
     {
-        dorf = GetComponent<Animator>();
+        unit = GetComponent<Animator>();
     }
     // OnStateEnter is called before OnStateEnter is called on any state inside this state machine
     //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -41,14 +41,14 @@ public class DorfAnimation : MonoBehaviour
 
     public void startWalk()
     {
-        dorf = GetComponent<Animator>();
-        dorf.SetTrigger("startWalk");
+        unit = GetComponent<Animator>();
+        unit.SetTrigger("startWalk");
     }
 
     public void startIdle()
     {
-        dorf = GetComponent<Animator>();
-        dorf.SetTrigger("startIdle");
+        unit = GetComponent<Animator>();
+        unit.SetTrigger("startIdle");
     }
     // OnStateExit is called before OnStateExit is called on any state inside this state machine
     //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

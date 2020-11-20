@@ -8,6 +8,11 @@ ModelImporter:
     second: Take 001
   externalObjects:
   - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: idle_0001_phongE1
+    second: {fileID: 2100000, guid: ac7fbd38222045d429092cee2d4d80d8, type: 2}
+  - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: dorfOBJ2_DefaultMaterial_AO

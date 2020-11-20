@@ -6,7 +6,32 @@ ModelImporter:
   - first:
       74: 1827226128182048838
     second: Take 001
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: axe_initialShadingGroup_BaseColor
+    second: {fileID: 2800000, guid: 312548abc183ace4fb7e7b5de6541096, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: axe_initialShadingGroup_Normal
+    second: {fileID: 2800000, guid: 5766323a4f93a264aac9574e89347b54, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: dorfOBJ2_DefaultMaterial_AO
+    second: {fileID: 2800000, guid: ede64f1933e489a4f91f81eeb1a19319, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: goblinFinished_DefaultMaterial_BaseColor
+    second: {fileID: 2800000, guid: 034ea6d921dfbea4abf89316778741ee, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: goblinFinished_DefaultMaterial_Normal
+    second: {fileID: 2800000, guid: 4b452ea76587b9c4ca1e6e919d084ad8, type: 3}
   materials:
     materialImportMode: 1
     materialName: 0

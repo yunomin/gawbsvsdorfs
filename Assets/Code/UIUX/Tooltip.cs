@@ -2,23 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using CodeMonkey.Utils;
 
 public class Tooltip : MonoBehaviour
 {
-    private Text tooltipText;
-    private RectTransform backgroudTrans;
+    [SerializeField]
+    private Camera uiCamera;
+    public Text tooltipText;
+    public RectTransform backgroundRectTransform;
+    public RectTransform tooltipTransform;
 
     private void Awake()
     {
-        backgroudTrans = transform.Find("ttBackground").GetComponent<RectTransform>();
-        tooltipText = transform.Find("ttText").GetComponent<Text>();
-
-        ShowTooltip("Random tt text");
         
+        ShowTooltip("Random  kjhgfd\nt text kjhgfdsdfgh");
+        
+    }
+    private void Update()
+    {
+        Vector2 localPoint;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(tooltipTransform, Input.mousePosition, uiCamera, out localPoint);
+        transform.localPosition = localPoint;
     }
     private void ShowTooltip(string t)
     {
         gameObject.SetActive(true);
+        tooltipText.text = t;
+        float textPaddingSize = 4f;
+
+        Vector2 backgroundSize = new Vector2(tooltipText.preferredWidth + textPaddingSize * 2f, tooltipText.preferredHeight + textPaddingSize * 2f);
+        backgroundRectTransform.sizeDelta = backgroundSize;
     }
     private void HideTooltip()
     {

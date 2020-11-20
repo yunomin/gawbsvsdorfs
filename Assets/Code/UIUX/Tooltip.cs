@@ -1,39 +1,48 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 
+[ExecuteInEditMode()]
 public class Tooltip : MonoBehaviour
 {
-    [SerializeField]
-    private Camera uiCamera;
-    public Text tooltipText;
-    public RectTransform backgroundRectTransform;
-    public RectTransform tooltipTransform;
+    public TextMeshProUGUI contentField;
+    public LayoutElement layoutElement;
+    public int characterWrapLimit;
+    public RectTransform rectTransform;
 
     private void Awake()
     {
-        
-        ShowTooltip("Random  kjhgfd\nt text kjhgfdsdfgh");
-        
+        rectTransform = GetComponent<RectTransform>();
+    }
+    public void SetText(string content = "")
+    {
+        if (string.IsNullOrEmpty(content))
+        {
+            contentField.gameObject.SetActive(false);
+        }
+        else
+        {
+            contentField.gameObject.SetActive(true);
+            contentField.text = content;
+        }
+        int contentLength = contentField.text.Length;
+        layoutElement.enabled = (contentLength > characterWrapLimit) ? true : false;
     }
     private void Update()
     {
-        Vector2 localPoint;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(tooltipTransform, Input.mousePosition, uiCamera, out localPoint);
-        transform.localPosition = localPoint;
-    }
-    private void ShowTooltip(string t)
-    {
-        gameObject.SetActive(true);
-        tooltipText.text = t;
-        float textPaddingSize = 4f;
+        if (Application.isEditor)
+        {
+            int contentLength = contentField.text.Length;
+            layoutElement.enabled = (contentLength > characterWrapLimit) ? true : false;
+        }
+        Vector2 position = Input.mousePosition;
 
-        Vector2 backgroundSize = new Vector2(tooltipText.preferredWidth + textPaddingSize * 2f, tooltipText.preferredHeight + textPaddingSize * 2f);
-        backgroundRectTransform.sizeDelta = backgroundSize;
-    }
-    private void HideTooltip()
-    {
-        gameObject.SetActive(false);
+        float pivotX = position.x / Screen.width;
+        float pivotY = position.y / Screen.height;
+
+        rectTransform.pivot = new Vector2(pivotX, pivotY);
+        transform.position = position;
     }
 }

@@ -40,6 +40,7 @@ public class GameEngine : MonoBehaviour
     public GameObject upgradedCampPrefab; //3
     public GameObject upgradedMinePrefab; //5
     public GameObject upgradedFarmPrefab; //7
+    public GameObject buildingPlaceholder;
 
     public int numActions;
 
@@ -55,7 +56,7 @@ public class GameEngine : MonoBehaviour
     public string currMushroomp2;
     public int buildType;
     public int turnNumber;
-    public bool removingUnits;
+    public int removingUnits;
     public bool needToHarvest;
     public bool finishClicked;
     public bool GameIsPause;
@@ -75,6 +76,7 @@ public class GameEngine : MonoBehaviour
     public Vector3 origPos;
     public GameObject unitToMove;
     public GameObject dorfModel;
+    public bool bonking;
 
     // Error display
     public GameObject err;
@@ -141,9 +143,9 @@ public class GameEngine : MonoBehaviour
         //Set up first turn parameters.
         //This should update to 2 after the turn switches.
         goldPool = 200;
-        currentTurnOwner = 1; //Player 1, (remember -1 is player 2)
+        currentTurnOwner = -1; //Player 1, (remember -1 is player 2)
         numActions = 2;
-        player1.StartTurn(roomList);
+        //player1.StartTurn(roomList);
         PopulateRoomStart();
         unitLifted = false;
 
@@ -152,6 +154,7 @@ public class GameEngine : MonoBehaviour
         // testing code
         isTurn = true;
         isEnable = true;
+        ChangeTurn();
 
     }
     private void clearSelection()
@@ -199,7 +202,7 @@ public class GameEngine : MonoBehaviour
 
     IEnumerator unitUpkeep()
     {
-        removingUnits = true;
+        removingUnits = 1;
         if (currentTurnOwner == 1)
         {
             while (player1.mushroomReserve < 0)
@@ -247,7 +250,7 @@ public class GameEngine : MonoBehaviour
                 yield return null;
             }
             finishClicked = false;
-            removingUnits = false;
+            removingUnits = 0;
             sendError("");
         }
 
@@ -297,7 +300,7 @@ public class GameEngine : MonoBehaviour
                 yield return null;
             }
             finishClicked = false;
-            removingUnits = false;
+            removingUnits = 0;
             sendError("");
         }
     }
@@ -398,10 +401,10 @@ public class GameEngine : MonoBehaviour
     int isGameOver()
     {
         string winner = "";
-        print("game over");
         if (goldPool <= 0)
         {
             //end game
+            print("game over");
             if (player1.goldReserve > player2.goldReserve)
             {
                 winner = "The winner is: Dorf";
@@ -425,6 +428,7 @@ public class GameEngine : MonoBehaviour
         else if (P1Base.GetComponent<Room>().roomOwner == -1)
         {
             //end game
+            print("game over");
             winner = "The winner is: Gawb";
             WinnerText.text = winner;
             ResultPanel.SetActive(true);
@@ -432,6 +436,7 @@ public class GameEngine : MonoBehaviour
         else if (P2Base.GetComponent<Room>().roomOwner == 1)
         {
             //end game
+            print("game over");
             winner = "The winner is: Dorf";
             WinnerText.text = winner;
             ResultPanel.SetActive(true);
@@ -464,11 +469,10 @@ public class GameEngine : MonoBehaviour
 
     IEnumerator moveAnimation()
     {
-        
         while ((unitToMove.transform.position - target).magnitude >= 0.005)
         {
             unitToMove.GetComponent<DorfAnimation>().startWalk();
-            float step = 1.0f * Time.deltaTime;
+            float step = 1.5f * Time.deltaTime;
             unitToMove.transform.position = Vector3.MoveTowards(unitToMove.transform.position, target, step);
             yield return null;
         }
@@ -489,7 +493,8 @@ public class GameEngine : MonoBehaviour
             }
             selectedRoom.GetComponent<Room>().units[1] += 1;
         }
-
+        removingUnits = 0;
+        enableSelect();
         numActions--;
         ActionUsed = true;
         if (numActions == 0)
@@ -525,28 +530,41 @@ public class GameEngine : MonoBehaviour
                 {
                     //cannot make move
                     liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 0.5f, liftedUnit.transform.position.z);
-                    liftedUnit.GetComponent<DorfAnimation>().startIdle();
+                    //liftedUnit.GetComponent<DorfAnimation>().startIdle();
                     sendError("Can not move there..");
                     return 0;
                 }
                 else
                 {
-                    //do walking animation
-                    origPos = previouslySelectedUnit.transform.position;
-                    origPos.y -= 0.5f;
-                    target = selectedUnit.transform.position;
-                    unitToMove.transform.forward = (selectedUnit.transform.position - unitToMove.transform.position);
-                    unitToMove.active = true;
-                    StartCoroutine(moveAnimation());
-                    liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 0.5f, liftedUnit.transform.position.z);
-                    liftedUnit.GetComponent<DorfAnimation>().startIdle();
+                    if (!(previouslySelectedRoom.GetComponent<Room>().roomOwner == currentTurnOwner || selectedRoom.GetComponent<Room>().roomOwner == currentTurnOwner))
+                    {
+                        //cannot make move
+                        liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 0.5f, liftedUnit.transform.position.z);
+                        //liftedUnit.GetComponent<DorfAnimation>().startIdle();
+                        sendError("Can not move there..");
+                        return 0;
+                    }
+                    else
+                    {
+                        //do walking animation
+                        origPos = previouslySelectedUnit.transform.position;
+                        origPos.y -= 0.5f;
+                        target = selectedUnit.transform.position;
+                        unitToMove.transform.forward = (selectedUnit.transform.position - unitToMove.transform.position);
+                        unitToMove.active = true;
+                        disableSelect();
+                        removingUnits = 1;
+                        StartCoroutine(moveAnimation());
+                        liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 0.5f, liftedUnit.transform.position.z);
+                        liftedUnit.GetComponent<DorfAnimation>().startIdle();
+                    }
                 }
             }
             else
             {
                 //cannot make move
                 liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 0.5f, liftedUnit.transform.position.z);
-                liftedUnit.GetComponent<DorfAnimation>().startIdle();
+                //liftedUnit.GetComponent<DorfAnimation>().startIdle();
                 sendError("Can not move there..");
                 return 0;
             }
@@ -583,11 +601,15 @@ public class GameEngine : MonoBehaviour
                 unitToMove.transform.localScale = scaleToChange;
                 unitToMove.active = false;
                 selectedUnit.transform.position = new Vector3(selectedUnit.transform.position.x, selectedUnit.transform.position.y + 0.5f, selectedUnit.transform.position.z);
-                selectedUnit.GetComponent<DorfAnimation>().startWalk();
+                //selectedUnit.GetComponent<DorfAnimation>().startWalk();
                 liftedUnit = selectedUnit;
                 unitLifted = true;
                 previouslySelectedRoom = selectedRoom;
                 previouslySelectedUnit = selectedUnit;
+            }
+            else
+            {
+                sendError("No owned units in that room..");
             }
 
             //mechanical
@@ -920,7 +942,7 @@ public class GameEngine : MonoBehaviour
                         }
                         break;
                     case 6:
-                        buildPos.y = 0.8f;
+                        buildPos.y = 0.6f;
                         Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots]);
                         selectedRoom.GetComponent<Room>().buildingPlacementSlots[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots] = Instantiate(farm1Prefab, buildPos, Quaternion.identity);
                         if (currentTurnOwner == 1)
@@ -1011,7 +1033,7 @@ public class GameEngine : MonoBehaviour
             roomOwner = defender;
         }
 
-        if(selectedRoom.GetComponent<Room>().units[attacker] == 0)
+        if(selectedRoom.GetComponent<Room>().units[attacker] == 0 || selectedRoom.GetComponent<Room>().units[defender] == 0)
         {
             sendError("No units in the selected room..");
             return;
@@ -1037,13 +1059,20 @@ public class GameEngine : MonoBehaviour
         int dp = 0;
         for(int i = 0; i < selectedRoom.GetComponent<Room>().units[attacker]; i++)
         {
-            if(Random.Range(1, 6) > 4)
+            if (Random.Range(1, 6) > 4)
+            {
                 ap++;
+                StartCoroutine(bonkAnimation(selectedRoom.GetComponent<Room>().unitSpawns[attacker]));
+                //selectedRoom.GetComponent<Room>().unitSpawns[attacker].GetComponent<DorfAnimation>().startBonk();
+            }
         }
         for (int i = 0; i < selectedRoom.GetComponent<Room>().units[defender]; i++)
         {
             if (Random.Range(1, 6) > 5)
+            {
                 dp++;
+                StartCoroutine(bonkAnimation(selectedRoom.GetComponent<Room>().unitSpawns[defender]));
+            }
         }
         if(ap > dp)
         {
@@ -1065,15 +1094,40 @@ public class GameEngine : MonoBehaviour
         print(defender.ToString());
 
         //remove unit
-        if (selectedRoom.GetComponent<Room>().units[defender] >= ap)
+        if (selectedRoom.GetComponent<Room>().units[defender] > ap)
         {
             selectedRoom.GetComponent<Room>().units[defender] = selectedRoom.GetComponent<Room>().units[defender] - ap;
+            if (selectedRoom.GetComponent<Room>().units[defender] == 0)
+            {
+                selectedRoom.GetComponent<Room>().unitSpawns[defender].active = false;
+            }
+            if (currentTurnOwner == 1)
+            {
+                player2.unitCount -= ap;
+            }
+            else
+            {
+                player1.unitCount -= ap;
+            }
         }
         else
         {
+            if (currentTurnOwner == 1)
+            {
+                player2.unitCount -= selectedRoom.GetComponent<Room>().units[defender];
+            }
+            else
+            {
+                player1.unitCount -= selectedRoom.GetComponent<Room>().units[defender];
+            }
+            selectedRoom.GetComponent<Room>().units[defender] = 0;
+            selectedRoom.GetComponent<Room>().unitSpawns[defender].active = false;
+
+
             int remainp = ap - selectedRoom.GetComponent<Room>().units[defender];
             if (roomOwner == defender)
             {
+                /*
                 for (int i = 0; i < remainp; i++)
                 {
                     if (selectedRoom.GetComponent<Room>().buildingNumber == 0)
@@ -1081,52 +1135,87 @@ public class GameEngine : MonoBehaviour
                         // no more buildings
                         break;
                     }
-                    selectedRoom.GetComponent<Room>().buildingNumber--;
-
+                    //selectedRoom.GetComponent<Room>().buildingNumber--;
+                    */
                     for (int j = 0; j < selectedRoom.GetComponent<Room>().roomSlots; j++)
                     {
-                        if (selectedRoom.GetComponent<Room>().builtBuildings[j] != 0)
+                        if (selectedRoom.GetComponent<Room>().builtBuildings[j] == 2 || selectedRoom.GetComponent<Room>().builtBuildings[j] == 3)
                         {
                             selectedRoom.GetComponent<Room>().builtBuildings[j] = 0;
+                            Vector3 buildPos = selectedRoom.GetComponent<Room>().buildingPlacementSlots[j].transform.position;
+                            buildPos.y = selectedRoom.GetComponent<Room>().roomTile.transform.position.y;
+                            GameObject placeholder = Instantiate(buildingPlaceholder, buildPos, Quaternion.identity);
+                            placeholder.active = true;
                             Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[j]);
-
+                            selectedRoom.GetComponent<Room>().buildingPlacementSlots[j] = placeholder;
+                            selectedRoom.GetComponent<Room>().emptySlots++;
                             break;
                         }
                     }
-                }
+                
             }
         }
 
         //
-        if (selectedRoom.GetComponent<Room>().units[attacker] >= dp)
+        if (selectedRoom.GetComponent<Room>().units[attacker] > dp)
         {
             selectedRoom.GetComponent<Room>().units[attacker] = selectedRoom.GetComponent<Room>().units[attacker] - dp;
+            if (selectedRoom.GetComponent<Room>().units[attacker] == 0)
+            {
+                selectedRoom.GetComponent<Room>().unitSpawns[attacker].active = false;
+            }
+            if (currentTurnOwner == 1)
+            {
+                player1.unitCount -= ap;
+            }
+            else
+            {
+                player2.unitCount -= ap;
+            }
         }
         else
         {
+            if (currentTurnOwner == 1)
+            {
+                player2.unitCount -= selectedRoom.GetComponent<Room>().units[attacker];
+            }
+            else
+            {
+                player1.unitCount -= selectedRoom.GetComponent<Room>().units[attacker];
+            }
+            selectedRoom.GetComponent<Room>().units[attacker] = 0;
+            selectedRoom.GetComponent<Room>().unitSpawns[attacker].active = false;
+
+            selectedRoom.GetComponent<Room>().units[defender] = 0;
+            selectedRoom.GetComponent<Room>().unitSpawns[defender].active = false;
             int remainp = dp - selectedRoom.GetComponent<Room>().units[attacker];
             if (roomOwner == attacker)
             {
-                for (int i = 0; i < remainp; i++)
+                /*for (int i = 0; i < remainp; i++)
                 {
                     if (selectedRoom.GetComponent<Room>().buildingNumber == 0)
                     {
                         // no more buildings
                         break;
                     }
-                    selectedRoom.GetComponent<Room>().buildingNumber--;
-
+                    //selectedRoom.GetComponent<Room>().buildingNumber--;
+                    */
                     for (int j = 0; j < selectedRoom.GetComponent<Room>().roomSlots; j++)
                     {
                         if (selectedRoom.GetComponent<Room>().builtBuildings[j] != 0)
                         {
                             selectedRoom.GetComponent<Room>().builtBuildings[j] = 0;
+                            Vector3 buildPos = selectedRoom.GetComponent<Room>().buildingPlacementSlots[j].transform.position;
+                            buildPos.y = selectedRoom.GetComponent<Room>().roomTile.transform.position.y;
+                            GameObject placeholder = Instantiate(buildingPlaceholder, buildPos, Quaternion.identity);
+                            placeholder.active = true;
                             Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[j]);
-
+                            selectedRoom.GetComponent<Room>().buildingPlacementSlots[j] = placeholder;
+                            selectedRoom.GetComponent<Room>().emptySlots++;
                             break;
                         }
                     }
-                }
+                
             }
         }
         
@@ -1146,10 +1235,22 @@ public class GameEngine : MonoBehaviour
         
         numActions--;
         ActionUsed = true;
+        needToHarvest = true;
         if (numActions == 0)
         {
             this.ChangeTurn();
         }
+    }
+
+    IEnumerator bonkAnimation(GameObject unit)
+    {
+        while(bonking)
+        {
+            yield return null;
+        }
+        bonking = true;
+        unit.GetComponent<DorfAnimation>().startBonk();
+        bonking = false;
     }
 
     private void sendError(string m)

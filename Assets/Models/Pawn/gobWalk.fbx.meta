@@ -6,7 +6,12 @@ ModelImporter:
   - first:
       74: 1827226128182048838
     second: Take 001
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: gawbRigIdle_0001_idle_0001_phongE1
+    second: {fileID: 2100000, guid: ac7fbd38222045d429092cee2d4d80d8, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -19,16 +24,9 @@ ModelImporter:
     optimizeGameObjects: 0
     motionNodeName: 
     rigImportErrors: 
-    rigImportWarnings: "Avatar Rig Configuration mis-match. Inbetween bone rotation
-      in configuration does not match rotation in animation file:\n\t'bn_c_pelvisSpline_JNT'
-      : rotation error = 0.166932 deg\n"
+    rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
-      might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'bn_c_pelvisSpline_JNT' is inbetween humanoid
-      transforms and has rotation animation that will be discarded.\n\t'bn_c_chest_CLUST_CORRECT'
-      has translation animation that will be discarded.\n\t'bn_c_chest_CLUST_CORRECT'
-      is inbetween humanoid transforms and has rotation animation that will be discarded.\n"
+    animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0

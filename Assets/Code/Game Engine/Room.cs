@@ -9,6 +9,8 @@ public class Room : MonoBehaviour
     public string roomName;
     public GameObject roomGameObject;
     public GameObject roomTile;
+    public List<GameObject> archStones;
+    public List<GameObject> archKeys;
     public int roomOwner; //Usage: should be 0 for neutral, 1 for player 1, -1 for player 2. 
     public List<GameObject> Adjacent; //A list of rooms that count as "Adjacent".
     public int[] roomID;
@@ -27,6 +29,10 @@ public class Room : MonoBehaviour
     //materials
     public Material player1Material;
     public Material player2Material;
+    public Material player1Stone;
+    public Material player1Key;
+    public Material player2Stone;
+    public Material player2Key;
 
     //UI
     public Text UnitNumGawb;
@@ -87,12 +93,26 @@ public class Room : MonoBehaviour
             //roomMaterial = Resources.Load<Material>("P1_Own_Hi");
             MeshRenderer meshRenderer = roomTile.GetComponent<MeshRenderer>();
             meshRenderer.material = player1Material;
+            for (int i = 0; i < archStones.Count; i++)
+            {
+                meshRenderer = archStones[i].GetComponent<MeshRenderer>();
+                meshRenderer.material = player1Stone;
+                meshRenderer = archKeys[i].GetComponent<MeshRenderer>();
+                meshRenderer.material = player1Key;
+            }
         }
         else
         {
             //roomMaterial = Resources.Load<Material>("Player 2 Owned");
             MeshRenderer meshRenderer = roomTile.GetComponent<MeshRenderer>();
             meshRenderer.material = player2Material;
+            for (int i = 0; i < archStones.Count; i++)
+            {
+                meshRenderer = archStones[i].GetComponent<MeshRenderer>();
+                meshRenderer.material = player2Stone;
+                meshRenderer = archKeys[i].GetComponent<MeshRenderer>();
+                meshRenderer.material = player2Key;
+            }
         }
     }
 

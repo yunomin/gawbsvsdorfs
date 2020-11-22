@@ -983,20 +983,6 @@ public class GameEngine : MonoBehaviour
         
         //TODO, ONLY RETREAT TO BASE RN
         //TODO, SPEND MUSHROOM
-
-        ////////// situations:
-        /// attacker to be the room owner,
-        ///     tie
-        ///         both remove unit and building
-        ///         nobody retreat
-        ///     attacker win 
-        ///         defender remove unit
-        ///         remining unit retreat
-        ///     defender win
-        ///         attacker remove unit
-        ///         attacker remove building
-        ///         attacker retreat
-
         
         int attacker;
         int defender; 

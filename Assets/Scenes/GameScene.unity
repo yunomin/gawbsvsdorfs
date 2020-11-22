@@ -2744,7 +2744,6 @@ GameObject:
   - component: {fileID: 318667801}
   - component: {fileID: 318667803}
   - component: {fileID: 318667802}
-  - component: {fileID: 318667804}
   m_Layer: 5
   m_Name: TurnNumber
   m_TagString: Untagged
@@ -2813,19 +2812,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 318667800}
   m_CullTransparentMesh: 0
---- !u!114 &318667804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 318667800}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83da8624b88232c48931b809a326c7d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  content: turn number showed but what's more?
 --- !u!1 &342839770
 GameObject:
   m_ObjectHideFlags: 0
@@ -14466,6 +14452,7 @@ GameObject:
   - component: {fileID: 943511433}
   - component: {fileID: 943511432}
   - component: {fileID: 943511434}
+  - component: {fileID: 943511435}
   m_Layer: 5
   m_Name: OverworkButton
   m_TagString: Untagged
@@ -14586,6 +14573,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!114 &943511435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 943511430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83da8624b88232c48931b809a326c7d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: The action neccessary to rile up the proletariats of Mighty Mountain.
+    You choose a square with buildings you control and immediately recieve the production
+    bonuses of those buildings as if you had just started your turn.
 --- !u!1001 &947565819
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19415,6 +19417,7 @@ GameObject:
   - component: {fileID: 1314329875}
   - component: {fileID: 1314329874}
   - component: {fileID: 1314329873}
+  - component: {fileID: 1314329876}
   m_Layer: 5
   m_Name: BuildButton
   m_TagString: Untagged
@@ -19535,6 +19538,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1314329871}
   m_CullTransparentMesh: 0
+--- !u!114 &1314329876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314329871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83da8624b88232c48931b809a326c7d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: The action neccessary to increase your infrastructure in Mighty Mountain.
+    You choose an empty space to build in and then select the building you'd like
+    to erect.
 --- !u!1001 &1314719068
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20029,9 +20047,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 155.61798, y: 1132.1595}
+  m_AnchoredPosition: {x: -133.175, y: 330.274}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.6945225, y: 3.0271418}
+  m_Pivot: {x: 0.33353126, y: 1.2337748}
 --- !u!114 &1334698445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20059,10 +20077,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+    m_Left: 2
+    m_Right: 2
+    m_Top: 2
+    m_Bottom: 2
   m_ChildAlignment: 0
   m_Spacing: 0
   m_ChildForceExpandWidth: 0
@@ -21430,6 +21448,8 @@ GameObject:
   - component: {fileID: 1443681116}
   - component: {fileID: 1443681115}
   - component: {fileID: 1443681114}
+  - component: {fileID: 1443681117}
+  - component: {fileID: 1443681118}
   m_Layer: 5
   m_Name: UpgradeButton
   m_TagString: Untagged
@@ -21550,6 +21570,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1443681112}
   m_CullTransparentMesh: 0
+--- !u!114 &1443681117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443681112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83da8624b88232c48931b809a326c7d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: 
+--- !u!114 &1443681118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443681112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83da8624b88232c48931b809a326c7d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: The action needed to make your buildings that much better. It's more expensive
+    but centralizes your infrastructure and allows you to better defend your investments
+    from the nefarious enemy.
 --- !u!1 &1444623513
 GameObject:
   m_ObjectHideFlags: 0
@@ -22421,6 +22469,7 @@ GameObject:
   - component: {fileID: 1530688836}
   - component: {fileID: 1530688835}
   - component: {fileID: 1530688834}
+  - component: {fileID: 1530688837}
   m_Layer: 5
   m_Name: ControlButton
   m_TagString: Untagged
@@ -22541,6 +22590,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1530688832}
   m_CullTransparentMesh: 0
+--- !u!114 &1530688837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530688832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83da8624b88232c48931b809a326c7d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: The action neccessary to stake a claim somewhere without bashing someone's
+    brains in, in Mighty Mountain. You choose a square where your forces outnumber
+    your opponents and then gain control of that square.
 --- !u!1001 &1541464291
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25851,6 +25915,7 @@ GameObject:
   - component: {fileID: 1823957894}
   - component: {fileID: 1823957893}
   - component: {fileID: 1823957892}
+  - component: {fileID: 1823957895}
   m_Layer: 5
   m_Name: MoveButton
   m_TagString: Untagged
@@ -25971,6 +26036,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1823957890}
   m_CullTransparentMesh: 0
+--- !u!114 &1823957895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823957890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83da8624b88232c48931b809a326c7d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: The action neccessary to have your forces move across Mighty Mountain.
+    You choose where your forces are moving from and then select where you're moving
+    to.
 --- !u!1001 &1835146757
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29442,6 +29522,7 @@ GameObject:
   - component: {fileID: 2145910690}
   - component: {fileID: 2145910689}
   - component: {fileID: 2145910688}
+  - component: {fileID: 2145910691}
   m_Layer: 5
   m_Name: AttackButton
   m_TagString: Untagged
@@ -29562,6 +29643,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2145910686}
   m_CullTransparentMesh: 0
+--- !u!114 &2145910691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2145910686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83da8624b88232c48931b809a326c7d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: The action neccessary to instigate conflict in Mighty Mountain. You choose
+    where you'd like to fight between your forces and your enemies' and if you want
+    to use any mushrooms to power your forces up. An attack may not lead to one group
+    being destroyed so you have to be ready to commit more to the area if you need
+    to.
 --- !u!1001 &2412539099391646910
 PrefabInstance:
   m_ObjectHideFlags: 0

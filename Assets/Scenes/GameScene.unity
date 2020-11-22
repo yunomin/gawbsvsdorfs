@@ -194,7 +194,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f872cf02733d1294a9c323d60b0e913f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 781202d9dc10a9a4380d03b1ded07b40, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -247,22 +247,22 @@ PrefabInstance:
     - target: {fileID: 8796260598970906215, guid: 43c57a845aaf4d8498f7f3ea8ab6ce9a,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.45451945
+      value: -0.45451954
       objectReference: {fileID: 0}
     - target: {fileID: 8796260598970906215, guid: 43c57a845aaf4d8498f7f3ea8ab6ce9a,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.54167527
+      value: 0.54167515
       objectReference: {fileID: 0}
     - target: {fileID: 8796260598970906215, guid: 43c57a845aaf4d8498f7f3ea8ab6ce9a,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.45451945
+      value: -0.45451954
       objectReference: {fileID: 0}
     - target: {fileID: 8796260598970906215, guid: 43c57a845aaf4d8498f7f3ea8ab6ce9a,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.54167527
+      value: -0.54167515
       objectReference: {fileID: 0}
     - target: {fileID: 8796260598970906215, guid: 43c57a845aaf4d8498f7f3ea8ab6ce9a,
         type: 3}
@@ -287,12 +287,12 @@ PrefabInstance:
     - target: {fileID: 8796260598970906215, guid: 43c57a845aaf4d8498f7f3ea8ab6ce9a,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.385
+      value: 0.512
       objectReference: {fileID: 0}
     - target: {fileID: 8796260598970906215, guid: 43c57a845aaf4d8498f7f3ea8ab6ce9a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.49
+      value: 0.447
       objectReference: {fileID: 0}
     - target: {fileID: 8796260598970906215, guid: 43c57a845aaf4d8498f7f3ea8ab6ce9a,
         type: 3}
@@ -368,7 +368,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: f872cf02733d1294a9c323d60b0e913f,
+      objectReference: {fileID: 21300000, guid: 781202d9dc10a9a4380d03b1ded07b40,
         type: 3}
     - target: {fileID: 8796260599064368901, guid: 43c57a845aaf4d8498f7f3ea8ab6ce9a,
         type: 3}
@@ -379,7 +379,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: df5e335afc19eee4aa1527404c37d7e8,
+      objectReference: {fileID: 21300000, guid: 67a67bf2cec653a4d882a57b187854db,
         type: 3}
     - target: {fileID: 8796260600749237748, guid: 43c57a845aaf4d8498f7f3ea8ab6ce9a,
         type: 3}
@@ -970,7 +970,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: df5e335afc19eee4aa1527404c37d7e8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 67a67bf2cec653a4d882a57b187854db, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1146,7 +1146,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f872cf02733d1294a9c323d60b0e913f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 781202d9dc10a9a4380d03b1ded07b40, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2611,7 +2611,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f872cf02733d1294a9c323d60b0e913f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 781202d9dc10a9a4380d03b1ded07b40, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2922,7 +2922,6 @@ GameObject:
   - component: {fileID: 318667801}
   - component: {fileID: 318667803}
   - component: {fileID: 318667802}
-  - component: {fileID: 318667804}
   m_Layer: 5
   m_Name: TurnNumber
   m_TagString: Untagged
@@ -2991,19 +2990,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 318667800}
   m_CullTransparentMesh: 0
---- !u!114 &318667804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 318667800}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83da8624b88232c48931b809a326c7d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  content: turn number showed but what's more?
 --- !u!1 &342839770
 GameObject:
   m_ObjectHideFlags: 0
@@ -3131,7 +3117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3572,6 +3558,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 399717728}
   m_CullTransparentMesh: 0
+--- !u!1 &400553491
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 400553492}
+  - component: {fileID: 400553493}
+  m_Layer: 0
+  m_Name: ttt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &400553492
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 400553491}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1179182203}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &400553493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 400553491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83da8624b88232c48931b809a326c7d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: 
 --- !u!1001 &403007572
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4241,6 +4271,7 @@ GameObject:
   - component: {fileID: 444203350}
   - component: {fileID: 444203349}
   - component: {fileID: 444203348}
+  - component: {fileID: 444203351}
   m_Layer: 5
   m_Name: MineButton
   m_TagString: Untagged
@@ -4323,6 +4354,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 400553493}
+        m_TargetAssemblyTypeName: TooltipTrigger, Assembly-CSharp
+        m_MethodName: hide
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &444203349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4367,6 +4410,22 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1576352427}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &444203351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 444203346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83da8624b88232c48931b809a326c7d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: Mining is the single most important thing a Dorf/Gob can do, its the only
+    value they add to society! A gold mine allows you to more rapidly strip Mighty
+    Mountain of its gold and allows you to become the wealthiest group in the Mountain,
+    at least until a banking system is introduced.
 --- !u!1 &447462217
 GameObject:
   m_ObjectHideFlags: 0
@@ -4840,7 +4899,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 471092701}
   m_LocalRotation: {x: -0.45451945, y: 0.54167527, z: -0.45451945, w: -0.54167527}
-  m_LocalPosition: {x: 0, y: 0, z: 0.043726087}
+  m_LocalPosition: {x: 0, y: 0, z: 0.006}
   m_LocalScale: {x: 0.003417362, y: 0.0073245484, z: 0.0008576456}
   m_Children:
   - {fileID: 294476563}
@@ -4850,7 +4909,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 80, y: 270, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.34674484, y: 0.43186808}
+  m_AnchoredPosition: {x: 0.636, y: 0.4}
   m_SizeDelta: {x: 150, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &471092703
@@ -12330,9 +12389,9 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 743845633}
-  m_LocalRotation: {x: -0.45451945, y: 0.54167527, z: -0.45451945, w: -0.54167527}
-  m_LocalPosition: {x: 0, y: 0, z: 0.004321219}
-  m_LocalScale: {x: 0.003599099, y: 0.007152009, z: 0.00085622113}
+  m_LocalRotation: {x: -0.45451954, y: 0.54167515, z: -0.45451954, w: -0.54167515}
+  m_LocalPosition: {x: 0, y: 0, z: -0.006}
+  m_LocalScale: {x: 0.003417362, y: 0.0073245484, z: 0.0008576456}
   m_Children:
   - {fileID: 1044402371}
   - {fileID: 2131824955}
@@ -12341,7 +12400,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 80, y: 270, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.29835606, y: 0.45522976}
+  m_AnchoredPosition: {x: 0.597, y: 0.417}
   m_SizeDelta: {x: 150, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &743845635
@@ -12979,8 +13038,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 48.122196, y: 18.883053, z: 23.419004}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2104999524}
+  m_Children: [{fileID: 2104999524}]
   m_Father: {fileID: 1179182203}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13566,7 +13624,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: df5e335afc19eee4aa1527404c37d7e8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 67a67bf2cec653a4d882a57b187854db, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -13795,7 +13853,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f872cf02733d1294a9c323d60b0e913f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 781202d9dc10a9a4380d03b1ded07b40, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -13975,7 +14033,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 885840035}
   m_LocalRotation: {x: -0.45451945, y: 0.54167527, z: -0.45451945, w: -0.54167527}
-  m_LocalPosition: {x: 0, y: 0, z: 0.07474737}
+  m_LocalPosition: {x: 0, y: 0, z: 0.03}
   m_LocalScale: {x: 0.0035628052, y: 0.008039672, z: 0.00086293847}
   m_Children:
   - {fileID: 122178477}
@@ -13985,7 +14043,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 80, y: 270, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.28533983, y: 0.32303047}
+  m_AnchoredPosition: {x: 0.578, y: 0.36}
   m_SizeDelta: {x: 150, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &885840037
@@ -14777,6 +14835,7 @@ GameObject:
   - component: {fileID: 943511433}
   - component: {fileID: 943511432}
   - component: {fileID: 943511434}
+  - component: {fileID: 943511435}
   m_Layer: 5
   m_Name: OverworkButton
   m_TagString: Untagged
@@ -14897,6 +14956,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!114 &943511435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 943511430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83da8624b88232c48931b809a326c7d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: The action neccessary to rile up the proletariats of Mighty Mountain. You
+    choose a square with buildings you control and immediately recieve the production
+    bonuses of those buildings as if you had just started your turn.
 --- !u!1001 &947565819
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15001,6 +15075,7 @@ GameObject:
   m_Component:
   - component: {fileID: 975913099}
   - component: {fileID: 975913100}
+  - component: {fileID: 975913101}
   m_Layer: 5
   m_Name: TextGroup
   m_TagString: Untagged
@@ -15057,6 +15132,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &975913101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 975913098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83da8624b88232c48931b809a326c7d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: This lets you know how much gold and mushroom income each side has, nothing
+    too crazy about it, but hey! We're glad you wanted to confirm your suspicions.
 --- !u!1001 &980158551
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16096,7 +16185,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f872cf02733d1294a9c323d60b0e913f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 781202d9dc10a9a4380d03b1ded07b40, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -16317,12 +16406,12 @@ PrefabInstance:
     - target: {fileID: 8796260598970906215, guid: 43c57a845aaf4d8498f7f3ea8ab6ce9a,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.323
+      value: 0.578
       objectReference: {fileID: 0}
     - target: {fileID: 8796260598970906215, guid: 43c57a845aaf4d8498f7f3ea8ab6ce9a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.4
+      value: 0.36
       objectReference: {fileID: 0}
     - target: {fileID: 8796260598970906215, guid: 43c57a845aaf4d8498f7f3ea8ab6ce9a,
         type: 3}
@@ -16398,7 +16487,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: f872cf02733d1294a9c323d60b0e913f,
+      objectReference: {fileID: 21300000, guid: 781202d9dc10a9a4380d03b1ded07b40,
         type: 3}
     - target: {fileID: 8796260599064368901, guid: 43c57a845aaf4d8498f7f3ea8ab6ce9a,
         type: 3}
@@ -16419,7 +16508,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: df5e335afc19eee4aa1527404c37d7e8,
+      objectReference: {fileID: 21300000, guid: 67a67bf2cec653a4d882a57b187854db,
         type: 3}
     - target: {fileID: 8796260600749237748, guid: 43c57a845aaf4d8498f7f3ea8ab6ce9a,
         type: 3}
@@ -16928,7 +17017,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1114937669}
   m_LocalRotation: {x: -0.45451945, y: 0.54167527, z: -0.45451945, w: -0.54167527}
-  m_LocalPosition: {x: 0, y: 0, z: -0.01291669}
+  m_LocalPosition: {x: 0, y: 0, z: -0.035}
   m_LocalScale: {x: 0.0035990984, y: 0.007152006, z: 0.0008562213}
   m_Children:
   - {fileID: 869288804}
@@ -16938,7 +17027,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 80, y: 270, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.3365448, y: 0.45522976}
+  m_AnchoredPosition: {x: 0.603, y: 0.48}
   m_SizeDelta: {x: 150, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1114937671
@@ -17277,6 +17366,7 @@ GameObject:
   - component: {fileID: 1124794991}
   - component: {fileID: 1124794990}
   - component: {fileID: 1124794989}
+  - component: {fileID: 1124794992}
   m_Layer: 5
   m_Name: CampButton
   m_TagString: Untagged
@@ -17359,6 +17449,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 400553493}
+        m_TargetAssemblyTypeName: TooltipTrigger, Assembly-CSharp
+        m_MethodName: hide
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1124794990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17397,6 +17499,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1124794987}
   m_CullTransparentMesh: 0
+--- !u!114 &1124794992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1124794987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83da8624b88232c48931b809a326c7d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: Dorfs/Gobs aren't really fighters. They can try and act tough but at the
+    end of the day the side that'll usually win the fight is the side that throws
+    the first punch. Mercenary Camp's change that, forcing the denizens of the camp
+    to sit up straight and be prepared for whatever comes in.
 --- !u!1001 &1125914010
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18182,6 +18300,7 @@ Transform:
   - {fileID: 1243660716}
   - {fileID: 1109599038}
   - {fileID: 832598060}
+  - {fileID: 400553492}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -19399,7 +19518,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f872cf02733d1294a9c323d60b0e913f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 781202d9dc10a9a4380d03b1ded07b40, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -19929,6 +20048,7 @@ GameObject:
   - component: {fileID: 1314329875}
   - component: {fileID: 1314329874}
   - component: {fileID: 1314329873}
+  - component: {fileID: 1314329876}
   m_Layer: 5
   m_Name: BuildButton
   m_TagString: Untagged
@@ -20049,6 +20169,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1314329871}
   m_CullTransparentMesh: 0
+--- !u!114 &1314329876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314329871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83da8624b88232c48931b809a326c7d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: The action neccessary to increase your infrastructure in Mighty Mountain.
+    You choose an empty space to build in and then select the building you'd like
+    to erect.
 --- !u!1001 &1314719068
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20600,10 +20735,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+    m_Left: 2
+    m_Right: 2
+    m_Top: 2
+    m_Bottom: 2
   m_ChildAlignment: 0
   m_Spacing: 0
   m_ChildForceExpandWidth: 0
@@ -20822,7 +20957,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: df5e335afc19eee4aa1527404c37d7e8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 67a67bf2cec653a4d882a57b187854db, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -21985,6 +22120,7 @@ GameObject:
   - component: {fileID: 1443681116}
   - component: {fileID: 1443681115}
   - component: {fileID: 1443681114}
+  - component: {fileID: 1443681118}
   m_Layer: 5
   m_Name: UpgradeButton
   m_TagString: Untagged
@@ -22105,6 +22241,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1443681112}
   m_CullTransparentMesh: 0
+--- !u!114 &1443681118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443681112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83da8624b88232c48931b809a326c7d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: The action needed to make your buildings that much better. It's more expensive
+    but centralizes your infrastructure and allows you to better defend your investments
+    from the nefarious enemy.
 --- !u!1 &1444623513
 GameObject:
   m_ObjectHideFlags: 0
@@ -22648,7 +22799,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: df5e335afc19eee4aa1527404c37d7e8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 67a67bf2cec653a4d882a57b187854db, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -22856,6 +23007,7 @@ GameObject:
   - component: {fileID: 1516821549}
   - component: {fileID: 1516821548}
   - component: {fileID: 1516821547}
+  - component: {fileID: 1516821550}
   m_Layer: 5
   m_Name: FarmButton
   m_TagString: Untagged
@@ -22938,6 +23090,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 400553493}
+        m_TargetAssemblyTypeName: TooltipTrigger, Assembly-CSharp
+        m_MethodName: hide
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1516821548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22976,6 +23140,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1516821545}
   m_CullTransparentMesh: 0
+--- !u!114 &1516821550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1516821545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83da8624b88232c48931b809a326c7d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: A staple part of any Dorf/Gob's diet. The mushrooms are rich in dirt and
+    mush and allow you to support a larger army, or you can feed the mushrooms to
+    soldiers who need a little boost in battle.
 --- !u!1 &1530688832
 GameObject:
   m_ObjectHideFlags: 0
@@ -22988,6 +23167,7 @@ GameObject:
   - component: {fileID: 1530688836}
   - component: {fileID: 1530688835}
   - component: {fileID: 1530688834}
+  - component: {fileID: 1530688837}
   m_Layer: 5
   m_Name: ControlButton
   m_TagString: Untagged
@@ -23108,6 +23288,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1530688832}
   m_CullTransparentMesh: 0
+--- !u!114 &1530688837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530688832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83da8624b88232c48931b809a326c7d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: The action neccessary to stake a claim somewhere without bashing someone's
+    brains in, in Mighty Mountain. You choose a square where your forces outnumber
+    your opponents and then gain control of that square.
 --- !u!1001 &1541464291
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23872,6 +24067,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483817317484746166, guid: 8ddd1255461cdfe47862a770f72e4b55,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7483817317484746166, guid: 8ddd1255461cdfe47862a770f72e4b55,
         type: 3}
@@ -25035,6 +25235,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1693965117}
   - component: {fileID: 1693965118}
+  - component: {fileID: 1693965119}
   m_Layer: 5
   m_Name: TextGroup
   m_TagString: Untagged
@@ -25091,6 +25292,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1693965119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1693965116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83da8624b88232c48931b809a326c7d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: This lets you know how much gold and mushroom income each side has, nothing
+    too crazy about it, but hey! We're glad you wanted to confirm your suspicions.
 --- !u!1 &1694218748
 GameObject:
   m_ObjectHideFlags: 0
@@ -25333,7 +25548,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: df5e335afc19eee4aa1527404c37d7e8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 67a67bf2cec653a4d882a57b187854db, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -25808,7 +26023,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f872cf02733d1294a9c323d60b0e913f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 781202d9dc10a9a4380d03b1ded07b40, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -26635,6 +26850,7 @@ GameObject:
   - component: {fileID: 1823957894}
   - component: {fileID: 1823957893}
   - component: {fileID: 1823957892}
+  - component: {fileID: 1823957895}
   m_Layer: 5
   m_Name: MoveButton
   m_TagString: Untagged
@@ -26755,6 +26971,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1823957890}
   m_CullTransparentMesh: 0
+--- !u!114 &1823957895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823957890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83da8624b88232c48931b809a326c7d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: The action neccessary to have your forces move across Mighty Mountain.
+    You choose where your forces are moving from and then select where you're moving
+    to.
 --- !u!1001 &1835146757
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26854,6 +27085,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1841780060}
   - component: {fileID: 1841780061}
+  - component: {fileID: 1841780062}
   m_Layer: 5
   m_Name: IndicatorGroup
   m_TagString: Untagged
@@ -26908,6 +27140,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1841780062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841780059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83da8624b88232c48931b809a326c7d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: A measure of how many more plans can be enacted on your turn, each side
+    can only do two actions a turn.
 --- !u!1 &1850108217 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5684473469975752811, guid: 275e70683d81a214ead4d469af61e132,
@@ -27989,7 +28235,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1942190786}
   m_LocalRotation: {x: -0.45451945, y: 0.54167527, z: -0.45451945, w: -0.54167527}
-  m_LocalPosition: {x: 0, y: 0, z: 0.014105117}
+  m_LocalPosition: {x: 0, y: 0, z: -0.03}
   m_LocalScale: {x: 0.003205745, y: 0.0064006504, z: 0.0011016713}
   m_Children:
   - {fileID: 1755743590}
@@ -27999,7 +28245,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 80, y: 270, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.35617042, y: 0.41815472}
+  m_AnchoredPosition: {x: 0.464, y: 0.35}
   m_SizeDelta: {x: 150, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1942190788
@@ -28600,7 +28846,7 @@ PrefabInstance:
     - target: {fileID: 8796260598970906215, guid: 43c57a845aaf4d8498f7f3ea8ab6ce9a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.068
+      value: -0.029
       objectReference: {fileID: 0}
     - target: {fileID: 8796260598970906215, guid: 43c57a845aaf4d8498f7f3ea8ab6ce9a,
         type: 3}
@@ -28645,12 +28891,12 @@ PrefabInstance:
     - target: {fileID: 8796260598970906215, guid: 43c57a845aaf4d8498f7f3ea8ab6ce9a,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.334
+      value: 0.597
       objectReference: {fileID: 0}
     - target: {fileID: 8796260598970906215, guid: 43c57a845aaf4d8498f7f3ea8ab6ce9a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.486
+      value: 0.417
       objectReference: {fileID: 0}
     - target: {fileID: 8796260598970906215, guid: 43c57a845aaf4d8498f7f3ea8ab6ce9a,
         type: 3}
@@ -28711,7 +28957,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: f872cf02733d1294a9c323d60b0e913f,
+      objectReference: {fileID: 21300000, guid: 781202d9dc10a9a4380d03b1ded07b40,
         type: 3}
     - target: {fileID: 8796260599064368901, guid: 43c57a845aaf4d8498f7f3ea8ab6ce9a,
         type: 3}
@@ -28737,7 +28983,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: df5e335afc19eee4aa1527404c37d7e8,
+      objectReference: {fileID: 21300000, guid: 67a67bf2cec653a4d882a57b187854db,
         type: 3}
     - target: {fileID: 8796260600749237748, guid: 43c57a845aaf4d8498f7f3ea8ab6ce9a,
         type: 3}
@@ -30057,7 +30303,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: df5e335afc19eee4aa1527404c37d7e8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 67a67bf2cec653a4d882a57b187854db, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -30139,7 +30385,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: df5e335afc19eee4aa1527404c37d7e8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 67a67bf2cec653a4d882a57b187854db, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -30250,6 +30496,7 @@ GameObject:
   - component: {fileID: 2145910690}
   - component: {fileID: 2145910689}
   - component: {fileID: 2145910688}
+  - component: {fileID: 2145910691}
   m_Layer: 5
   m_Name: AttackButton
   m_TagString: Untagged
@@ -30376,6 +30623,23 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 44027944}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2145910691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2145910686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83da8624b88232c48931b809a326c7d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: The action neccessary to instigate conflict in Mighty Mountain. You choose
+    where you'd like to fight between your forces and your enemies' and if you want
+    to use any mushrooms to power your forces up. An attack may not lead to one group
+    being destroyed so you have to be ready to commit more to the area if you need
+    to.
 --- !u!1001 &2412539099391646910
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30791,12 +31055,12 @@ PrefabInstance:
     - target: {fileID: 8796260598970906215, guid: 43c57a845aaf4d8498f7f3ea8ab6ce9a,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.40394938
+      value: 0.536
       objectReference: {fileID: 0}
     - target: {fileID: 8796260598970906215, guid: 43c57a845aaf4d8498f7f3ea8ab6ce9a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.45504677
+      value: 0.436
       objectReference: {fileID: 0}
     - target: {fileID: 8796260598970906215, guid: 43c57a845aaf4d8498f7f3ea8ab6ce9a,
         type: 3}
@@ -30872,7 +31136,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: f872cf02733d1294a9c323d60b0e913f,
+      objectReference: {fileID: 21300000, guid: 781202d9dc10a9a4380d03b1ded07b40,
         type: 3}
     - target: {fileID: 8796260599064368901, guid: 43c57a845aaf4d8498f7f3ea8ab6ce9a,
         type: 3}
@@ -30883,7 +31147,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: df5e335afc19eee4aa1527404c37d7e8,
+      objectReference: {fileID: 21300000, guid: 67a67bf2cec653a4d882a57b187854db,
         type: 3}
     - target: {fileID: 8796260600749237748, guid: 43c57a845aaf4d8498f7f3ea8ab6ce9a,
         type: 3}

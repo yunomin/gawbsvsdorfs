@@ -153,15 +153,17 @@ public class ButtonManager : MonoBehaviour
                 }
             }
         }
-        if (gameEngine.GetComponent<GameEngine>().removingUnits == true)
+        if (gameEngine.GetComponent<GameEngine>().removingUnits == 1)
         {
             actionOff();
             endTurnButton.GetComponent<Button>().interactable = true;
+            gameEngine.GetComponent<GameEngine>().removingUnits = 2;
         }
-        else
+        else if (gameEngine.GetComponent<GameEngine>().removingUnits == 0)
         {
             actionOn();
             endTurnButton.GetComponent<Button>().interactable = false;
+            gameEngine.GetComponent<GameEngine>().removingUnits = 2;
         }
         if (gameEngine.GetComponent<GameEngine>().needToHarvest)
         {
@@ -276,6 +278,7 @@ public class ButtonManager : MonoBehaviour
     public void Move()
     {
         Debug.Log("move");
+        gameEngine.GetComponent<GameEngine>().MoveUnit();
         if (gameEngine.GetComponent<GameEngine>().unitLifted)
         {
             actionOff();
@@ -285,7 +288,6 @@ public class ButtonManager : MonoBehaviour
         {
             actionOn();
         }
-        gameEngine.GetComponent<GameEngine>().MoveUnit();
     }
     
     public void Finish()

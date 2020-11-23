@@ -5,9 +5,11 @@ using System.Globalization;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameEngine : MonoBehaviour
 {
+    public GameObject trigger;
     public Player player1; // Dorf
     public Player player2; // Gob
     private string p1Identity;
@@ -64,6 +66,8 @@ public class GameEngine : MonoBehaviour
 
     public bool isTurn;
     public bool isEnd;
+    public bool isTutorial;
+    public bool isTriggered;
 
     // selection variables
     public GameObject selectionLight;
@@ -128,6 +132,14 @@ public class GameEngine : MonoBehaviour
 
             }
         }
+        if (isTutorial)
+        {
+            if(numActions == 1 && !isTriggered)
+            {
+                trigger.GetComponent<DialogueTrigger>().TriggerNext();
+                isTriggered = !isTriggered;
+            }
+        }
     }
     
 
@@ -143,6 +155,7 @@ public class GameEngine : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isTriggered = false;
         lightHeight = 5;
         playerList.Add(player1);
         playerList.Add(player2);
@@ -158,10 +171,54 @@ public class GameEngine : MonoBehaviour
         GameIsPause = false;
         ActionUsed = true;
         // testing code
-        isTurn = true;
         isEnable = true;
-        ChangeTurn();
-
+        if (SceneManager.GetActiveScene().name.Equals("TutorialScene"))
+        {
+            isTutorial = true;
+        }
+        else
+        {
+            isTutorial = false;
+            startGame();
+        }
+        
+    }
+    public void startGame()
+    {
+        isTurn = true;
+        isEnd = true;
+        print("changing turn");
+        isGameOver();
+        List<string> AIActions = new List<string> { };
+        if (currentTurnOwner > 0)
+        {
+            currentTurnOwner *= -1;
+            AIActions = player2.StartTurn(roomList);
+            //clearSelection();
+            goldPool -= player2.goldIncome;
+            if (player2.isAI)
+            {
+                ProcessActions(AIActions);
+            }
+            else
+            {
+                StartCoroutine(unitUpkeep());
+            }
+        }
+        else
+        {
+            currentTurnOwner *= -1;
+            player1.StartTurn(roomList);
+            //clearSelection();
+            goldPool -= player1.goldIncome;
+            StartCoroutine(unitUpkeep());
+        }
+        this.turnNumber++;
+        numActions = 2;
+        isTriggered = false;
+        ActionUsed = true;
+        err.GetComponent<ReminderManager>().clearMsg();
+        Harvest();
     }
     private void clearSelection()
     {
@@ -201,9 +258,14 @@ public class GameEngine : MonoBehaviour
         }
         this.turnNumber++;
         numActions = 2;
+        isTriggered = false;
         ActionUsed = true;
         err.GetComponent<ReminderManager>().clearMsg();
         Harvest();
+        if (isTutorial)
+        {
+            trigger.GetComponent<DialogueTrigger>().TriggerNext();
+        }
     }
 
     IEnumerator unitUpkeep()
@@ -1208,7 +1270,6 @@ public class GameEngine : MonoBehaviour
                             break;
                         }
                     }
-                
             }
         }
         

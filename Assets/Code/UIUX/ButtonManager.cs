@@ -68,21 +68,10 @@ public class ButtonManager : MonoBehaviour
         // Button enable and disable (ok I ve been changing ways of doing this but I am sure this code below is final!)
         if (gameEngine.GetComponent<GameEngine>().isTurn)
         {
-            
-            if (gameEngine.GetComponent<GameEngine>().isEnd)
-            {
-                //end turn
-                //actionOff();
-                buildSelection = 0;
-                //gameEngine.GetComponent<GameEngine>().disableSelect();
-            }
-            else
-            {
-                //action
-                Harvest();
-                gameEngine.GetComponent<GameEngine>().enableSelect();
-                actionOn();
-            }
+            buildSelection = 0;
+            Harvest();
+            gameEngine.GetComponent<GameEngine>().enableSelect();
+            actionOn();
         }
         else
         {

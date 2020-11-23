@@ -38,6 +38,9 @@ public class ButtonManager : MonoBehaviour
     // panel
     public GameObject upgradePanel;
     public GameObject buildOptionPanel;
+    public GameObject AttackWindow;
+    public GameObject DorfReport;
+    public GameObject GawbReport;
 
     // UI variable
     private int buildSelection;
@@ -46,6 +49,8 @@ public class ButtonManager : MonoBehaviour
     //Action Indicator Images
     public Sprite GawbPic;
     public Sprite DorfPic;
+    public Sprite DeadDorf;
+    public Sprite DeadGawb;
     public GameObject ActionOneIndicator;
     public GameObject ActionTwoIndicator;
     private Color tc;
@@ -196,7 +201,13 @@ public class ButtonManager : MonoBehaviour
     public void Attack()
     {
         gameEngine.GetComponent<GameEngine>().Attack();
+        int dn = gameEngine.GetComponent<GameEngine>().dorfNum;
+        int gn = gameEngine.GetComponent<GameEngine>().gawbNum;
+        int dd = gameEngine.GetComponent<GameEngine>().deaddorfNum;
+        int dg = gameEngine.GetComponent<GameEngine>().deadgawbNum;
 
+        AttackWindow.SetActive(true);
+        
     }
     public void Overwork()
     {

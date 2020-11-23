@@ -78,6 +78,12 @@ public class GameEngine : MonoBehaviour
     public GameObject dorfModel;
     public bool bonking;
 
+    //audio
+    public GameObject buildNoise;
+    public GameObject clickNoise;
+    public GameObject controlNoise;
+    public GameObject moveNoise;
+
     // Error display
     public GameObject err;
 
@@ -910,6 +916,7 @@ public class GameEngine : MonoBehaviour
             else //build conditions are met
             {
                 //add room choice to built room list
+                buildNoise.GetComponent<AudioSource>().Play();
                 selectedRoom.GetComponent<Room>().builtBuildings[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots] = choice;
                 selectedRoom.GetComponent<Room>().buildingNumber++;
                 buildPos = selectedRoom.GetComponent<Room>().buildingPlacementSlots[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots].transform.position;

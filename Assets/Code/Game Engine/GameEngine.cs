@@ -5,6 +5,7 @@ using System.Globalization;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameEngine : MonoBehaviour
 {
@@ -64,6 +65,7 @@ public class GameEngine : MonoBehaviour
 
     public bool isTurn;
     public bool isEnd;
+    public bool isTutorial;
 
     // selection variables
     public GameObject selectionLight;
@@ -122,6 +124,11 @@ public class GameEngine : MonoBehaviour
 
             }
         }
+
+        if (isTutorial)
+        {
+
+        }
     }
     
 
@@ -152,10 +159,22 @@ public class GameEngine : MonoBehaviour
         GameIsPause = false;
         ActionUsed = true;
         // testing code
-        isTurn = true;
         isEnable = true;
+        if (SceneManager.GetActiveScene().name.Equals("TutorialScene"))
+        {
+            isTutorial = true;
+        }
+        else
+        {
+            isTutorial = false;
+            startGame();
+        }
+        
+    }
+    public void startGame()
+    {
+        isTurn = true;
         ChangeTurn();
-
     }
     private void clearSelection()
     {

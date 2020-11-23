@@ -7733,7 +7733,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 548933312}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.04875, y: 1.04875, z: 1.04875}
   m_Children: []
   m_Father: {fileID: 1025889649}
@@ -7765,7 +7765,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 0}
+    m_Font: {fileID: 12800000, guid: 59234a90b4badad43b72b7229a54add2, type: 3}
     m_FontSize: 12
     m_FontStyle: 0
     m_BestFit: 0

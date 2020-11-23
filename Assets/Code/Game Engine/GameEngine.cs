@@ -48,6 +48,7 @@ public class GameEngine : MonoBehaviour
 
     // UI variables
     public GameObject ResultPanel;
+    public GameObject TutorialPanel;
     public Text WinnerText;
     public string currGoldp1;
     public string currMushroomp1;
@@ -124,7 +125,13 @@ public class GameEngine : MonoBehaviour
 
             }
         }
-
+        if (isTutorial)
+        {
+            if(numActions == 1 && !TutorialPanel.activeSelf)
+            {
+                
+            }
+        }
     }
     
 
@@ -1216,7 +1223,6 @@ public class GameEngine : MonoBehaviour
                             break;
                         }
                     }
-                
             }
         }
         

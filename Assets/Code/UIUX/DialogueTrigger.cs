@@ -19,6 +19,7 @@ public class DialogueTrigger : MonoBehaviour
     public void TriggerNext()
     {
         FindObjectOfType<TutorialManager>().StartTutorial(dialogues[iter], dialogues[iter].index);
+        iter++;
     }
     
 }

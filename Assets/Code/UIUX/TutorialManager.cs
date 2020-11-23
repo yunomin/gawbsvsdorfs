@@ -19,6 +19,12 @@ public class TutorialManager : MonoBehaviour
     {
         index = i;
         sentences = new Queue<string>();
+        if(index == 3 || index == 5)
+        {
+            return;
+        }
+        tutorialPanel.SetActive(true);
+        engine.GetComponent().isturn = false;
         foreach (string sentence in dialogue.sentences)
         {
             sentences.Enqueue(sentence);
@@ -39,8 +45,23 @@ public class TutorialManager : MonoBehaviour
     {
         if(index == 0)
         {
-
             engine.GetComponent<GameEngine>().startGame();
+        }
+        else if(index == 1)
+        {
+
+        }
+        else if (index == 2)
+        {
+
+        }
+        else if (index == 3)
+        {
+
+        }
+        else if (index == 4)
+        {
+            engine.GetComponent<GameEngine>().isTutorial = false;
         }
         tutorialPanel.SetActive(false);
     }

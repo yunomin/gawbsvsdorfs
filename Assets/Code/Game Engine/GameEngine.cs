@@ -371,8 +371,8 @@ public class GameEngine : MonoBehaviour
                 {
                     if (room2.GetComponent<Room>().roomName == AIActions[2])
                     {
-                        previouslySelectedRoom = selectedRoom;
-                        previouslySelectedUnit = selectedUnit;
+                        //previouslySelectedRoom = selectedRoom;
+                        //previouslySelectedUnit = selectedUnit;
                         SelectRoom(room2);
                         SelectUnit(room2.GetComponent<Room>().unitSpawns[1]);
                         MoveUnit();

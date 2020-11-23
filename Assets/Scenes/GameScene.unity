@@ -1304,6 +1304,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: gobSpin4-3
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: deb20d02c740eb049842742648fd6a14,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: deb20d02c740eb049842742648fd6a14,
         type: 3}
       propertyPath: m_Controller
@@ -6428,7 +6433,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 615690f763b1c4b408e3a13dc60be156,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.12
+      value: 0.14
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 615690f763b1c4b408e3a13dc60be156,
         type: 3}
@@ -12322,7 +12327,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: c653be07d953fe7499d79167c65d52b3,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c653be07d953fe7499d79167c65d52b3,
         type: 3}
@@ -17874,7 +17879,7 @@ PrefabInstance:
     - target: {fileID: 7483817317484746166, guid: 8ddd1255461cdfe47862a770f72e4b55,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7483817317484746166, guid: 8ddd1255461cdfe47862a770f72e4b55,
         type: 3}
@@ -20732,9 +20737,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.9093078, y: 281.6229}
+  m_AnchoredPosition: {x: 11.455847, y: 283.53223}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.49761337, y: 1.1263269}
+  m_Pivot: {x: 0.51431984, y: 1.1305733}
 --- !u!114 &1334698445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24093,7 +24098,7 @@ PrefabInstance:
     - target: {fileID: 7483817317484746166, guid: 8ddd1255461cdfe47862a770f72e4b55,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7483817317484746166, guid: 8ddd1255461cdfe47862a770f72e4b55,
         type: 3}
@@ -25595,6 +25600,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1810746549}
     m_Modifications:
+    - target: {fileID: 5225230162210878456, guid: 8ddd1255461cdfe47862a770f72e4b55,
+        type: 3}
+      propertyPath: m_Name
+      value: Keystones right
+      objectReference: {fileID: 0}
     - target: {fileID: 5673487416170266176, guid: 8ddd1255461cdfe47862a770f72e4b55,
         type: 3}
       propertyPath: m_Name
@@ -26591,7 +26601,7 @@ MonoBehaviour:
   roomMushroomIncome: 0
   roomGoldIncome: 0
   defensePresent: 0
-  units: 0100000004000000
+  units: 0100000000000000
   unitSpawns:
   - {fileID: 1680404013}
   - {fileID: 270325063}
@@ -30720,7 +30730,7 @@ PrefabInstance:
     - target: {fileID: 9153170228196813072, guid: 9437fd5ef0733864da947dcc6f6eb0a0,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 9153170228196813072, guid: 9437fd5ef0733864da947dcc6f6eb0a0,
         type: 3}

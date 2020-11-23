@@ -165,6 +165,7 @@ public class GameEngine : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        numToMove.text = "0";
         isTriggered = false;
         lightHeight = 5;
         playerList.Add(player1);

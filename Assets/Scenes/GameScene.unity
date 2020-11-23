@@ -14835,11 +14835,11 @@ MonoBehaviour:
     type: 3}
   farm1Prefab: {fileID: 919132149155446097, guid: 0f6a4f45364db614d881deba3ffbcb0e,
     type: 3}
-  upgradedCampPrefab: {fileID: 919132149155446097, guid: 6874e928ad038e5409003e2282b0b7d0,
+  upgradedCampPrefab: {fileID: 8156148845719005553, guid: c2da4dfdc339b2a48b9a1c06a2d86800,
     type: 3}
-  upgradedMinePrefab: {fileID: 919132149155446097, guid: a489cd7a1456214459143b4567670540,
+  upgradedMinePrefab: {fileID: 8999384906645330260, guid: af55c89c83ff08740b121854afaa8b7c,
     type: 3}
-  upgradedFarmPrefab: {fileID: 919132149155446097, guid: eb8c5cc825e1f524eb86d1db56ec4cbd,
+  upgradedFarmPrefab: {fileID: 2432619173832258216, guid: b5f97506da47ac5408a2e55e4f368b0e,
     type: 3}
   buildingPlaceholder: {fileID: 2104999520}
   numActions: 0
@@ -23087,9 +23087,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 10.965435, y: 317.0441}
+  m_AnchoredPosition: {x: 7.1513705, y: 316.09058}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5137068, y: 1.2044492}
+  m_Pivot: {x: 0.5089392, y: 1.2023305}
 --- !u!114 &1334698445
 MonoBehaviour:
   m_ObjectHideFlags: 0

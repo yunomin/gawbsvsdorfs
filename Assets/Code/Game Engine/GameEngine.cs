@@ -989,9 +989,7 @@ public class GameEngine : MonoBehaviour
                 break;
             case 7:
                 buildPos = selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex].transform.position;
-                System.Threading.Thread.Sleep(50);
                 Destroy(selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex]);
-                System.Threading.Thread.Sleep(50);
                 selectedRoom.GetComponent<Room>().buildingPlacementSlots[upgradeIndex] = Instantiate(upgradedFarmPrefab, buildPos, Quaternion.identity);
                 if (currentTurnOwner == 1)
                 {

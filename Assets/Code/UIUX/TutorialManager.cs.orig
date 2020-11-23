@@ -1,0 +1,109 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
+public class TutorialManager : MonoBehaviour
+{
+    public GameObject engine;
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> fcf4e8225e7ba8ad20e93af9f68b3311d03c40ce
+    public Text t11;
+    public GameObject tutorialPanel;
+
+    private int index; // stage of tutorial
+    private Queue<string> sentences;
+    
+    public void StartTutorial(Dialogue dialogue, int i)
+    {
+        index = i;
+        sentences = new Queue<string>();
+        if(index == 3 || index == 5)
+        {
+            return;
+        }
+        tutorialPanel.SetActive(true);
+<<<<<<< HEAD
+        engine.GetComponent<GameEngine>().isTurn = false;
+=======
+        engine.GetComponent().isturn = false;
+>>>>>>> fcf4e8225e7ba8ad20e93af9f68b3311d03c40ce
+        foreach (string sentence in dialogue.sentences)
+        {
+            sentences.Enqueue(sentence);
+        }
+<<<<<<< HEAD
+        ShowNextSentence();
+    }
+    public void ShowNext()
+    {
+        
+    }
+    public void ShowNextSentence()
+    {
+        if (sentences.Count == 0)
+=======
+        ShowNext();
+    }
+    public void ShowNext()
+    {
+        if(sentences.Count == 0)
+>>>>>>> fcf4e8225e7ba8ad20e93af9f68b3311d03c40ce
+        {
+            EndTutorial();
+            return;
+        }
+        string sentence = sentences.Dequeue();
+        t11.text = sentence;
+    }
+    public void EndTutorial()
+    {
+<<<<<<< HEAD
+        if (index == 0)
+=======
+        if(index == 0)
+>>>>>>> fcf4e8225e7ba8ad20e93af9f68b3311d03c40ce
+        {
+            engine.GetComponent<GameEngine>().startGame();
+        }
+        else if(index == 1)
+        {
+<<<<<<< HEAD
+        }
+        else if (index == 2)
+        {
+        }
+        else if (index == 4)
+        {
+        }
+        else if (index == 6)
+        {
+        }
+        else if (index == 7)
+        {
+            engine.GetComponent<GameEngine>().isTutorial = false;
+        }
+        engine.GetComponent<GameEngine>().isTurn = true;
+=======
+
+        }
+        else if (index == 2)
+        {
+
+        }
+        else if (index == 3)
+        {
+
+        }
+        else if (index == 4)
+        {
+            engine.GetComponent<GameEngine>().isTutorial = false;
+        }
+>>>>>>> fcf4e8225e7ba8ad20e93af9f68b3311d03c40ce
+        tutorialPanel.SetActive(false);
+    }
+}

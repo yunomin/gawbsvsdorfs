@@ -49,6 +49,7 @@ public class GameEngine : MonoBehaviour
 
     // UI variables
     public GameObject ResultPanel;
+    public GameObject TutorialPanel;
     public Text WinnerText;
     public string currGoldp1;
     public string currMushroomp1;
@@ -67,7 +68,10 @@ public class GameEngine : MonoBehaviour
     public bool isTurn;
     public bool isEnd;
     public bool isTutorial;
+<<<<<<< HEAD
     public bool isTriggered;
+=======
+>>>>>>> fcf4e8225e7ba8ad20e93af9f68b3311d03c40ce
 
     // selection variables
     public GameObject selectionLight;
@@ -128,10 +132,16 @@ public class GameEngine : MonoBehaviour
         }
         if (isTutorial)
         {
+<<<<<<< HEAD
             if(numActions == 1 && !isTriggered)
             {
                 trigger.GetComponent<DialogueTrigger>().TriggerNext();
                 isTriggered = !isTriggered;
+=======
+            if(numActions == 1 && !TutorialPanel.activeSelf)
+            {
+                
+>>>>>>> fcf4e8225e7ba8ad20e93af9f68b3311d03c40ce
             }
         }
     }
@@ -180,6 +190,7 @@ public class GameEngine : MonoBehaviour
     public void startGame()
     {
         isTurn = true;
+<<<<<<< HEAD
         isEnd = true;
         print("changing turn");
         isGameOver();
@@ -213,6 +224,9 @@ public class GameEngine : MonoBehaviour
         ActionUsed = true;
         err.GetComponent<ReminderManager>().clearMsg();
         Harvest();
+=======
+        ChangeTurn();
+>>>>>>> fcf4e8225e7ba8ad20e93af9f68b3311d03c40ce
     }
     private void clearSelection()
     {
@@ -1303,5 +1317,17 @@ public class GameEngine : MonoBehaviour
     private void sendError(string m)
     {
         err.GetComponent<ReminderManager>().updateMsg(m);
+    }
+
+    private void triggerTutorial()
+    {
+        if(numActions == 1)
+        {
+            
+        }
+        else
+        {
+
+        }
     }
 }

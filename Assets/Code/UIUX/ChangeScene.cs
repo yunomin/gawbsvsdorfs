@@ -54,6 +54,10 @@ public class ChangeScene : MonoBehaviour
         ge.GetComponent<GameEngine>().GameIsPause = false;
     }
 
+    public void LoadGame()
+    {
+        SceneManager.LoadScene("GameScene");
+    }
     public void LoadGameScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);

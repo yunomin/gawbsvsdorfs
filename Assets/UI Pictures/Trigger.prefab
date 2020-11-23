@@ -1,0 +1,157 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &440385293118205418
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 440385293118205417}
+  - component: {fileID: 440385293118205416}
+  m_Layer: 0
+  m_Name: Trigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &440385293118205417
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440385293118205418}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &440385293118205416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440385293118205418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fc38cb96f00c9d4688a8e071e566e7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: 1
+  dialogues:
+  - index: 0
+    sentences:
+    - "Welcome to Gobs Vs Dorfs! In this game you play as one of the two eponymous
+      forces of the Mighty Mountain in their attempt to strip the mountain of its
+      valuable gold. You win by being the side with the most gold, or with the last
+      home base standing by the time the gold in the mountain runs out or you run
+      your opponent out of Dodge. What do both sides use gold for? Why the acquisition
+      of more gold of course! What is a value driven economy elsewise.\r\n\r\nYou
+      interact with you environment by clicking around to access various actions.
+      This tutorial will offer two suggestions per action until we take the training
+      wheels off. Though you\u2019ll only be taking one suggestion at a time we recommend
+      you read both so you can better learn and understand the hows and whys of the
+      game\u2019s systems.\r\n"
+    - "Deciding what to do can generally be viewed as deciding how you want to play,
+      either more or less aggressively. \r\n\r\nFor this first action if you\u2019d
+      like to play aggressively select the move action on the action bar by clicking
+      the button. After that you click on where you want your forces to move from
+      and then clicking where you want them to move to, selecting however many you
+      specifically want to move along the way. You\u2019ll select the middle tile
+      as your destination as you\u2019re trying to gain control of the powerful mushroom
+      lake where all building outputs are substantially increased.\r\n\r\nWhile each
+      tile will only show one physical Gob or Dorf each model is just a representation
+      of a number of your forces shown as the number above their head. Both sides
+      start with six forces but that can be expanded by increasing the amount of
+      mushrooms you receive each turn.\r\n"
+    - "If you\u2019d like to play more defensively we\u2019d recommend building a
+      gold mine in the space with two empty slots next to your base. This will allow
+      you to begin pumping out more money to further increase your infrastructure.
+      You can hover your mouse over buildings in the build action or on the map to
+      learn more about them. You can also look at the top corners of your screen
+      to see how both players incomes are looking.\r"
+  - index: 1
+    sentences:
+    - "Your second action will be the last one you take before your opponent begins
+      their turn so keep that in mind, because they\u2019ll be able to respond with
+      two actions as well.\r\n\r\nIf you went with the aggressive move last action
+      you\u2019ll now be gaining control of the mushroom lake. Control is how you
+      build and maintain the income from buildings you\u2019ve erected, control is
+      also how movement is determined as you need your allies either in the place
+      you\u2019re moving from or to to successfully move. Any player can take control
+      of any building as long as they either take control of the tile of their choice
+      when they have more forces there than their opponent or have just won a battle
+      against their opponent in that tile. You\u2019re going to try to ensure your
+      control of the powerful mushroom lake.\r"
+    - "If you elected to build a gold mine instead you\u2019ll be focusing on receiving
+      a bonus from that gold mine early by using the Harvest/Overtime action to immediately
+      receive the yield from all building on one tile, thus giving you a boost to
+      your financial production and bringing you closer to defeating your enemies!"
+  - index: 2
+    sentences:
+    - "During your opponent\u2019s turn they will be able to perform the same actions
+      you have available to you, whether you\u2019re playing hotseat multiplayer
+      or against the computer you\u2019re on an even playing field against your opponent.
+      Remember that you either win by amassing the most gold by the time the mountain
+      runs out, or by destroying your opponent\u2019s base through battle. Battle
+      is an action that highly rewards the attacking player over the defending one,
+      so be sure to strike first if you\u2019re worried about your opponent. Mushrooms
+      factor heavily into combat and we\u2019ll be discussing them at the start of
+      your turn."
+  - index: 3
+    sentences: []
+  - index: 4
+    sentences:
+    - "Your turn has just started again! You should notice in the upper corner how
+      your resources may have just gone up depending on what you\u2019ve previously
+      built. If you built a gold mine you\u2019ll have the resources needed to build
+      a mushroom farm and if you\u2019ve taken the mushroom lake you\u2019ll also
+      be able to build a mushroom farm.\r\n\r\nThe mushroom farm will allow you to
+      field more forces to the Mighty Mountain, or hold onto spare mushrooms in order
+      to give any troop on the map a boost in one battle. At the start of your turn
+      is when you\u2019ll be able to select where you\u2019ll be building more troops,
+      or if you\u2019re running low on mushrooms where you\u2019ll be removing your
+      troops.\r\n"
+    - "Regardless, you\u2019ll be building a mushroom farm on either the tile where
+      you already have a gold mine, or on the mushroom lake if you have control of
+      it. This will allow you to field more troops."
+  - index: 4
+    sentences: []
+  - index: 4
+    sentences:
+    - "After building that mushroom farm you\u2019ll be more equipped to maintain
+      control of Mighty Mountain! This will be the last tutorial screen you\u2019ll
+      see so be sure to read it carefully. \r\n\r\nIf you\u2019ve built both a gold
+      mine and mushroom farm you should try using the harvest/overtime action again
+      to receive your additional income. As stated earlier you should click the action,
+      then click the tile you\u2019d like to make go into overtime. From here you
+      should have a strong enough economy to begin building more troops and more
+      buildings as you expand across the map. Your objective should be to mine the
+      mountain dry before your opponent.\r"
+    - "If you\u2019ve built a mushroom farm on mushroom lake you should do one of
+      two things. If there are no enemy troops on mushroom lake, you should move
+      your troops from one of your two map corners to the center by clicking on the
+      move action; then the moving from location; then the moving to location and
+      move all of your forces there.\r\n\r\nIf there are enemies on the mushroom
+      lake, you should try to battle them because when you battle attackers have
+      a distinct advantage, hitting about two thirds of the time as opposed to half
+      the time. Select the battle action then select your location for battle and
+      confirm that you want to fight, as once randomness is introduced it can\u2019t
+      be taken back. The outcome of the battle will determine how you may want to
+      play for the rest of your game! \r\n"
+    - "If you do well, then you should try to amass more of your forces to the center
+      mushroom lake and then try to push into your opponent\u2019s territory: remembering
+      that you need to take control of their territory as you move in and to not
+      leave your own base vulnerable. If you did powerfully you should try to defend
+      your base and begin slowly moving to reclaim some of the adjacent territory
+      to your base. Regardless, your end goal is to conquer your opponent\u2019s
+      base. \r\n\r\nWe hope you enjoy your time with Gobs Vs Dorfs! Do your best
+      to show the denizens of Mighty Mountain who\u2019s the boss!\r\n"
+  iter: 0
+  tm: {fileID: 0}

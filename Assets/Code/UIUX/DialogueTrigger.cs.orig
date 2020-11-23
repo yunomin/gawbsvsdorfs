@@ -7,7 +7,10 @@ public class DialogueTrigger : MonoBehaviour
     public bool trigger;
     public List<Dialogue> dialogues;
     private int iter;
+<<<<<<< HEAD
     public GameObject tm;
+=======
+>>>>>>> fcf4e8225e7ba8ad20e93af9f68b3311d03c40ce
 
     void Start()
     {
@@ -19,8 +22,12 @@ public class DialogueTrigger : MonoBehaviour
     }
     public void TriggerNext()
     {
+<<<<<<< HEAD
         print(iter.ToString());
         tm.GetComponent<TutorialManager>().StartTutorial(dialogues[iter], dialogues[iter].index);
+=======
+        FindObjectOfType<TutorialManager>().StartTutorial(dialogues[iter], dialogues[iter].index);
+>>>>>>> fcf4e8225e7ba8ad20e93af9f68b3311d03c40ce
         iter++;
     }
     

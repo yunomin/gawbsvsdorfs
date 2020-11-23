@@ -21,14 +21,29 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         TooltipSystem.Hide();
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> fcf4e8225e7ba8ad20e93af9f68b3311d03c40ce
     public void turnOff()
     {
         enable = !enable;
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
+<<<<<<< HEAD
         TooltipSystem.Show(content);
+=======
+        //delay = LeanTween.delayedCall(0.5f, () =>
+        //{
+        //    TooltipSystem.Show(content);
+        //});
+        if (enable)
+        {
+            TooltipSystem.Show(content);
+        }
+        
+>>>>>>> fcf4e8225e7ba8ad20e93af9f68b3311d03c40ce
     }
     public void OnPointerExit(PointerEventData eventData)
     {

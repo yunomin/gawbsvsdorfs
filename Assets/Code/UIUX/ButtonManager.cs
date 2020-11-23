@@ -71,6 +71,7 @@ public class ButtonManager : MonoBehaviour
     void Update()
     {
         // Button enable and disable (ok I ve been changing ways of doing this but I am sure this code below is final!)
+        /*
         if (gameEngine.GetComponent<GameEngine>().isTurn)
         {
             buildSelection = 0;
@@ -83,7 +84,7 @@ public class ButtonManager : MonoBehaviour
             actionOff();
             endTurnButton.GetComponent<Button>().interactable = false;
         }
-
+        */
         //AI update
         if (gameEngine.GetComponent<GameEngine>().AIMove)
         {
@@ -278,15 +279,15 @@ public class ButtonManager : MonoBehaviour
     public void Move()
     {
         Debug.Log("move");
+        if (gameEngine.GetComponent<GameEngine>().unitLifted)
+        {
+            moveButton.GetComponent<Button>().interactable = false;
+        }
         gameEngine.GetComponent<GameEngine>().MoveUnit();
         if (gameEngine.GetComponent<GameEngine>().unitLifted)
         {
             actionOff();
             moveButton.GetComponent<Button>().interactable = true;
-        }
-        else
-        {
-            actionOn();
         }
     }
     

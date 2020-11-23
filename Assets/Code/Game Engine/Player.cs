@@ -139,6 +139,10 @@ public class Player : MonoBehaviour
         actions.Add(""); //from room
         actions.Add(""); //to room
         actions.Add(""); //num to move
+        actions.Add(""); //non move action
+        actions.Add("");
+        actions.Add("");
+        actions.Add("");
         int maxStateScore = 0;
         for (int r = 0; r < roomList.Count; r++)
         {
@@ -156,37 +160,53 @@ public class Player : MonoBehaviour
                     int adjIndex = -1;
                     for (int q = 0; q < tempRoomList.Count; q++)
                     {
-                        if (tempRoomList[1].GetComponent<Room>().roomName == roomList[r].GetComponent<Room>().Adjacent[a].GetComponent<Room>().roomName)
+                        if (tempRoomList[q].GetComponent<Room>().roomName == roomList[r].GetComponent<Room>().Adjacent[a].GetComponent<Room>().roomName)
                         {
-                            adjIndex = 1;
+                            adjIndex = q;
                         }
                     }
+                    print("here 1");
                     tempRoomList[adjIndex].GetComponent<Room>().units[1] += 1;
+                    print("here 2");
                     List<string> nonMoveAction = GetBuild(roomList);
+                    print("build");
                     List<string> battleAction = GetBattle(roomList);
-                    if (int.Parse(battleAction[0]) > int.Parse(nonMoveAction[0]))
+                    print("battle");
+                    if (battleAction.Count > 0)
                     {
-                        nonMoveAction = battleAction;
+                        if (int.Parse(battleAction[0]) > int.Parse(nonMoveAction[0]))
+                        {
+                            nonMoveAction = battleAction;
+                        }
                     }
+                    print("overtime");
                     List<string> overtimeAction = GetOvertime(roomList);
-                    if (int.Parse(overtimeAction[0]) > int.Parse(nonMoveAction[0]))
+                    if (overtimeAction.Count > 0)
                     {
-                        nonMoveAction = overtimeAction;
+                        if (int.Parse(overtimeAction[0]) > int.Parse(nonMoveAction[0]))
+                        {
+                            nonMoveAction = overtimeAction;
+                        }
                     }
                     List<string> controlAction = GetControl(roomList);
-                    if (int.Parse(controlAction[0]) > int.Parse(nonMoveAction[0]))
+                    print("control");
+                    if (controlAction.Count > 0)
                     {
-                        nonMoveAction = controlAction;
+                        if (int.Parse(controlAction[0]) > int.Parse(nonMoveAction[0]))
+                        {
+                            nonMoveAction = controlAction;
+                        }
                     }
+                    print("here 3");
                     if (int.Parse(nonMoveAction[0]) > maxStateScore)
                     {
                         maxStateScore = int.Parse(nonMoveAction[0]);
                         actions[1] = roomList[r].GetComponent<Room>().roomName;
                         actions[2] = roomList[r].GetComponent<Room>().Adjacent[a].GetComponent<Room>().roomName;
-                        actions[3] = "num to move";
+                        actions[3] = "1";
                         for (int n = 4; n < 4 + nonMoveAction.Count - 1; n++)
                         {
-                            actions.Add(nonMoveAction[n - 3]);
+                            actions[n] = nonMoveAction[n - 3];
                         }
                     }
                 }

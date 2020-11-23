@@ -70,6 +70,12 @@ public class GameEngine : MonoBehaviour
     public bool isTutorial;
     public bool isTriggered;
 
+    //Attack display variable
+    public int dorfNum;
+    public int gawbNum;
+    public int deaddorfNum;
+    public int deadgawbNum;
+
     // selection variables
     public GameObject selectionLight;
     public float lightHeight;
@@ -1121,7 +1127,15 @@ public class GameEngine : MonoBehaviour
         int removedBuilding = 0;
         int removedUnit = 0;
         int roomOwner = 0;
-        int a = currentTurnOwner; // 1 is p1
+        int a = currentTurnOwner; // 1 is p1 is dorf
+
+        deaddorfNum = 0;
+        deadgawbNum = 0;
+        dorfNum = 0;
+        gawbNum = 0;
+
+        dorfNum = selectedRoom.GetComponent<Room>().units[0];
+        gawbNum = selectedRoom.GetComponent<Room>().units[1];
 
         if (selectedRoom == null) // check for room selection
         {
@@ -1153,6 +1167,8 @@ public class GameEngine : MonoBehaviour
             sendError("No units in the selected room..");
             return;
         }
+
+       
 
         // check if current room is base
         // DiceVariable = Random.Range(1, 6)
@@ -1208,7 +1224,6 @@ public class GameEngine : MonoBehaviour
             winner = 2;
         }
 
-        print(defender.ToString());
 
         //remove unit
         if (selectedRoom.GetComponent<Room>().units[defender] > ap)
@@ -1220,11 +1235,15 @@ public class GameEngine : MonoBehaviour
             }
             if (currentTurnOwner == 1)
             {
+
                 player2.unitCount -= ap;
+                deadgawbNum = ap;
+                
             }
             else
             {
                 player1.unitCount -= ap;
+                deaddorfNum = ap;
             }
         }
         else
@@ -1239,7 +1258,6 @@ public class GameEngine : MonoBehaviour
             }
             selectedRoom.GetComponent<Room>().units[defender] = 0;
             selectedRoom.GetComponent<Room>().unitSpawns[defender].active = false;
-
 
             int remainp = ap - selectedRoom.GetComponent<Room>().units[defender];
             if (roomOwner == defender)
@@ -1273,7 +1291,6 @@ public class GameEngine : MonoBehaviour
             }
         }
 
-        //
         if (selectedRoom.GetComponent<Room>().units[attacker] > dp)
         {
             selectedRoom.GetComponent<Room>().units[attacker] = selectedRoom.GetComponent<Room>().units[attacker] - dp;
@@ -1348,7 +1365,13 @@ public class GameEngine : MonoBehaviour
         {
             
         }
-        
+
+        deaddorfNum = dorfNum - selectedRoom.GetComponent<Room>().units[0];
+        deadgawbNum = gawbNum - selectedRoom.GetComponent<Room>().units[1];
+        dorfNum = selectedRoom.GetComponent<Room>().units[0];
+        gawbNum = selectedRoom.GetComponent<Room>().units[1];
+
+
         numActions--;
         ActionUsed = true;
         needToHarvest = true;

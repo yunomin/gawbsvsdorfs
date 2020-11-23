@@ -8,23 +8,23 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 {
     [Multiline()]
     public string content;
-    private bool enable;
+    private bool needChange;
 
     void Start()
     {
-        TooltipSystem.Hide();
-        enable = true;
+        needChange = false;
+        TooltipSystem.Hide(needChange);
     }
 
     //private static LTDescr delay;
     public void hide()
     {
-        TooltipSystem.Hide();
+        TooltipSystem.Hide(needChange);
     }
 
     public void turnOff()
     {
-        enable = !enable;
+        needChange = !needChange;
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -32,6 +32,10 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        TooltipSystem.Hide();
+        TooltipSystem.Hide(needChange);
+        if (needChange)
+        {
+            needChange = false;
+        }
     }
 }

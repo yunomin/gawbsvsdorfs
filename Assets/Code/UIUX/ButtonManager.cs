@@ -38,6 +38,9 @@ public class ButtonManager : MonoBehaviour
     // panel
     public GameObject upgradePanel;
     public GameObject buildOptionPanel;
+    public GameObject AttackWindow;
+    public GameObject DorfReport;
+    public GameObject GawbReport;
 
     // UI variable
     private int buildSelection;
@@ -46,6 +49,8 @@ public class ButtonManager : MonoBehaviour
     //Action Indicator Images
     public Sprite GawbPic;
     public Sprite DorfPic;
+    public Sprite DeadDorf;
+    public Sprite DeadGawb;
     public GameObject ActionOneIndicator;
     public GameObject ActionTwoIndicator;
     private Color tc;
@@ -196,8 +201,58 @@ public class ButtonManager : MonoBehaviour
     }
     public void Attack()
     {
-        gameEngine.GetComponent<GameEngine>().Attack();
+        foreach (Transform child in DorfReport.transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+        foreach (Transform child in GawbReport.transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
 
+        gameEngine.GetComponent<GameEngine>().Attack();
+        int dn = gameEngine.GetComponent<GameEngine>().dorfNum;
+        int gn = gameEngine.GetComponent<GameEngine>().gawbNum;
+        int dd = gameEngine.GetComponent<GameEngine>().deaddorfNum;
+        int dg = gameEngine.GetComponent<GameEngine>().deadgawbNum;
+
+        AttackWindow.SetActive(true);
+        for (int i = 0; i < dn; i++)
+        {
+            GameObject d = new GameObject("head");
+            Image dImage = d.AddComponent<Image>(); //Add the Image Component script
+            dImage.sprite = DorfPic; //Set the Sprite of the Image Component on the new GameObject
+            dImage.rectTransform.localScale = new Vector3(0.25f, 0.25f, 1);
+            d.GetComponent<RectTransform>().SetParent(DorfReport.transform);
+            d.layer = 5;     
+        }
+        for (int i = 0; i < dd; i++)
+        {
+            GameObject d = new GameObject("dead");
+            Image dImage = d.AddComponent<Image>(); //Add the Image Component script
+            dImage.sprite = DeadDorf; //Set the Sprite of the Image Component on the new GameObject
+            dImage.rectTransform.localScale = new Vector3(0.25f, 0.25f, 1);
+            d.GetComponent<RectTransform>().SetParent(DorfReport.transform);
+            d.layer = 5;
+        }
+        for (int i = 0; i < gn; i++)
+        {
+            GameObject g = new GameObject("head");
+            Image gImage = g.AddComponent<Image>(); //Add the Image Component script
+            gImage.sprite = GawbPic; //Set the Sprite of the Image Component on the new GameObject
+            gImage.rectTransform.localScale = new Vector3(0.25f, 0.25f, 1);
+            g.GetComponent<RectTransform>().SetParent(GawbReport.transform);
+            g.layer = 5;
+        }
+        for (int i = 0; i < dg; i++)
+        {
+            GameObject g = new GameObject("head");
+            Image gImage = g.AddComponent<Image>(); //Add the Image Component script
+            gImage.sprite = DeadGawb; //Set the Sprite of the Image Component on the new GameObject
+            gImage.rectTransform.localScale = new Vector3(0.25f, 0.25f, 1);
+            g.GetComponent<RectTransform>().SetParent(GawbReport.transform);
+            g.layer = 5;
+        }
     }
     public void Overwork()
     {

@@ -7,8 +7,6 @@ using UnityEngine.SceneManagement;
 public class TutorialManager : MonoBehaviour
 {
     public GameObject engine;
-
-
     public Text t11;
     public GameObject tutorialPanel;
 
@@ -24,16 +22,20 @@ public class TutorialManager : MonoBehaviour
             return;
         }
         tutorialPanel.SetActive(true);
-        engine.GetComponent().isturn = false;
+        engine.GetComponent<GameEngine>().isTurn = false;
         foreach (string sentence in dialogue.sentences)
         {
             sentences.Enqueue(sentence);
         }
-        ShowNext();
+        ShowNextSentence();
     }
     public void ShowNext()
     {
-        if(sentences.Count == 0)
+        
+    }
+    public void ShowNextSentence()
+    {
+        if (sentences.Count == 0)
         {
             EndTutorial();
             return;
@@ -43,26 +45,27 @@ public class TutorialManager : MonoBehaviour
     }
     public void EndTutorial()
     {
-        if(index == 0)
+        if (index == 0)
         {
             engine.GetComponent<GameEngine>().startGame();
         }
         else if(index == 1)
         {
-
         }
         else if (index == 2)
         {
-
-        }
-        else if (index == 3)
-        {
-
         }
         else if (index == 4)
         {
+        }
+        else if (index == 6)
+        {
+        }
+        else if (index == 7)
+        {
             engine.GetComponent<GameEngine>().isTutorial = false;
         }
+        engine.GetComponent<GameEngine>().isTurn = true;
         tutorialPanel.SetActive(false);
     }
 }

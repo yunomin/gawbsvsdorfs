@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 
 public class GameEngine : MonoBehaviour
 {
+    public GameObject trigger;
     public Player player1; // Dorf
     public Player player2; // Gob
     private string p1Identity;
@@ -48,7 +49,6 @@ public class GameEngine : MonoBehaviour
 
     // UI variables
     public GameObject ResultPanel;
-    public GameObject TutorialPanel;
     public Text WinnerText;
     public string currGoldp1;
     public string currMushroomp1;
@@ -67,6 +67,7 @@ public class GameEngine : MonoBehaviour
     public bool isTurn;
     public bool isEnd;
     public bool isTutorial;
+    public bool isTriggered;
 
     // selection variables
     public GameObject selectionLight;
@@ -127,9 +128,10 @@ public class GameEngine : MonoBehaviour
         }
         if (isTutorial)
         {
-            if(numActions == 1 && !TutorialPanel.activeSelf)
+            if(numActions == 1 && !isTriggered)
             {
-                
+                trigger.GetComponent<DialogueTrigger>().TriggerNext();
+                isTriggered = !isTriggered;
             }
         }
     }
@@ -147,6 +149,7 @@ public class GameEngine : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isTriggered = false;
         lightHeight = 5;
         playerList.Add(player1);
         playerList.Add(player2);
@@ -217,6 +220,7 @@ public class GameEngine : MonoBehaviour
         }
         this.turnNumber++;
         numActions = 2;
+        isTriggered = false;
         ActionUsed = true;
         err.GetComponent<ReminderManager>().clearMsg();
         Harvest();

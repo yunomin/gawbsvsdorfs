@@ -7,16 +7,17 @@ using UnityEngine.SceneManagement;
 public class TutorialManager : MonoBehaviour
 {
     public GameObject engine;
-    private bool begineGame;
-    //scene 1
+
+
     public Text t11;
     public GameObject tutorialPanel;
 
-
+    private int index; // stage of tutorial
     private Queue<string> sentences;
-    public void StartTutorial(Dialogue dialogue, bool isFirst)
+    
+    public void StartTutorial(Dialogue dialogue, int i)
     {
-        begineGame = isFirst;
+        index = i;
         sentences = new Queue<string>();
         foreach (string sentence in dialogue.sentences)
         {
@@ -36,10 +37,11 @@ public class TutorialManager : MonoBehaviour
     }
     public void EndTutorial()
     {
-        if (begineGame)
+        if(index == 0)
         {
-            tutorialPanel.SetActive(false);
+
             engine.GetComponent<GameEngine>().startGame();
         }
+        tutorialPanel.SetActive(false);
     }
 }

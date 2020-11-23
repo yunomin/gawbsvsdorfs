@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class DialogueTrigger : MonoBehaviour
 {
-    public Dialogue dialogue;
     public bool trigger;
+    public List<Dialogue> dialogues;
+    private int iter;
 
     void Start()
     {
+        iter = 0;
         if (trigger)
         {
-            TriggerDialogue();
+            TriggerNext();
         }
     }
-    public void TriggerDialogue()
+    public void TriggerNext()
     {
-        FindObjectOfType<TutorialManager>().StartTutorial(dialogue, trigger);
+        FindObjectOfType<TutorialManager>().StartTutorial(dialogues[iter], dialogues[iter].index);
     }
+    
 }

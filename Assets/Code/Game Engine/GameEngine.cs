@@ -125,10 +125,6 @@ public class GameEngine : MonoBehaviour
             }
         }
 
-        if (isTutorial)
-        {
-
-        }
     }
     
 
@@ -1261,5 +1257,17 @@ public class GameEngine : MonoBehaviour
     private void sendError(string m)
     {
         err.GetComponent<ReminderManager>().updateMsg(m);
+    }
+
+    private void triggerTutorial()
+    {
+        if(numActions == 1)
+        {
+            
+        }
+        else
+        {
+
+        }
     }
 }

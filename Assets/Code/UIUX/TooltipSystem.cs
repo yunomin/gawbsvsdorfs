@@ -5,7 +5,7 @@ using UnityEngine;
 public class TooltipSystem : MonoBehaviour
 {
     private static TooltipSystem current;
-    private bool onoff;
+    private static bool onoff;
     public Tooltip tooltip;
     void Start()
     {
@@ -17,11 +17,20 @@ public class TooltipSystem : MonoBehaviour
     }
     public static void Show(string content)
     {
-        current.tooltip.SetText(content);
-        current.tooltip.gameObject.SetActive(true);
+        
+        if (onoff)
+        {
+            current.tooltip.SetText(content);
+            current.tooltip.gameObject.SetActive(true);
+        }
+        
     }
-    public static void Hide()
+    public static void Hide(bool nc)
     {
+        if (nc)
+        {
+            onoff = !onoff;
+        }
         current.tooltip.gameObject.SetActive(false);
     }
 }

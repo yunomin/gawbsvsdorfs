@@ -5,7 +5,6 @@ using System.Globalization;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class GameEngine : MonoBehaviour
 {
@@ -48,7 +47,6 @@ public class GameEngine : MonoBehaviour
 
     // UI variables
     public GameObject ResultPanel;
-    public GameObject TutorialPanel;
     public Text WinnerText;
     public string currGoldp1;
     public string currMushroomp1;
@@ -66,7 +64,6 @@ public class GameEngine : MonoBehaviour
 
     public bool isTurn;
     public bool isEnd;
-    public bool isTutorial;
 
     // selection variables
     public GameObject selectionLight;
@@ -125,13 +122,6 @@ public class GameEngine : MonoBehaviour
 
             }
         }
-        if (isTutorial)
-        {
-            if(numActions == 1 && !TutorialPanel.activeSelf)
-            {
-                
-            }
-        }
     }
     
 
@@ -162,22 +152,10 @@ public class GameEngine : MonoBehaviour
         GameIsPause = false;
         ActionUsed = true;
         // testing code
-        isEnable = true;
-        if (SceneManager.GetActiveScene().name.Equals("TutorialScene"))
-        {
-            isTutorial = true;
-        }
-        else
-        {
-            isTutorial = false;
-            startGame();
-        }
-        
-    }
-    public void startGame()
-    {
         isTurn = true;
+        isEnable = true;
         ChangeTurn();
+
     }
     private void clearSelection()
     {
@@ -1223,6 +1201,7 @@ public class GameEngine : MonoBehaviour
                             break;
                         }
                     }
+                
             }
         }
         
@@ -1263,17 +1242,5 @@ public class GameEngine : MonoBehaviour
     private void sendError(string m)
     {
         err.GetComponent<ReminderManager>().updateMsg(m);
-    }
-
-    private void triggerTutorial()
-    {
-        if(numActions == 1)
-        {
-            
-        }
-        else
-        {
-
-        }
     }
 }

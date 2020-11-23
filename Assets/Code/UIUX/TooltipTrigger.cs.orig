@@ -1,0 +1,52 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+
+public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler 
+{
+    [Multiline()]
+    public string content;
+    private bool enable;
+
+    void Start()
+    {
+        TooltipSystem.Hide();
+        enable = true;
+    }
+
+    //private static LTDescr delay;
+    public void hide()
+    {
+        TooltipSystem.Hide();
+    }
+<<<<<<< HEAD
+
+=======
+>>>>>>> fcf4e8225e7ba8ad20e93af9f68b3311d03c40ce
+    public void turnOff()
+    {
+        enable = !enable;
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+<<<<<<< HEAD
+        TooltipSystem.Show(content);
+=======
+        //delay = LeanTween.delayedCall(0.5f, () =>
+        //{
+        //    TooltipSystem.Show(content);
+        //});
+        if (enable)
+        {
+            TooltipSystem.Show(content);
+        }
+        
+>>>>>>> fcf4e8225e7ba8ad20e93af9f68b3311d03c40ce
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        TooltipSystem.Hide();
+    }
+}

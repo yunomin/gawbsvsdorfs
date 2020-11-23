@@ -6,7 +6,7 @@ public class DialogueTrigger : MonoBehaviour
 {
     public bool trigger;
     public List<Dialogue> dialogues;
-    public int iter;
+    private int iter;
     public GameObject tm;
 
     void Start()

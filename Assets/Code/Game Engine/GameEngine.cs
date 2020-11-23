@@ -180,7 +180,39 @@ public class GameEngine : MonoBehaviour
     public void startGame()
     {
         isTurn = true;
-        ChangeTurn();
+        isEnd = true;
+        print("changing turn");
+        isGameOver();
+        List<string> AIActions = new List<string> { };
+        if (currentTurnOwner > 0)
+        {
+            currentTurnOwner *= -1;
+            AIActions = player2.StartTurn(roomList);
+            //clearSelection();
+            goldPool -= player2.goldIncome;
+            if (player2.isAI)
+            {
+                ProcessActions(AIActions);
+            }
+            else
+            {
+                StartCoroutine(unitUpkeep());
+            }
+        }
+        else
+        {
+            currentTurnOwner *= -1;
+            player1.StartTurn(roomList);
+            //clearSelection();
+            goldPool -= player1.goldIncome;
+            StartCoroutine(unitUpkeep());
+        }
+        this.turnNumber++;
+        numActions = 2;
+        isTriggered = false;
+        ActionUsed = true;
+        err.GetComponent<ReminderManager>().clearMsg();
+        Harvest();
     }
     private void clearSelection()
     {
@@ -224,6 +256,10 @@ public class GameEngine : MonoBehaviour
         ActionUsed = true;
         err.GetComponent<ReminderManager>().clearMsg();
         Harvest();
+        if (isTutorial)
+        {
+            trigger.GetComponent<DialogueTrigger>().TriggerNext();
+        }
     }
 
     IEnumerator unitUpkeep()

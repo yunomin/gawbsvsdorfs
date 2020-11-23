@@ -5,7 +5,12 @@ using UnityEngine;
 public class TooltipSystem : MonoBehaviour
 {
     private static TooltipSystem current;
+    private bool onoff;
     public Tooltip tooltip;
+    void Start()
+    {
+        onoff = true;
+    }
     public void Awake()
     {
         current = this;
@@ -18,16 +23,5 @@ public class TooltipSystem : MonoBehaviour
     public static void Hide()
     {
         current.tooltip.gameObject.SetActive(false);
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

@@ -2917,7 +2917,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8825830988798718923}
   m_Layer: 0
-  m_Name: mercCamp_upgraded3
+  m_Name: mercCamp_upgraded_prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2932,7 +2932,7 @@ Transform:
   m_GameObject: {fileID: 8156148845719005553}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 28.48947, y: 0.8873616, z: 26.716928}
-  m_LocalScale: {x: 1.3734756, y: 1.3734756, z: 1.3734756}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
   - {fileID: 6675396585317878920}
   - {fileID: 1441513711382413766}

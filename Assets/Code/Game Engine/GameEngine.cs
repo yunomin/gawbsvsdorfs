@@ -30,7 +30,8 @@ public class GameEngine : MonoBehaviour
     //movement variables
     public GameObject liftedUnit;
     public bool unitLifted;
-    public int numToMove;
+    public Text numToMove;
+    public GameObject numToMoveField;
     public GameObject previouslySelectedRoom;
     public GameObject previouslySelectedUnit;
 
@@ -560,7 +561,7 @@ public class GameEngine : MonoBehaviour
             {
                 selectedRoom.GetComponent<Room>().unitSpawns[0].active = true;
             }
-            selectedRoom.GetComponent<Room>().units[0] += 1;
+            selectedRoom.GetComponent<Room>().units[0] += int.Parse(numToMove.text);
         }
         else
         {
@@ -568,7 +569,7 @@ public class GameEngine : MonoBehaviour
             {
                 selectedRoom.GetComponent<Room>().unitSpawns[1].active = true;
             }
-            selectedRoom.GetComponent<Room>().units[1] += 1;
+            selectedRoom.GetComponent<Room>().units[1] += int.Parse(numToMove.text);
         }
         removingUnits = 0;
         enableSelect();
@@ -604,11 +605,52 @@ public class GameEngine : MonoBehaviour
             //check if move can be made
             if (previouslySelectedRoom != null)
             {
+                if (int.Parse(numToMove.text) <= 0)
+                {
+                    //cannot make move
+                    liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 0.5f, liftedUnit.transform.position.z);
+                    //liftedUnit.GetComponent<DorfAnimation>().startIdle();
+                    removingUnits = 0;
+                    numToMoveField.active = false;
+                    Destroy(unitToMove);
+                    sendError("Invalid number of units");
+                    return 0;
+                }
+                if (currentTurnOwner == 1)
+                {
+                    if (int.Parse(numToMove.text) > previouslySelectedRoom.GetComponent<Room>().units[0])
+                    {
+                        //cannot make move
+                        liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 0.5f, liftedUnit.transform.position.z);
+                        //liftedUnit.GetComponent<DorfAnimation>().startIdle();
+                        removingUnits = 0;
+                        numToMoveField.active = false;
+                        Destroy(unitToMove);
+                        sendError("Invalid number of units");
+                        return 0;
+                    }
+                }
+                else
+                {
+                    if (int.Parse(numToMove.text) > previouslySelectedRoom.GetComponent<Room>().units[1])
+                    {
+                        //cannot make move
+                        liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 0.5f, liftedUnit.transform.position.z);
+                        //liftedUnit.GetComponent<DorfAnimation>().startIdle();
+                        removingUnits = 0;
+                        numToMoveField.active = false;
+                        Destroy(unitToMove);
+                        sendError("Invalid number of units");
+                        return 0;
+                    }
+                }
                 if (!(previouslySelectedRoom.GetComponent<Room>().isAdjacent(selectedRoom)))
                 {
                     //cannot make move
                     liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 0.5f, liftedUnit.transform.position.z);
                     //liftedUnit.GetComponent<DorfAnimation>().startIdle();
+                    removingUnits = 0;
+                    numToMoveField.active = false;
                     Destroy(unitToMove);
                     sendError("Can not move there..");
                     return 0;
@@ -620,6 +662,8 @@ public class GameEngine : MonoBehaviour
                         //cannot make move
                         liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 0.5f, liftedUnit.transform.position.z);
                         //liftedUnit.GetComponent<DorfAnimation>().startIdle();
+                        removingUnits = 0;
+                        numToMoveField.active = false;
                         Destroy(unitToMove);
                         sendError("Can not move there..");
                         return 0;
@@ -638,6 +682,7 @@ public class GameEngine : MonoBehaviour
                         StartCoroutine(moveAnimation());
                         liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 0.5f, liftedUnit.transform.position.z);
                         liftedUnit.GetComponent<DorfAnimation>().startIdle();
+                        numToMoveField.active = false;
                     }
                 }
             }
@@ -646,6 +691,8 @@ public class GameEngine : MonoBehaviour
                 //cannot make move
                 liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 0.5f, liftedUnit.transform.position.z);
                 //liftedUnit.GetComponent<DorfAnimation>().startIdle();
+                removingUnits = 0;
+                numToMoveField.active = false;
                 Destroy(unitToMove);
                 sendError("Can not move there..");
                 return 0;
@@ -655,7 +702,7 @@ public class GameEngine : MonoBehaviour
             //mechanical
             if (currentTurnOwner == 1)
             {
-                previouslySelectedRoom.GetComponent<Room>().units[0] -= 1;
+                previouslySelectedRoom.GetComponent<Room>().units[0] -= int.Parse(numToMove.text);
                 if (previouslySelectedRoom.GetComponent<Room>().units[0] == 0)
                 {
                     previouslySelectedRoom.GetComponent<Room>().unitSpawns[0].active = false;
@@ -663,7 +710,7 @@ public class GameEngine : MonoBehaviour
             }
             else
             {
-                previouslySelectedRoom.GetComponent<Room>().units[1] -= 1;
+                previouslySelectedRoom.GetComponent<Room>().units[1] -= int.Parse(numToMove.text);
                 if (previouslySelectedRoom.GetComponent<Room>().units[1] == 0)
                 {
                     previouslySelectedRoom.GetComponent<Room>().unitSpawns[1].active = false;
@@ -688,13 +735,14 @@ public class GameEngine : MonoBehaviour
                 liftedUnit = selectedUnit;
                 previouslySelectedRoom = selectedRoom;
                 previouslySelectedUnit = selectedUnit;
+                numToMoveField.active = true;
             }
             else
             {
                 sendError("No owned units in that room..");
             }
 
-            //mechanical
+            /*mechanical
             if (currentTurnOwner == 1)
             {
                 numToMove = 1; //selectedRoom.GetComponent<Room>().units[0];
@@ -703,6 +751,7 @@ public class GameEngine : MonoBehaviour
             {
                 numToMove = 1; //selectedRoom.GetComponent<Room>().units[1];
             }
+            */
         }
         return 0;
     }

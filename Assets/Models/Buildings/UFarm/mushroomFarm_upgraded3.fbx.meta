@@ -1,29 +1,9 @@
 fileFormatVersion: 2
-guid: 20c3879768eb5b74aa671a9c821c4c68
+guid: 3f951d4af8598d64c8ae7357e4976723
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: big_mushrooms
-    second: {fileID: 2100000, guid: 564e0b90135ec444bb5fef43b552ba71, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: extraMushrooms
-    second: {fileID: 2100000, guid: 1178ff6242fb3324384d454d17437410, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: rocks1
-    second: {fileID: 2100000, guid: 574da22dde098cb4fb5b71681716ab64, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: small_mushrooms
-    second: {fileID: 2100000, guid: a84d9a5cda65c154990296cad9b7e10c, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 1
     materialName: 0

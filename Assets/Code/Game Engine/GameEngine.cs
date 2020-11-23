@@ -62,7 +62,7 @@ public class GameEngine : MonoBehaviour
     public bool needToHarvest;
     public bool finishClicked;
     public bool GameIsPause;
-    public bool enableSelection;
+    //public bool enableSelection;
 
     public bool isTurn;
     public bool isEnd;
@@ -82,6 +82,14 @@ public class GameEngine : MonoBehaviour
     public GameObject dorfModel;
     public bool bonking;
 
+    //audio
+    public GameObject buildNoise;
+    public GameObject clickNoise;
+    public GameObject controlNoise;
+    public GameObject moveNoise;
+    public GameObject bonkNoise;
+    public GameObject gameNoise;
+
     // Error display
     public GameObject err;
 
@@ -95,6 +103,7 @@ public class GameEngine : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
+                clickNoise.GetComponent<AudioSource>().Play();
                 if (EventSystem.current.IsPointerOverGameObject())
                 {
                     print("Clicked on the UI");
@@ -433,8 +442,8 @@ public class GameEngine : MonoBehaviour
                 {
                     if (room2.GetComponent<Room>().roomName == AIActions[2])
                     {
-                        previouslySelectedRoom = selectedRoom;
-                        previouslySelectedUnit = selectedUnit;
+                        //previouslySelectedRoom = selectedRoom;
+                        //previouslySelectedUnit = selectedUnit;
                         SelectRoom(room2);
                         SelectUnit(room2.GetComponent<Room>().unitSpawns[1]);
                         MoveUnit();
@@ -534,7 +543,7 @@ public class GameEngine : MonoBehaviour
         while ((unitToMove.transform.position - target).magnitude >= 0.005)
         {
             unitToMove.GetComponent<DorfAnimation>().startWalk();
-            float step = 1.5f * Time.deltaTime;
+            float step = 1.2f * Time.deltaTime;
             unitToMove.transform.position = Vector3.MoveTowards(unitToMove.transform.position, target, step);
             yield return null;
         }
@@ -557,6 +566,7 @@ public class GameEngine : MonoBehaviour
         }
         removingUnits = 0;
         enableSelect();
+        moveNoise.GetComponent<AudioSource>().Stop();
         numActions--;
         ActionUsed = true;
         if (numActions == 0)
@@ -593,6 +603,7 @@ public class GameEngine : MonoBehaviour
                     //cannot make move
                     liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 0.5f, liftedUnit.transform.position.z);
                     //liftedUnit.GetComponent<DorfAnimation>().startIdle();
+                    Destroy(unitToMove);
                     sendError("Can not move there..");
                     return 0;
                 }
@@ -603,19 +614,21 @@ public class GameEngine : MonoBehaviour
                         //cannot make move
                         liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 0.5f, liftedUnit.transform.position.z);
                         //liftedUnit.GetComponent<DorfAnimation>().startIdle();
+                        Destroy(unitToMove);
                         sendError("Can not move there..");
                         return 0;
                     }
                     else
                     {
                         //do walking animation
+                        moveNoise.GetComponent<AudioSource>().Play();
                         origPos = previouslySelectedUnit.transform.position;
                         origPos.y -= 0.5f;
                         target = selectedUnit.transform.position;
                         unitToMove.transform.forward = (selectedUnit.transform.position - unitToMove.transform.position);
                         unitToMove.active = true;
                         disableSelect();
-                        removingUnits = 1;
+                        //removingUnits = 1;
                         StartCoroutine(moveAnimation());
                         liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 0.5f, liftedUnit.transform.position.z);
                         liftedUnit.GetComponent<DorfAnimation>().startIdle();
@@ -627,6 +640,7 @@ public class GameEngine : MonoBehaviour
                 //cannot make move
                 liftedUnit.transform.position = new Vector3(liftedUnit.transform.position.x, liftedUnit.transform.position.y - 0.5f, liftedUnit.transform.position.z);
                 //liftedUnit.GetComponent<DorfAnimation>().startIdle();
+                Destroy(unitToMove);
                 sendError("Can not move there..");
                 return 0;
             }
@@ -655,6 +669,7 @@ public class GameEngine : MonoBehaviour
             //visual
             if (selectedUnit.active == true)
             {
+                unitLifted = true;
                 unitToMove = Instantiate(selectedUnit, selectedUnit.transform.position, Quaternion.identity);
                 Vector3 scaleToChange = unitToMove.transform.localScale;
                 scaleToChange.x = scaleToChange.x * selectedRoom.transform.localScale.x;
@@ -665,7 +680,6 @@ public class GameEngine : MonoBehaviour
                 selectedUnit.transform.position = new Vector3(selectedUnit.transform.position.x, selectedUnit.transform.position.y + 0.5f, selectedUnit.transform.position.z);
                 //selectedUnit.GetComponent<DorfAnimation>().startWalk();
                 liftedUnit = selectedUnit;
-                unitLifted = true;
                 previouslySelectedRoom = selectedRoom;
                 previouslySelectedUnit = selectedUnit;
             }
@@ -785,6 +799,7 @@ public class GameEngine : MonoBehaviour
             {
                 if (selectedRoom.GetComponent<Room>().units[0] > selectedRoom.GetComponent<Room>().units[1])
                 {
+                    controlNoise.GetComponent<AudioSource>().Play();
                     selectedRoom.GetComponent<Room>().ChangeOwner(1);
                     player2.ownedRooms.Remove(selectedRoom);
                     player1.ownedRooms.Add(selectedRoom);
@@ -815,6 +830,7 @@ public class GameEngine : MonoBehaviour
             {
                 if (selectedRoom.GetComponent<Room>().units[1] > selectedRoom.GetComponent<Room>().units[0])
                 {
+                    controlNoise.GetComponent<AudioSource>().Play();
                     selectedRoom.GetComponent<Room>().ChangeOwner(-1);
                     player1.ownedRooms.Remove(selectedRoom);
                     player2.ownedRooms.Add(selectedRoom);
@@ -884,6 +900,7 @@ public class GameEngine : MonoBehaviour
         }
 
         selectedRoom.GetComponent<Room>().builtBuildings[upgradeIndex] = choice;
+        buildNoise.GetComponent<AudioSource>().Play();
         switch (choice)
         {
             case 3:
@@ -972,6 +989,7 @@ public class GameEngine : MonoBehaviour
             else //build conditions are met
             {
                 //add room choice to built room list
+                buildNoise.GetComponent<AudioSource>().Play();
                 selectedRoom.GetComponent<Room>().builtBuildings[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots] = choice;
                 selectedRoom.GetComponent<Room>().buildingNumber++;
                 buildPos = selectedRoom.GetComponent<Room>().buildingPlacementSlots[selectedRoom.GetComponent<Room>().roomSlots - selectedRoom.GetComponent<Room>().emptySlots].transform.position;
@@ -1111,6 +1129,7 @@ public class GameEngine : MonoBehaviour
             {
                 ap++;
                 StartCoroutine(bonkAnimation(selectedRoom.GetComponent<Room>().unitSpawns[attacker]));
+                bonkNoise.GetComponent<AudioSource>().Play();
                 //selectedRoom.GetComponent<Room>().unitSpawns[attacker].GetComponent<DorfAnimation>().startBonk();
             }
         }
@@ -1120,6 +1139,7 @@ public class GameEngine : MonoBehaviour
             {
                 dp++;
                 StartCoroutine(bonkAnimation(selectedRoom.GetComponent<Room>().unitSpawns[defender]));
+                bonkNoise.GetComponent<AudioSource>().Play();
             }
         }
         if(ap > dp)
